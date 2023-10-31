@@ -10,7 +10,7 @@ The `possum` package, which implements the multiple imputation approach for cova
 devtools::install_github("sarahlotspeich/possum", ref = "main")
 ```
 
-Each of the "Script (Run Simulations)" files is coded to run 100 replications of each setting for demonstration. Per the NOTES at the bottom of the scripts, some more time-intensive simulations were run in parallel.
+Each of the "Script (Run Simulations)" files is coded to run 10 replications of each setting for demonstration. Per the NOTES at the bottom of the scripts, some more time-intensive simulations were run in parallel.
 
 ## Tables 
 
