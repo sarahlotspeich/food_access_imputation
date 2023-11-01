@@ -23,5 +23,5 @@ Each of the "Script (Run Simulations)" files is coded to run 10 replications of 
 ## Figures 
 
 **Figure 1.** Straight-line and map-based distances from Reynolda House (square symbol) to a nearby Food Lion grocery store (triangle symbol) in Winston-Salem, North Carolina.
-
+![](figures/fig1_map_comparing_distances.png)
   - [Script (Make Figure)](Figure-Scripts/FigureS1-Illustrate-Extrapolation-Methods.R)
