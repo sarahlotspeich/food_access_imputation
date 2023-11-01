@@ -14,7 +14,7 @@ Each of the "Script (Run Simulations)" files is coded to run 10 replications of 
 
 ## Tables 
 
-**Table 1.** Simulation results under increasing severity of errors in straight-line food access. Data for $N = 340$ neighborhoods were simulated in each setting, assuming $10-14\%$ outcome prevalence and true log prevalence ratio $\beta_1 = 0.049$. 
+**Table 1.** Simulation results under increasing severity of errors in straight-line food access. Data for $N = 340$ neighborhoods were simulated in each setting, assuming $10-14%$ outcome prevalence and true log prevalence ratio $\beta_1 = 0.049$. 
 
   - [Script (Run Simulations)](Sim-Scripts/Table1-Gold-Standard.R)
   - [Script (Make Table)](Table-Scripts/Table1-Gold-Standard.R)
