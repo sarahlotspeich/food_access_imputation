@@ -9,6 +9,7 @@ library(possum, ## for multiple imputation estimator
 
 # Random seed to be used for each simulation setting
 args = commandArgs(TRUE)
+## When running on the cluster, give each array a unique seed by adding the array ID to 11422
 sim_seed = 11422 + as.integer(args)
 
 # Number of replicates per simulation setting
