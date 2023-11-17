@@ -16,7 +16,8 @@ Each of the "Script (Run Simulations)" files is coded to run 10 replications of 
 
 **Table 1.** Simulation results under increasing severity of errors in straight-line food access. Data for $N = 340$ neighborhoods were simulated in each setting, assuming 10-14% outcome prevalence and true log prevalence ratio $\beta_1 = 0.049$. 
 
-  - [Script (Run Simulations Locally)](https://github.com/sarahlotspeich/food/blob/main/sims-scripts/sims_vary_sigmaU.R)[ (Run Simulations on a Cluster)](https://github.com/sarahlotspeich/food/blob/main/cluster-sims-scripts/sims_vary_sigmaU.R)
+  - [Script (Run Simulations Locally)](https://github.com/sarahlotspeich/food/blob/main/sims-scripts/sims_vary_sigmaU.R)
+  - [Script (Run Simulations on a Cluster)](https://github.com/sarahlotspeich/food/blob/main/cluster-sims-scripts/sims_vary_sigmaU.R)
   - [Script (Make Table)](Table-Scripts/Table1-Gold-Standard.R)
   - [Data (Simulation Results)](Table-Data/data_Table1.csv)  
 
