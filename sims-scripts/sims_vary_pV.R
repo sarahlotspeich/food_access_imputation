@@ -2,15 +2,11 @@
 # if needed: install.packages("devtools") 
 # then: 
 # devtools::install_github("sarahlotspeich/possum", 
-#                          ref = "main") ## for multiple imputation estimator
-
-library(possum, ## for SMLE
-        lib.loc = "/home/lotspes/R/x86_64-pc-linux-gnu-library/4.0") 
+#                          ref = "main") 
+library(possum) ## for multiple imputation estimator
 
 # Random seed to be used for each simulation setting
-args = commandArgs(TRUE)
-sim_seed = 11422 + as.integer(args)
-set.seed(sim_seed)
+sim_seed = 11422
 
 # Number of replicates per simulation setting
 num_reps = 100
@@ -69,7 +65,7 @@ sim_data = function(N, avg_prev = fix_avg_prev, beta1 = fix_beta1, muU = fix_muU
 
 # Loop over different sample sizes: N = 100, 340, 2200
 for (N in c(100, 340, 2200)) {
-  # And error standard deviations: sigmaU = 0.25, 0.5, 1
+  # And proportion to be queried for complete case/imputation analyses: 0.1, 0.25, 0.5, 0.75
   for (pV in c(0.1, 0.25, 0.5, 0.75)){
     # Be reproducible
     set.seed(sim_seed) ## set random seed
@@ -87,7 +83,7 @@ for (N in c(100, 340, 2200)) {
     for (r in 1:num_reps) {
       # Generate data
       dat = sim_data(N  = N, ## Sample size
-                     sigmaU = sigma) ## Error standard deviation
+                     sigmaU = fix_sigmaU) ## Error standard deviation
       
       # Save average neighborhood prevalence
       sett_res$avg_prev[r] = mean(dat$Cases / dat$P)
@@ -110,7 +106,7 @@ for (N in c(100, 340, 2200)) {
       
       # Select subset of neighborhoods/rows for map-based measures
       query_rows = sample(x = 1:N, 
-                          size = ceiling(fix_pV * N), 
+                          size = ceiling(pV * N), 
                           replace = FALSE)
       
       # Make X NA/missing for rows not in selected subset (query_rows)
