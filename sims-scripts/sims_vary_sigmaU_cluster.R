@@ -21,7 +21,7 @@ num_reps = 100
 fix_avg_prev = 0.11 ## average prevalence
 fix_beta1 = log(1.05) ## log prevalence ratio
 fix_muU = -0.8 ## error mean
-fix_sigmaU = 1 ## error standard deviation
+fix_pV = 0.1 ## proportion of neighborhoods to be queried# Run once
 
 # --------------------------------------------------------------------
 # Function to simulate data (arguments defined as follows)
@@ -32,7 +32,7 @@ fix_sigmaU = 1 ## error standard deviation
 ## sigmaU = standard deviation of the measurement error distribution
 ## pV = proportion of neighborhoods to be queried 
 # --------------------------------------------------------------------
-sim_data = function(N, avg_prev = fix_avg_prev, beta1 = fix_beta1, muU = fix_muU, sigmaU = fix_sigmaU) {
+sim_data = function(N, avg_prev = fix_avg_prev, beta1 = fix_beta1, muU = fix_muU, sigmaU) {
   ## Get model intercept
   beta0 = log(avg_prev)
   
@@ -69,14 +69,14 @@ sim_data = function(N, avg_prev = fix_avg_prev, beta1 = fix_beta1, muU = fix_muU
 
 # Loop over different sample sizes: N = 100, 340, 2200
 for (N in c(100, 340, 2200)) {
-  # And proportion to be queried for complete case/imputation analyses: 0.1, 0.25, 0.5, 0.75
-  for (pV in c(0.1, 0.25, 0.5, 0.75)){
+  # And error standard deviation: 0.25, 0.5, 1
+  for (sigma in c(0.25, 0.5, 1)){
     # Be reproducible
     set.seed(sim_seed) ## set random seed
     
     # Create dataframe to save results for setting
     sett_res = data.frame(sim = paste(sim_seed, 1:num_reps, sep = "-"), 
-                          N, beta1 = fix_beta1, muU = fix_muU, sigmaU = fix_sigmaU, pV, avg_prev = NA, ## simulation setting
+                          N, beta1 = fix_beta1, muU = fix_muU, sigmaU = sigma, pV = fix_pV, avg_prev = NA, ## simulation setting
                           beta_gs = NA, se_beta_gs = NA, ## gold standard analysis
                           beta_n = NA, se_beta_n = NA, ## naive analysis
                           beta_cc = NA, se_beta_cc = NA, ## complete case analysis
@@ -87,7 +87,7 @@ for (N in c(100, 340, 2200)) {
     for (r in 1:num_reps) {
       # Generate data
       dat = sim_data(N  = N, ## sample size
-                     sigmaU = fix_sigmaU) ## error standard deviation
+                     sigmaU = sigma) ## error standard deviation
       
       # Save average neighborhood prevalence
       sett_res$avg_prev[r] = mean(dat$Cases / dat$P)
@@ -110,7 +110,7 @@ for (N in c(100, 340, 2200)) {
       
       # Select subset of neighborhoods/rows for map-based measures
       query_rows = sample(x = 1:N, 
-                          size = ceiling(pV * N), 
+                          size = ceiling(fix_pV * N), 
                           replace = FALSE)
       
       # Make X NA/missing for rows not in selected subset (query_rows)
@@ -134,7 +134,7 @@ for (N in c(100, 340, 2200)) {
       
       # Save results
       write.csv(x = sett_res,
-                file = paste0("vary_pV/proximity_N", N, "_pV", 100 * pV, "_seed", sim_seed, ".csv"), 
+                file = paste0("vary_sigmaU/proximity_N", N, "_sigmaU", 100 * sigma, "_seed", sim_seed, ".csv"), 
                 row.names = F)
     }
   }
