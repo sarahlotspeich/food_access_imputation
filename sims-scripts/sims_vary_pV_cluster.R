@@ -86,8 +86,7 @@ for (N in c(100, 340, 2200)) {
     # Loop over replicates 
     for (r in 1:num_reps) {
       # Generate data
-      dat = sim_data(N  = N, ## Sample size
-                     sigmaU = fix_sigmaU) ## Error standard deviation
+      dat = sim_data(N  = N) ## Sample size
       
       # Save average neighborhood prevalence
       sett_res$avg_prev[r] = mean(dat$Cases / dat$P)
