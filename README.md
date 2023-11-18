@@ -1,16 +1,12 @@
 # Combining straight-line and map-based distances to investigate food access and health
 
-This repository contains R code and simulation data to reproduce results from the manuscript by Lotspeich, Mullan, D'Agostino McGowan, and Hepler (2023+). 
-
-The `possum` package, which implements the multiple imputation approach for covariate measurement error in Poisson regression from the paper, can be found in its own repo [here](https://github.com/sarahlotspeich/possum). 
+This repository contains R code and simulation data to reproduce results from the manuscript by Lotspeich, Mullan, D'Agostino McGowan, and Hepler (2023+). These simulations rely on the `possum` package, which implements the multiple imputation approach for covariate measurement error in Poisson regression from the paper. The package can be found in its own repo [here](https://github.com/sarahlotspeich/possum), and installed in `R` as follows:
 
 ``` r
 # Run once
 # install.packages("devtools")
 devtools::install_github("sarahlotspeich/possum", ref = "main")
 ```
-
-Each of the "Script (Run Simulations)" files is coded to run 10 replications of each setting for demonstration. Per the NOTES at the bottom of the scripts, some more time-intensive simulations were run in parallel.
 
 ## Tables 
 
