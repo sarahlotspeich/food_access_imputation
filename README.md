@@ -38,3 +38,9 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
   - [Figure](figures/fig1_map_comparing_distances.png)
   - [Script (Make Figure)](figure-scripts/fig1_map_comparing_distances.R)
 
+**Figure S1.** Estimated log prevalence ratios for food access $X_P$ on health. The five possible ways to include the analysis model outcome in the imputation model for $X_P$ were considered. A small number of simulated replicates with $N = 100$ neighborhoods ($\leq 4\%$ per model) were excluded from the plot; all other results are based on 1000 replications.
+
+  - [Script (Run Simulations Locally)](https://github.com/sarahlotspeich/food/blob/main/sims-scripts/sims_vary_sigmaU.R)
+  - [Script (Run Simulations on a Cluster)](https://github.com/sarahlotspeich/food/blob/main/cluster-sims-scripts/sims_vary_sigmaU.R)
+  - [Figure](figures/fig1_map_comparing_distances.png)
+  - [Script (Make Figure)](figure-scripts/fig1_map_comparing_distances.R)
