@@ -13,7 +13,6 @@ library(latex2exp) # To create LaTex labels for plots
 # //////////////////////////////////////////////////////////////////////
 # Read in simulation results from GitHub ///////////////////////////////
 # //////////////////////////////////////////////////////////////////////
-# Read in simulation results 
 res = read.csv(file = "https://raw.githubusercontent.com/sarahlotspeich/food/main/sims-data/include_outcome_sims_combined.csv")
 ## Note: Simulations were run in parallel on random seeds 114-123 (with 100 reps per seed, per setting)
 ## This information is captured in the "sim" variable which is of the form "seed-replicate." 
