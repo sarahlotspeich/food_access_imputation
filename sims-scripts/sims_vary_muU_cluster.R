@@ -21,7 +21,7 @@ num_reps = 100
 fix_avg_prev = 0.07 ## average prevalence
 fix_beta1 = log(1.01) ## log prevalence ratio
 fix_sigmaU = 0.6 ## error standard deviation
-fix_pV = 0.1 ## proportion of neighborhoods to be queried# Run once
+fix_pV = 0.1 ## proportion of neighborhoods to be queried
 
 # --------------------------------------------------------------------
 # Function to simulate data (arguments defined as follows)

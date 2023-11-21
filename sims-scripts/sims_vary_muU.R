@@ -15,10 +15,10 @@ num_reps = 100
 
 # Set parameters that won't be varied in the loop
 ## These values will be set as the defaults in the sim_data() function for convenience
-fix_avg_prev = 0.11 ## average prevalence
-fix_beta1 = log(1.05) ## log prevalence ratio
-fix_sigmaU = 1 ## error standard deviation
-fix_pV = 0.1 ## proportion of neighborhoods to be queried# Run once
+fix_avg_prev = 0.07 ## average prevalence
+fix_beta1 = log(1.01) ## log prevalence ratio
+fix_sigmaU = 0.6 ## error standard deviation
+fix_pV = 0.1 ## proportion of neighborhoods to be queried
 
 # --------------------------------------------------------------------
 # Function to simulate data (arguments defined as follows)
@@ -67,7 +67,7 @@ sim_data = function(N, avg_prev = fix_avg_prev, beta1 = fix_beta1, muU, sigmaU =
 # Loop over different sample sizes: N = 100, 340, 2200
 for (N in c(100, 340, 2200)) {
   # And error standard deviation: 0.25, 0.5, 1
-  for (mu in c(-1.2, -0.8, -0.4)){
+  for (mu in c(-1, -0.7, -0.35, -0.1)){
     # Be reproducible
     set.seed(sim_seed) ## set random seed
     
@@ -136,3 +136,4 @@ for (N in c(100, 340, 2200)) {
     }
   }
 }
+
