@@ -24,6 +24,13 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
   - [Script (Make Table)](table-scripts/table2_vary_pV.R)
   - [Data (Simulation Results)](sims-data/vary_pV_sims_combined.csv)
 
+**Table 3.** Simulation results under higher disease prevalence and prevalence ratios for map-based proximity to healthy foods, as controlled by the coefficients $\beta_0$ (\textbf{Prev.}$=\exp(\beta_0)$) and $\beta_1$ (\textbr{PR}$=\exp(\beta_1)$), respectively.
+
+  - [Script (Run Simulations Locally)](sims-scripts/sims_vary_prev.R)
+  - [Script (Run Simulations on a Cluster)](sims-scripts/sims_vary_prev_cluster.R)
+  - [Script (Make Table)](table-scripts/table3_vary_prev.R)
+  - [Data (Simulation Results)](sims-data/vary_prev_sims_combined.csv)
+
 **Table 4.** Simulation results under increasingly severe multiplicative errors in straight-line proximity to healthy foods, as controlled by the max of the error distribution $\tau_W$. 
 
   - [Script (Run Simulations Locally)](sims-scripts/sims_mult_error.R)
@@ -47,7 +54,7 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 
 **Figure S1.** Estimated log prevalence ratios for food access $X$ on health. The five possible ways to include the analysis model outcome in the imputation model for $X$ were considered. 
 
-  - [Script (Run Simulations Locally)](https://github.com/sarahlotspeich/food/blob/main/sims-scripts/sims_incl_outcome.R)
-  - [Script (Run Simulations on a Cluster)](https://github.com/sarahlotspeich/food/blob/main/sims-scripts/sims_incl_outcome_cluster.R)
+  - [Script (Run Simulations Locally)](sims-scripts/sims_incl_outcome.R)
+  - [Script (Run Simulations on a Cluster)](sims-scripts/sims_incl_outcome_cluster.R)
   - [Figure](figures/figS1_inclY_in_imputation_model.png)
   - [Script (Make Figure)](figure-scripts/figS1_inclY_in_imputation_model.R)
