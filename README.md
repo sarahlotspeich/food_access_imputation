@@ -38,7 +38,7 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
   - [Figure](figures/fig1_map_comparing_distances.png)
   - [Script (Make Figure)](figure-scripts/fig1_map_comparing_distances.R)
 
-**Figure S1.** Estimated log prevalence ratios for food access $X_P$ on health. The five possible ways to include the analysis model outcome in the imputation model for $X_P$ were considered. All results are based on 1000 replications.
+**Figure S1.** Estimated log prevalence ratios for food access $X$ on health. The five possible ways to include the analysis model outcome in the imputation model for $X$ were considered. All results are based on \num{1000} replications. 
 
   - [Script (Run Simulations Locally)](https://github.com/sarahlotspeich/food/blob/main/sims-scripts/sims_incl_outcome.R)
   - [Script (Run Simulations on a Cluster)](https://github.com/sarahlotspeich/food/blob/main/sims-scripts/sims_incl_outcome_cluster.R)
