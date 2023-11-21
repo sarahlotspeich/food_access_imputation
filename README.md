@@ -24,7 +24,7 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
   - [Script (Make Table)](table-scripts/table2_vary_pV.R)
   - [Data (Simulation Results)](sims-data/vary_pV_sims_combined.csv)
 
-**Table 3.** Simulation results under higher disease prevalence and prevalence ratios for map-based proximity to healthy foods, as controlled by the coefficients $\beta_0$ (\textbf{Prev.}$=\exp(\beta_0)$) and $\beta_1$ (\textbr{PR}$=\exp(\beta_1)$), respectively.
+**Table 3.** Simulation results under higher disease prevalence and prevalence ratios for map-based proximity to healthy foods, as controlled by the coefficients $\beta_0$ (**Prev.** $=\exp(\beta_0)$) and $\beta_1$ (**PR** $=\exp(\beta_1)$), respectively.
 
   - [Script (Run Simulations Locally)](sims-scripts/sims_vary_prev.R)
   - [Script (Run Simulations on a Cluster)](sims-scripts/sims_vary_prev_cluster.R)
