@@ -103,8 +103,7 @@ for (N in c(100, 340, 2200)) {
     fit_imp = possum::impPossum(imputation_formula = X ~ Xstar, 
                                 analysis_formula = Cases ~ X + offset(log(P)), 
                                 data = dat, 
-                                B = 20, 
-                                seed = 918)
+                                B = 20)
     sett_res$beta_noY[r] = fit_imp$Estimate[2] ## estimated log prevalence ratio
     sett_res$se_beta_noY[r] = fit_imp$Standard.Error[2] ## and its standard error
     
@@ -146,3 +145,4 @@ for (N in c(100, 340, 2200)) {
               row.names = F)
   }
 }
+

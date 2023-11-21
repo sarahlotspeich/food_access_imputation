@@ -2,15 +2,14 @@
 # if needed: install.packages("devtools") 
 # then: 
 # devtools::install_github("sarahlotspeich/possum", 
-#                          ref = "main") 
+#                          ref = "main") ## for multiple imputation estimator
 
-library(possum, ## for multiple imputation estimator
+library(possum, ## for SMLE
         lib.loc = "/home/lotspes/R/x86_64-pc-linux-gnu-library/4.0") 
 
 # Random seed to be used for each simulation setting
 args = commandArgs(TRUE)
-## when running on the cluster, give each array a unique seed by adding the array ID to 11422
-sim_seed = 11422 + as.integer(args) 
+sim_seed = 11422 + as.integer(args)
 
 # Number of replicates per simulation setting
 num_reps = 100
@@ -18,10 +17,10 @@ num_reps = 100
 
 # Set parameters that won't be varied in the loop
 ## These values will be set as the defaults in the sim_data() function for convenience
-fix_avg_prev = 0.11 ## average prevalence
-fix_beta1 = log(1.05) ## log prevalence ratio
-fix_muU = -0.8 ## error mean
-fix_sigmaU = 1 ## error standard deviation
+fix_avg_prev = 0.07 ## average prevalence
+fix_beta1 = log(1.01) ## log prevalence ratio
+fix_muU = -0.7 ## error mean
+fix_sigmaU = 0.6 ## error standard deviation
 
 # --------------------------------------------------------------------
 # Function to simulate data (arguments defined as follows)
@@ -76,17 +75,18 @@ for (N in c(100, 340, 2200)) {
     
     # Create dataframe to save results for setting
     sett_res = data.frame(sim = paste(sim_seed, 1:num_reps, sep = "-"), 
-                          N, pV, avg_prev = NA, 
+                          N, beta1 = fix_beta1, muU = fix_muU, sigmaU = fix_sigmaU, pV, avg_prev = NA, 
                           beta_gs = NA, se_beta_gs = NA, ## gold standard analysis
                           beta_n = NA, se_beta_n = NA, ## naive analysis
                           beta_cc = NA, se_beta_cc = NA, ## complete case analysis
                           beta_imp = NA, se_beta_imp = NA ## imputation analysis
     )
-    
+
     # Loop over replicates 
     for (r in 1:num_reps) {
       # Generate data
-      dat = sim_data(N  = N) ## Sample size
+      dat = sim_data(N  = N, ## Sample size
+                     sigmaU = fix_sigmaU) ## Error standard deviation
       
       # Save average neighborhood prevalence
       sett_res$avg_prev[r] = mean(dat$Cases / dat$P)
@@ -132,8 +132,8 @@ for (N in c(100, 340, 2200)) {
       sett_res$se_beta_imp[r] = fit_imp$Standard.Error[2] ## and its standard error
       
       # Save results
-      write.csv(x = sett_res, 
-                file = paste0("vary_pV/proximity_vary_pV_seed", sim_seed, ".csv"), 
+      write.csv(x = sett_res,
+                file = paste0("vary_pV/proximity_N", N, "_pV", 100 * pV, "_seed", sim_seed, ".csv"), 
                 row.names = F)
     }
   }
