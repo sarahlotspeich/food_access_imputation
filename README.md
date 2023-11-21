@@ -17,6 +17,13 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
   - [Script (Make Table)](table-scripts/table1_vary_sigmaU.R)
   - [Data (Simulation Results)](sims-data/vary_sigmaU_sims_combined.csv)
 
+**Table 2.** Simulation results under increasing proportion of neighborhoods queried to obtain map-based proximity to healthy foods, as controlled by $p_V$.
+
+  - [Script (Run Simulations Locally)](sims-scripts/sims_vary_pV.R)
+  - [Script (Run Simulations on a Cluster)](sims-scripts/sims_vary_pV_cluster.R)
+  - [Script (Make Table)](table-scripts/table2_vary_pV.R)
+  - [Data (Simulation Results)](sims-data/vary_pV_sims_combined.csv)
+
 **Table S1.** Simulation results under increasing severity of errors in straight-line proximity to healthy foods, as controlled by the error mean $\mu_U$.
 
   - [Script (Run Simulations Locally)](sims-scripts/sims_vary_muU.R)
