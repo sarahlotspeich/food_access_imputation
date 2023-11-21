@@ -24,6 +24,13 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
   - [Script (Make Table)](table-scripts/table2_vary_pV.R)
   - [Data (Simulation Results)](sims-data/vary_pV_sims_combined.csv)
 
+**Table 4.** Simulation results under increasingly severe multiplicative errors in straight-line proximity to healthy foods, as controlled by the max of the error distribution $\tau_W$. 
+
+  - [Script (Run Simulations Locally)](sims-scripts/sims_mult_error.R)
+  - [Script (Run Simulations on a Cluster)](sims-scripts/sims_vary_mult_error_cluster.R)
+  - [Script (Make Table)](table-scripts/table4_mult_error.R)
+  - [Data (Simulation Results)](sims-data/mult_error_sims_combined.csv)
+
 **Table S1.** Simulation results under increasing severity of errors in straight-line proximity to healthy foods, as controlled by the error mean $\mu_U$.
 
   - [Script (Run Simulations Locally)](sims-scripts/sims_vary_muU.R)
