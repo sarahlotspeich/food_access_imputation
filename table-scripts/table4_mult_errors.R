@@ -50,7 +50,7 @@ res_summ = res_summ |>
   mutate(maxW = format_num(num = maxW, digits = 2)) |> 
   arrange(N, maxW)
 ## Change column names 
-colnames(res_summ) = c("$\\pmb{N}$", "$\\pmb{\\tau}$", rep(c("Bias", "ESE", "ASE", "CP"), times = 4))
+colnames(res_summ) = c("$\\pmb{N}$", "$\\pmb{\\tau_W}$", rep(c("Bias", "ESE", "ASE", "CP"), times = 4))
 res_summ |> 
   kable(format = "latex", 
         booktabs = TRUE, 
