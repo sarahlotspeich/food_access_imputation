@@ -4,13 +4,10 @@
 # devtools::install_github("sarahlotspeich/possum", 
 #                          ref = "main") 
 
-library(possum, ## for multiple imputation estimator
-        lib.loc = "/home/lotspes/R/x86_64-pc-linux-gnu-library/4.0") 
+library(possum) ## for multiple imputation estimator
 
 # Random seed to be used for each simulation setting
-args = commandArgs(TRUE)
-## When running on the cluster, give each array a unique seed by adding the array ID to 11422
-sim_seed = 11422 + as.integer(args)
+sim_seed = 11422
 
 # Number of replicates per simulation setting
 num_reps = 100
