@@ -2,7 +2,7 @@
 # Replicate Table 4 ////////////////////////////////////////////////////
 # Caption begins "Simulation results under increasingly severe /////////
 # multiplicative errors in straight-line proximity to healthy foods, ///
-# as controlled by the max of the error distribution $\tau$." //////////
+# as controlled by the min of the error distribution $\tau$." //////////
 # //////////////////////////////////////////////////////////////////////
 
 # Load packages
@@ -25,7 +25,7 @@ cp = function(est, se, truth) {
   mean((est - 1.96 * se) <= truth & truth <= (est + 1.96 * se))
 }
 res_summ = res |> 
-  group_by(N, maxW) |> 
+  group_by(N, minW) |> 
   summarize(bias_gs = mean((beta_gs - beta1) / beta1), ese_gs = sd(beta_gs), ase_gs = mean(se_beta_gs), 
             cp_gs = cp(est = beta_gs, se = se_beta_gs, truth = beta1), 
             bias_n = mean((beta_n - beta1) / beta1), ese_n = sd(beta_n), ase_n = mean(se_beta_n), 
@@ -47,10 +47,11 @@ format_num = function(num, digits = 3) {
 # Format res_summ for LaTex
 res_summ = res_summ |> 
   mutate_at(.vars = 3:18, .funs = format_num, digits = 3) |>
-  mutate(maxW = format_num(num = maxW, digits = 2)) |> 
-  arrange(N, maxW)
+  mutate(minW = format_num(num = minW, digits = 2)) |> 
+  arrange(N, minW)
 ## Change column names 
-colnames(res_summ) = c("$\\pmb{N}$", "$\\pmb{\\tau_W}$", rep(c("Bias", "ESE", "ASE", "CP"), times = 4))
+colnames(res_summ) = c("$\\pmb{N}$", "$\\pmb{\\tau_W}$", 
+                       rep(c("Bias", "ESE", "ASE", "CP"), times = 4))
 res_summ |> 
   kable(format = "latex", 
         booktabs = TRUE, 
