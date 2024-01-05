@@ -59,5 +59,5 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 **1.  Healthy Foods Store Locations** taken from the United States Department of Agriculture’s (UDSA’s) Historical Supplemental Nutrition Assistance Program (SNAP) Retail Locator Data (2022 Release)
 
   - [Download SNAP Data](https://www.fns.usda.gov/snap/retailer-locator)
-  - [Raw SNAP Data](forsyth-data/raw_SNAP.csv)
-  - [Script (Run Simulations Locally)](sims-scripts/sims_incl_outcome.R)
+  - [Script (Filter SNAP Data)](forsyth-data/healthy_foods_stores_2022.R)
+  - [Data (Filtered SNAP Data)](forsyth-data/healthy_foods_stores_2022.csv)
