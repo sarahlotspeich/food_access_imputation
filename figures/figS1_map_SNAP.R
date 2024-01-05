@@ -47,7 +47,7 @@ forsyth_ct |>
   facet_wrap(~Store.Type_with_n, nrow = 3) 
 
 ## Save map 
-ggsave(filename = "Forsyth-Food-Access/figures/fig4_map_extended_forsyth_border_SNAP_faceted_by_store_type.png", 
+ggsave(filename = "figures/figS1_map_SNAP.png", 
        device = "png", 
        width = 10, 
        height = 8, 
