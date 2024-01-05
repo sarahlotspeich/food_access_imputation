@@ -80,7 +80,7 @@ nrow(forsyth_border_snap) ## 525 rows
 
 # Set API keys (redacted to avoid violating use agreements)
 ## See ex_set_api_keys.R to set up your own script
-source("Forsyth-Food-Access/data/set_api_keys.R")
+source("set_api_keys.R")
 # Re-geocode using ggmap::geocode()
 healthy = forsyth_border_snap |> 
   dplyr::filter(Store.Type %in% healthy_types) |> 
