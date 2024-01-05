@@ -54,7 +54,8 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 
 **Figure S1.** Estimated log prevalence ratios for food access $X$ on health. The five possible ways to include the analysis model outcome in the imputation model for $X$ were considered. 
 
+## Data 
+
+**Grocery Stores (from the [USDA SNAP Retail Locator](https://www.fns.usda.gov/snap/retailer-locator) 
+
   - [Script (Run Simulations Locally)](sims-scripts/sims_incl_outcome.R)
-  - [Script (Run Simulations on a Cluster)](sims-scripts/sims_incl_outcome_cluster.R)
-  - [Figure](figures/figS1_inclY_in_imputation_model.png)
-  - [Script (Make Figure)](figure-scripts/figS1_inclY_in_imputation_model.R)
