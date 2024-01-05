@@ -56,6 +56,6 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 
 ## Data 
 
-**Grocery Stores** from the [USDA SNAP Retail Locator](https://www.fns.usda.gov/snap/retailer-locator)
+**1.  Grocery Stores** from the [USDA SNAP Retail Locator](https://www.fns.usda.gov/snap/retailer-locator)
 
   - [Script (Run Simulations Locally)](sims-scripts/sims_incl_outcome.R)
