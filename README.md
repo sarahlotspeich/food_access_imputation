@@ -52,7 +52,12 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
   - [Figure](figures/fig1_map_comparing_distances.png)
   - [Script (Make Figure)](figure-scripts/fig1_map_comparing_distances.R)
 
-**Figure S1.** Estimated log prevalence ratios for food access $X$ on health. The five possible ways to include the analysis model outcome in the imputation model for $X$ were considered. 
+**Figure S1.** Map of $n = 525$ authorized SNAP retailers (as of 2022) in Forsyth County and the surrounding areas broken down by store type
+
+  - [Figure](figures/figS1_map_SNAP.png)
+  - [Script (Make Figure)](figures/figS1_map_SNAPs.R)
+
+**Figure S2.** Estimated log prevalence ratios for food access $X$ on health. The five possible ways to include the analysis model outcome in the imputation model for $X$ were considered. 
 
 ## Data 
 
