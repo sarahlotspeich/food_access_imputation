@@ -1,6 +1,6 @@
 # Combining straight-line and map-based distances to investigate the connection between proximity to healthy foods and disease
 
-This repository contains R code and simulation data to reproduce results from the manuscript by Lotspeich, Mullan, D'Agostino McGowan, and Hepler (2023+). These simulations rely on the `possum` package, which implements the multiple imputation approach for covariate measurement error in Poisson regression from the paper. The package can be found in its own repo [here](https://github.com/sarahlotspeich/possum), and installed in `R` as follows:
+This repository contains R code and simulation data to reproduce results from the manuscript by Lotspeich, Mullan, D'Agostino McGowan, and Hepler (2023+). These simulations rely on the `possum` package, which implements the multiple imputation approach for covariate measurement error in Poisson regression from the paper. The package can be found in its own repo [here](https://github.com/sarahlotspeich/possum) and installed in `R` as follows:
 
 ``` r
 # Run once
@@ -52,7 +52,12 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
   - [Figure](figures/fig1_map_comparing_distances.png)
   - [Script (Make Figure)](figure-scripts/fig1_map_comparing_distances.R)
 
-**Figure S1.** Estimated log prevalence ratios for food access $X$ on health. The five possible ways to include the analysis model outcome in the imputation model for $X$ were considered. 
+**Figure S1.** Map of $n = 525$ authorized SNAP retailers (as of 2022) in Forsyth County and the surrounding areas broken down by store type
+
+  - [Figure](figures/figS1_map_SNAP.png)
+  - [Script (Make Figure)](figures/figS1_map_SNAPs.R)
+
+**Figure S2.** Estimated log prevalence ratios for food access $X$ on health. The five possible ways to include the analysis model outcome in the imputation model for $X$ were considered. 
 
 ## Data 
 
