@@ -97,7 +97,7 @@ healthy$Street.Name[healthy$Store.Name == "FOOD LION 547"] = "SALISBURY AVE"
 healthy$Address[healthy$Store.Name == "FOOD LION 547"] = with(healthy[healthy$Store.Name == "FOOD LION 547", ], 
                                                               paste(Street.Number, Street.Name, Additional.Address, City, State, Zip.Code))
 ## Geocode this one again
-healthy[healthy$Store.Name == "FOOD LION 547", c("Latitude", "Longitude")] = ggmap::geocode(location = healthy$Address[healthy$Store.Name == "FOOD LION 547"])
+healthy[healthy$Store.Name == "FOOD LION 547", c("Longitude", "Latitude")] = ggmap::geocode(location = healthy$Address[healthy$Store.Name == "FOOD LION 547"])
 
 # Save final dataset 
 healthy |> 
