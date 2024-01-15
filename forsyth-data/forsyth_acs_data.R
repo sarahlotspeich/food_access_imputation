@@ -29,6 +29,23 @@ income = get_acs(state = "NC",
   dplyr::select(GEOID, NAME, INCOME) 
 
 ############################################################################################
+## % POPULATION WITH INCOME BELOW POVERTY LEVEL IN THE PAST 12 MONTHS //////////////////////
+############################################################################################
+poverty = get_acs(state = "NC",
+                  geography = "tract",
+                  county = tolower(c("forsyth", border_counties, border_border_counties)),
+                  variables = c("B17020_001", ## population for whom poverty status is determined
+                                "B17020_002"), ## number of people with income in the past 12 months below poverty level
+                  geometry = FALSE,
+                  year = 2015) |> 
+  dplyr::mutate(variable = factor(x = variable, 
+                                  levels = c("B17020_002", "B17020_001"), 
+                                  labels = c("POVERTY", "POVERTY_TOTAL"))) |> 
+  dplyr::select(-moe) |>
+  tidyr::spread(key = variable, value = estimate) |> 
+  dplyr::mutate(PERC_POVERTY = POVERTY / POVERTY_TOTAL) |> 
+  dplyr::select(-POVERTY, -POVERTY_TOTAL)
+############################################################################################
 ## % HOUSEHOLDS RECEIVING FOOD STAMPS/SNAP IN THE PAST 12 MONTHS ///////////////////////////
 ############################################################################################
 snap = get_acs(state = "NC",
@@ -98,7 +115,6 @@ insured = get_acs(state = "NC",
   ) |> 
   dplyr::mutate(PERC_INSURED = INSURED / INSURED_TOTAL) |> 
   dplyr::select(GEOID, NAME, PERC_INSURED) 
-
 ############################################################################################
 ## % POPULATION (>= 25 YO) COMPLETING AT LEAST SOME COLLEGE ////////////////////////////////
 ############################################################################################
@@ -131,6 +147,7 @@ college = get_acs(state = "NC",
 ## MERGE AND SAVE //////////////////////////////////////////////////////////////////////////
 ############################################################################################
 forsyth_acs_data = income |> 
+  dplyr::left_join(poverty) |> 
   dplyr::left_join(snap) |> 
   dplyr::left_join(work_transport) |> 
   dplyr::left_join(insured) |> 
@@ -138,3 +155,4 @@ forsyth_acs_data = income |>
 forsyth_acs_data |> 
   write.csv("forsyth_acs_data.csv", 
             row.names = FALSE)
+
