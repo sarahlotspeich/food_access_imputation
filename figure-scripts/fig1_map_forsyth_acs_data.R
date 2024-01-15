@@ -80,8 +80,8 @@ ggpubr::ggarrange(map_income, map_poverty,
                   map_insured, map_college,
                   ncol = 2, nrow = 3)
  
-ggsave(filename = "Forsyth-Food-Access/figures/fig3_map_chd_forsyth_border.png",
+ggsave(filename = "fig1_map_forsyth_acs_data.png",
        device = "png",
        width = 8,
-       height = 6,
+       height = 10,
        units = "in")
