@@ -83,5 +83,5 @@ ggpubr::ggarrange(map_income, map_poverty,
 ggsave(filename = "fig1_map_forsyth_acs_data.png",
        device = "png",
        width = 8,
-       height = 10,
+       height = 8,
        units = "in")
