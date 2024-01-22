@@ -91,4 +91,4 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 
 **3.  Neighborhood (Census Tract) Population Centers** taken from the United States Census Bureau (2010 Release). 
 
-  - [Download Data]([https://data.cdc.gov/500-Cities-Places/PLACES-Census-Tract-Data-GIS-Friendly-Format-2022-/shc3-fzig/data](https://www2.census.gov/geo/docs/reference/cenpop2010/tract/CenPop2010_Mean_TR37.txt)
+  - [Download Data](https://www2.census.gov/geo/docs/reference/cenpop2010/tract/CenPop2010_Mean_TR37.txt)
