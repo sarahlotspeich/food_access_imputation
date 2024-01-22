@@ -77,14 +77,18 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 
 ## Data 
 
-**1.  Healthy Foods Store Locations** taken from the United States Department of Agriculture’s (UDSA’s) Historical Supplemental Nutrition Assistance Program (SNAP) Retail Locator Data (2022 Release)
+**1.  Healthy Foods Store Locations** taken from the United States Department of Agriculture’s (UDSA’s) Historical Supplemental Nutrition Assistance Program (SNAP) Retail Locator Data (2022 Release).
 
-  - [Download SNAP Data](https://www.fns.usda.gov/snap/retailer-locator)
-  - [Script (Filter SNAP Data)](forsyth-data/healthy_foods_stores_2022.R)
-  - [Data (Filtered SNAP Data)](forsyth-data/healthy_foods_stores_2022.csv)
+  - [Download Data](https://www.fns.usda.gov/snap/retailer-locator)
+  - [Script (Filter Data)](forsyth-data/healthy_foods_stores_2022.R)
+  - [Data (Filtered Data)](forsyth-data/healthy_foods_stores_2022.csv)
 
-**2.  Disease Prevalence by Neighborhood (Census Tract)** taken from the United States Centers for Disease Control and Prevention (CDC’s) PLACES Dataset (2022 Release)
+**2.  Disease Prevalence by Neighborhood (Census Tract)** taken from the United States Centers for Disease Control and Prevention (CDC’s) PLACES Dataset (2022 Release). 
 
-  - [Download PLACES Data](https://data.cdc.gov/500-Cities-Places/PLACES-Census-Tract-Data-GIS-Friendly-Format-2022-/shc3-fzig/data)
-  - [Script (Filter PLACES Data)](forsyth-data/disease_prevalence_2022.R)
-  - [Data (Filtered PLACES Data)](forsyth-data/disease_prevalence_2022.csv)
+  - [Download Data](https://data.cdc.gov/500-Cities-Places/PLACES-Census-Tract-Data-GIS-Friendly-Format-2022-/shc3-fzig/data)
+  - [Script (Filter Data)](forsyth-data/disease_prevalences_2022.R)
+  - [Data (Filtered Data)](forsyth-data/disease_prevalences_2022.csv)
+
+**3.  Neighborhood (Census Tract) Population Centers** taken from the United States Census Bureau (2010 Release). 
+
+  - [Download Data]([https://data.cdc.gov/500-Cities-Places/PLACES-Census-Tract-Data-GIS-Friendly-Format-2022-/shc3-fzig/data](https://www2.census.gov/geo/docs/reference/cenpop2010/tract/CenPop2010_Mean_TR37.txt))
