@@ -24,7 +24,7 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
   - [Script (Make Table)](table-scripts/table2_vary_pV.R)
   - [Data (Simulation Results)](sims-data/vary_pV_sims_combined.csv)
 
-**Table 3.** Simulation results under higher disease prevalence and prevalence ratios for map-based proximity to healthy foods, as controlled by the coefficients $\beta_0$ (**Prev.** $=\exp(\beta_0)$) and $\beta_1$ (**PR** $=\exp(\beta_1)$), respectively.
+**Table 3.** Simulation results under higher disease prevalence and prevalence ratios for map-based proximity to healthy foods, as controlled by the coefficients $\beta_0$ and $\beta_1$, respectively.
 
   - [Script (Run Simulations Locally)](sims-scripts/sims_vary_prev.R)
   - [Script (Run Simulations on a Cluster)](sims-scripts/sims_vary_prev_cluster.R)
@@ -47,10 +47,26 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 
 ## Figures 
 
-**Figure 1.** Straight-line and map-based distances from Reynolda House (square symbol) to a nearby Food Lion grocery store (triangle symbol) in Winston-Salem, North Carolina.
+**Figure 1.** Maps of socioeconomic factors across the census tracts of Forsyth County, North Carolina and its surrounding counties. Data were taken from the 2015 American Community Survey. 
 
-  - [Figure](figures/fig1_map_comparing_distances.png)
-  - [Script (Make Figure)](figure-scripts/fig1_map_comparing_distances.R)
+  - [Data](forsyth-data/forsyth_acs_data.csv)
+  - [Figure](figures/fig1_map_forsyth_acs_data.png)
+  - [Script (Make Figure)](figure-scripts/fig1_map_forsyth_acs_data.R)
+
+**Figure 2.** Choropleth map of the crude prevalence of adverse health outcomes for each census tract in Forsyth County, North Carolina and its surrounding counties. Data were taken from the 2022 Centers for Disease Control and Prevention PLACES dataset. 
+
+  - [Figure](figures/fig1_map_forsyth_acs_data.png)
+  - [Script (Make Figure)](figure-scripts/fig1_map_forsyth_acs_data.R)
+
+**Figure 3.** Choropleth map of the crude prevalence of adverse health outcomes for each census tract in Forsyth County, North Carolina and its surrounding counties. Data were taken from the 2022 Centers for Disease Control and Prevention PLACES dataset. 
+
+  - [Figure](figures/fig1_map_forsyth_acs_data.png)
+  - [Script (Make Figure)](figure-scripts/fig1_map_forsyth_acs_data.R)
+
+**Figure 4.** Straight-line and map-based distances from Reynolda House (square symbol) to a nearby Food Lion grocery store (triangle symbol) in Winston-Salem, North Carolina. 
+
+  - [Figure](figures/fig2_map_comparing_distances.png)
+  - [Script (Make Figure)](figure-scripts/fig2_map_comparing_distances.R)
 
 **Figure S1.** Map of $n = 525$ authorized SNAP retailers (as of 2022) in Forsyth County and the surrounding areas broken down by store type
 
@@ -66,3 +82,9 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
   - [Download SNAP Data](https://www.fns.usda.gov/snap/retailer-locator)
   - [Script (Filter SNAP Data)](forsyth-data/healthy_foods_stores_2022.R)
   - [Data (Filtered SNAP Data)](forsyth-data/healthy_foods_stores_2022.csv)
+
+**2.  Disease Prevalence by Neighborhood (Census Tract)** taken from the United States Centers for Disease Control and Prevention (CDC’s) PLACES Dataset (2022 Release)
+
+  - [Download PLACES Data](https://data.cdc.gov/500-Cities-Places/PLACES-Census-Tract-Data-GIS-Friendly-Format-2022-/shc3-fzig/data)
+  - [Script (Filter PLACES Data)](forsyth-data/prevalence_2022.R)
+  - [Data (Filtered PLACES Data)](forsyth-data/prevalence_2022.csv)
