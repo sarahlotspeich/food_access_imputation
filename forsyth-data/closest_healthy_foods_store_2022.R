@@ -10,7 +10,7 @@ source("set_api_keys.R")
 source("Forsyth-Food-Access/data/food_access/get_centroid_address.R")
 
 # Load census tract population centers for Forsyth county from the 2010 US Census
-neighborhoods = read.csv(file = "Forsyth-Food-Access/data/neighborhoods/nc_ct_pop_centers_2010.csv") |> ## Read in all NC population centers
+neighborhoods = read.csv(file = "https://raw.githubusercontent.com/sarahlotspeich/food/main/forsyth-data/nc_ct_pop_centers_2010.csv") |> ## Read in all NC population centers
   dplyr::filter(COUNTYFP %in% c("81", "151", "59", "67", "57", "169", "157", "171", "197")) |> ## Subset to counties in study area
   dplyr::mutate(LocationID = paste0(STATEFP, sprintf("%03s", COUNTYFP), sprintf("%06s", TRACTCE))) ## Construct LocationID by combining state, county, and tract FIPS codes
 nrow(neighborhoods) ## N = 340 neighborhoods
