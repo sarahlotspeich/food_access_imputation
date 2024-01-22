@@ -66,8 +66,8 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 
 **Figure 4.** Straight-line and map-based distances from Reynolda House (square symbol) to a nearby Food Lion grocery store (triangle symbol) in Winston-Salem, North Carolina. 
 
-  - [Figure](figures/fig1_map_comparing_distances.png)
-  - [Script (Make Figure)](figure-scripts/fig1_map_comparing_distances.R)
+  - [Figure](figures/fig2_map_comparing_distances.png)
+  - [Script (Make Figure)](figure-scripts/fig2_map_comparing_distances.R)
 
 **Figure S1.** Map of $n = 525$ authorized SNAP retailers (as of 2022) in Forsyth County and the surrounding areas broken down by store type
 
