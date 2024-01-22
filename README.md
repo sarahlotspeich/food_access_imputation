@@ -82,3 +82,9 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
   - [Download SNAP Data](https://www.fns.usda.gov/snap/retailer-locator)
   - [Script (Filter SNAP Data)](forsyth-data/healthy_foods_stores_2022.R)
   - [Data (Filtered SNAP Data)](forsyth-data/healthy_foods_stores_2022.csv)
+
+**2.  Disease Prevalence by Neighborhood (Census Tract)** taken from the United States Centers for Disease Control and Prevention (CDC’s) PLACES Dataset (2022 Release)
+
+  - [Download PLACES Data](https://data.cdc.gov/500-Cities-Places/PLACES-Census-Tract-Data-GIS-Friendly-Format-2022-/shc3-fzig/data)
+  - [Script (Filter PLACES Data)](forsyth-data/prevalence_2022.R)
+  - [Data (Filtered PLACES Data)](forsyth-data/prevalence_2022.csv)
