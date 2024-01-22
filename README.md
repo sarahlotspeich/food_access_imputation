@@ -50,6 +50,7 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 
 **Figure 1.** Maps of socioeconomic factors across the census tracts of Forsyth County, North Carolina and its surrounding counties. Data were taken from the 2015 American Community Survey. 
 
+  - [Data](forsyth-data/forsyth_acs_data.csv)
   - [Figure](figures/fig1_map_forsyth_acs_data.png)
   - [Script (Make Figure)](figure-scripts/fig1_map_forsyth_acs_data.R)
 
