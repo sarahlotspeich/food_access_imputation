@@ -69,5 +69,5 @@ wake_map +
             xlim = c(-80.31, -80.27))
 
 # Save Figure 1
-ggsave(filename = "figures/fig1_map_comparing_distances.png", 
+ggsave(filename = "figures/fig4_map_comparing_distances.png", 
        device = "png", units = "in", width = 14, height = 16)
