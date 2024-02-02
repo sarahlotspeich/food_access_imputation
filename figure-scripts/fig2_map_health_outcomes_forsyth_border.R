@@ -83,7 +83,7 @@ ggpubr::ggarrange(plot_chd, plot_diabetes,
                   plot_hbp, plot_obesity, 
                   ncol = 2, nrow = 2)
 
-ggsave(filename = "fig3_map_forsyth_health_outcomes.png",
+ggsave(filename = "fig2_map_forsyth_health_outcomes.png",
        device = "png",
        width = 8,
        height = 6,
