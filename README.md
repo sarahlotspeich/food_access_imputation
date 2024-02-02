@@ -55,8 +55,8 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 
 **Figure 2.** Choropleth map of the crude prevalence of adverse health outcomes for each census tract in Forsyth County, North Carolina and its surrounding counties. Data were taken from the 2022 Centers for Disease Control and Prevention PLACES dataset. 
 
-  - [Figure](figures/fig1_map_forsyth_acs_data.png)
-  - [Script (Make Figure)](figure-scripts/fig1_map_forsyth_acs_data.R)
+  - [Figure](figures/fig2_map_forsyth_health_outcomes.png)
+  - [Script (Make Figure)](figure-scripts/fig2_map_forsyth_health_outcomes.R)
 
 **Figure 3.** 
 
