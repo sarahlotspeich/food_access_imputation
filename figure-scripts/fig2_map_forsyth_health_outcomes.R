@@ -17,12 +17,12 @@ forsyth_border = c("forsyth", "davidson", "davie", "yadkin", "surry", "stokes",
                    "rockingham", "guilford", "randolph")
 
 ## Load map data (census tracts)
-tracts = tidycensus::get_acs(state = "NC", 
-                             geography = "tract", 
-                             county = forsyth_border,
-                             variables = "B19013_001",
-                             geometry = TRUE, 
-                             year = 2010) 
+tracts = get_acs(state = "NC", 
+                 geography = "tract", 
+                 county = forsyth_border,
+                 variables = "B19013_001",
+                 geometry = TRUE, 
+                 year = 2010)
 nrow(tracts) ## M = 340 neighborhoods
 
 ## Load health outcomes data
