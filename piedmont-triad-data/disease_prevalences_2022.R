@@ -10,9 +10,9 @@ piedmont_triad = c("SURRY", "STOKES", "ROCKINGHAM", "CASWELL",
                    "DAVIE", "DAVIDSON", "RANDOLPH", "MONTGOMERY")
 
 # Read in raw PLACES data
-health = read.csv(file = "PLACES-USA.csv") |> 
+health = read.csv(file = "~/Dropbox (Wake Forest University)/14 - GRANTS/CEES-DistanceToFood-May2023/Forsyth-Food-Access/data/health/PLACES-USA.csv") |> 
   dplyr::filter(StateAbbr == "NC", ## subset to NC
-                CountyName %in% forsyth_border, ## subset to study area
+                toupper(CountyName) %in% piedmont_triad, ## subset to study area
                 MeasureId %in% health_indicators ## subset to outcomes of interest
                 ) |> 
   dplyr::mutate(TractFIPS = as.numeric(LocationName), ## make FIPS numeric
@@ -25,5 +25,5 @@ health = read.csv(file = "PLACES-USA.csv") |>
 
 # Save data 
 health |> 
-  write.csv("disease_prevalences_2022.csv", 
+  write.csv("~/Documents/food/piedmont-triad-data/disease_prevalences_2022.csv", 
             row.names = FALSE)
