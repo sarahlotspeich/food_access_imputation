@@ -16,15 +16,16 @@ piedmont_triad = c("SURRY", "STOKES", "ROCKINGHAM", "CASWELL",
                    "YADKIN", "FORSYTH", "GUILFORD", "ALAMANCE", 
                    "DAVIE", "DAVIDSON", "RANDOLPH", "MONTGOMERY")
 piedmont_triad_ct = get_acs(state = "NC",
-                     geography = "tract",
-                     county = piedmont_triad,
-                     variables = "B01003_001", ## total population,
-                     geometry = TRUE,
-                     year = 2015)
+                            geography = "tract",
+                            county = piedmont_triad,
+                            variables = "B01003_001", ## total population,
+                            geometry = TRUE,
+                            year = 2015)
 ############################################################################################
 ## LOAD ACS DATA FOR FORSYTH AND BORDERING COUNTIES' CENSUS TRACTS /////////////////////////
 ############################################################################################
 acs = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food/main/piedmont-triad-data/piedmont_triad_acs_data.csv")
+
 ## Merge ACS data into map data 
 piedmont_triad_ct = piedmont_triad_ct |> 
   dplyr::mutate(GEOID = as.numeric(GEOID)) |> 
