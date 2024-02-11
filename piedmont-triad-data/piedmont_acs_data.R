@@ -51,13 +51,10 @@ poverty = get_acs(state = "NC",
 snap = get_acs(state = "NC",
                geography = "tract",
                county = piedmont_triad,
-               variables = c("B22001_002", ## number of households received food stamps/SNAP (past 12 mo)
-                             "B22001_001"), ## total number of households
+               variables = c(SNAP = "B22001_002", ## number of households received food stamps/SNAP (past 12 mo)
+                             SNAP_TOTAL = "B22001_001"), ## total number of households
                geometry = FALSE,
                year = 2015) |> 
-  dplyr::mutate(variable = factor(x = variable, 
-                                  levels = c("B22001_002", "B22001_001"), 
-                                  labels = c("SNAP", "SNAP_TOTAL"))) |> 
   dplyr::select(-moe) |>
   tidyr::spread(key = variable, value = estimate) |> 
   dplyr::mutate(PERC_SNAP = SNAP / SNAP_TOTAL) |> 
@@ -142,7 +139,22 @@ college = get_acs(state = "NC",
   ) |> 
   dplyr::mutate(PERC_COLLEGE = COLLEGE / EDUCATION_TOTAL) |> 
   dplyr::select(GEOID, NAME, PERC_COLLEGE) 
-  
+
+############################################################################################
+## % CHILDREN (< 18 YO) IN FEMALE-HEADED HOUSEHOLDS (NO SPOUSE) ////////////////////////////
+############################################################################################
+fem_house = get_acs(state = "NC",
+                    geography = "tract",
+                    county = piedmont_triad,
+                    variables = c(FEM_HEAD = "B09005_005", ## children in female-headed household, no husband present, family
+                                  FEM_HEAD_TOTAL = "B09005_001"), ## total number of children
+                    geometry = FALSE,
+                    year = 2015) |> 
+  dplyr::select(-moe) |>
+  tidyr::spread(key = variable, value = estimate) |> 
+  dplyr::mutate(PERC_FEM_HEAD = FEM_HEAD / FEM_HEAD_TOTAL) |> 
+  dplyr::select(-FEM_HEAD, -FEM_HEAD_TOTAL)
+
 ############################################################################################
 ## MERGE AND SAVE //////////////////////////////////////////////////////////////////////////
 ############################################################################################
@@ -151,7 +163,8 @@ piedmont_triad_acs_data = income |>
   dplyr::left_join(snap) |> 
   dplyr::left_join(work_transport) |> 
   dplyr::left_join(insured) |> 
-  dplyr::left_join(college)
+  dplyr::left_join(college) |> 
+  dplyr::left_join(fem_house)
 piedmont_triad_acs_data |> 
   write.csv("~/Documents/food/forsyth-data/piedmont_triad_acs_data.csv", 
             row.names = FALSE)
