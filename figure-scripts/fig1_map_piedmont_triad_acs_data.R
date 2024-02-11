@@ -12,6 +12,7 @@ source("~/Documents/food/set_api_keys.R")
 ## LOAD MAP DATA FOR FORSYTH AND BORDERING COUNTIES' CENSUS TRACTS /////////////////////////
 ## To align with CDC Places dataset, use 2015 census geometry. /////////////////////////////
 ############################################################################################
+# Census tract outlines
 piedmont_triad = c("SURRY", "STOKES", "ROCKINGHAM", "CASWELL", 
                    "YADKIN", "FORSYTH", "GUILFORD", "ALAMANCE", 
                    "DAVIE", "DAVIDSON", "RANDOLPH", "MONTGOMERY")
@@ -21,8 +22,18 @@ piedmont_triad_ct = get_acs(state = "NC",
                             variables = "B01003_001", ## total population,
                             geometry = TRUE,
                             year = 2015)
+# County outlines
+counties = get_acs(state = "NC", 
+                   geography = "county", 
+                   county = piedmont_triad,
+                   variables = "B19013_001",
+                   geometry = TRUE, 
+                   year = 2015) |> 
+  dplyr::mutate(NAME = sub(pattern = " County, North Carolina", 
+                           replacement = "", 
+                           x = NAME))
 ############################################################################################
-## LOAD ACS DATA FOR FORSYTH AND BORDERING COUNTIES' CENSUS TRACTS /////////////////////////
+## LOAD ACS and RUCA DATA FOR PIEDMONT TRIAD CENSUS TRACTS /////////////////////////////////
 ############################################################################################
 acs = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food/main/piedmont-triad-data/piedmont_triad_acs_data.csv")
 
@@ -30,24 +41,65 @@ acs = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food/main/piedm
 piedmont_triad_ct = piedmont_triad_ct |> 
   dplyr::mutate(GEOID = as.numeric(GEOID)) |> 
   dplyr::left_join(acs)
+
+## 2010 rural/urban continuum codes (merge into health outcomes and food access)
+ruca = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food/main/forsyth-data/ruca2010revised.csv")
+piedmont_triad_ct = piedmont_triad_ct |> 
+  dplyr::left_join(y = ruca, 
+                   by = dplyr::join_by(GEOID == StateCountyTract))
 ############################################################################################
 ## CREATE FUNCTION TO MAP VARIABLES FROM ACS DATA //////////////////////////////////////////
 ############################################################################################
-plot_tract_acs = function(fill_var, title, legend_title = "", label_scale = scales::number) {
-  piedmont_triad_ct |> 
+plot_tract_acs = function(fill_var, title, legend_title = "", label_scale = scales::number, label_counties = FALSE) {
+  if (label_counties) {
     ggplot() + 
-    geom_sf(aes(fill = {{ fill_var }}, geometry = geometry)) + 
-    scale_fill_viridis_c(option = "magma", 
-                         name = legend_title, 
-                         labels = label_scale,
-                         guide = guide_colourbar(direction = "horizontal",
-                                                 barwidth = 8, 
-                                                 barheight = 1)) +
-    theme_void(base_size = 10) + 
-    theme(plot.margin = margin(l=25,r=20,t=20,b=25),
-          legend.position = "bottom", 
-          plot.title = element_text(face = "bold", hjust = 0.5)) + 
-    ggtitle(label = title)
+      geom_sf(data = piedmont_triad_ct, 
+              aes(fill = {{ fill_var }}, 
+                  geometry = geometry)) + 
+      geom_sf(data = counties, 
+              aes(geometry = geometry), 
+              color = "white", 
+              fill = NA, 
+              size = 25) +   
+      geom_sf_label(data = counties, 
+                    aes(geometry = geometry, label = NAME)) + 
+      scale_fill_viridis_c(option = "magma", 
+                           name = legend_title, 
+                           labels = label_scale,
+                           guide = guide_colourbar(direction = "horizontal",
+                                                   barwidth = 8, 
+                                                   barheight = 0.5)) +
+      theme_void(base_size = 8) + 
+      theme(plot.margin = margin(0, 0, 0, 0), #margin(l = 25, r = 20, t = 20, b = 25),
+            legend.position = "top", 
+            plot.title = element_text(face = "bold", 
+                                      hjust = 0.5, 
+                                      margin = margin(t = 0, r = 0, b = 10, l = 0))) + 
+      ggtitle(label = title)
+  } else {
+    ggplot() + 
+      geom_sf(data = piedmont_triad_ct, 
+              aes(fill = {{ fill_var }}, 
+                  geometry = geometry)) + 
+      geom_sf(data = counties, 
+              aes(geometry = geometry), 
+              color = "white", 
+              fill = NA, 
+              size = 25) +   
+      scale_fill_viridis_c(option = "magma", 
+                           name = legend_title, 
+                           labels = label_scale,
+                           guide = guide_colourbar(direction = "horizontal",
+                                                   barwidth = 8, 
+                                                   barheight = 0.5)) +
+      theme_void(base_size = 8) + 
+      theme(plot.margin = margin(0, 0, 0, 0), #margin(l = 25, r = 20, t = 20, b = 25),
+            legend.position = "top", 
+            plot.title = element_text(face = "bold", 
+                                      hjust = 0.5, 
+                                      margin = margin(t = 0, r = 0, b = 10, l = 0))) + 
+      ggtitle(label = title)
+  }
 }
 ############################################################################################
 ## MAPS FROM EACH ACS VARIABLE /////////////////////////////////////////////////////////////
@@ -76,16 +128,27 @@ map_insured = plot_tract_acs(fill_var = PERC_INSURED,
 map_college = plot_tract_acs(fill_var = PERC_COLLEGE, 
                              title = "At Least Some College", 
                              label_scale = scales::percent)
+## 7. Population density
+map_density = plot_tract_acs(fill_var = PopulationDensity, 
+                             title = "Population Density", 
+                             label_scale = scales::label_comma())
+
+## 8. Percent children in female-headed households 
+map_fem = plot_tract_acs(fill_var = PERC_FEM_HEAD, 
+                         title = "Female-Headed Households", 
+                         label_scale = scales::label_comma())
 ############################################################################################
 ## COMBINE MAPS AND SAVE ///////////////////////////////////////////////////////////////////
 ############################################################################################
-ggpubr::ggarrange(map_income, map_poverty, 
-                  map_snap, map_cars, 
-                  map_insured, map_college,
-                  ncol = 3, nrow = 2)
+ggpubr::ggarrange(map_density, map_income, 
+                  map_poverty, map_snap, 
+                  map_cars, map_insured, 
+                  map_college, map_fem, 
+                  ncol = 3, nrow = 3, 
+                  labels = "AUTO")
  
 ggsave(filename = "~/Documents/food/figures/fig1_map_piedmont_triad_acs_data.png",
        device = "png",
-       width = 10,
+       width = 8,
        height = 8,
        units = "in")
