@@ -66,8 +66,8 @@ sim_data = function(N, beta0 = fix_beta0, beta1 = fix_beta1, muU = fix_muU, sigm
 # Loop over different sample sizes: N = 390 (Piedmont Triad), 2200 (all of NC)
 for (N in c(390, 2200)) {
   tic(paste("Sims with N =", N)) ## Start counting runtime for sims with current sample size N
-  # And error standard deviation: 0.1, 0.2, 0.4, 0.8
-  for (sigma in c(0.1, 0.2, 0.4, 0.8)){
+  # And error standard deviation: 0.1, 0.2, 0.4, 0.8, 1
+  for (sigma in c(0.1, 0.2, 0.4, 0.8, 1)){
     # Be reproducible
     set.seed(sim_seed) ## set random seed
     
@@ -139,5 +139,5 @@ for (N in c(390, 2200)) {
 }
 
 # Timing from tictoc:
-## Sims with N = 390: 168.916 sec elapsed
-## Sims with N = 2200: 437.192 sec elapsed
+## Sims with N = 390: 214.262 sec elapsed
+## Sims with N = 2200: 553.668 sec elapsed
