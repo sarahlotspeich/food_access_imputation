@@ -21,7 +21,7 @@ num_reps = 1000
 fix_beta0 = -2.7 ## outcome model intercept (leads to ~ 7% prevalence)
 fix_beta1 = log(1.01) ## log prevalence ratio for X on Y
 fix_sigmaU = 0.8 ## error standard deviation
-fix_pV = 0.1 ## proportion of neighborhoods to be queried
+fix_q = 0.1 ## proportion of neighborhoods to be queried
 
 # --------------------------------------------------------------------
 # Function to simulate data (arguments defined as follows)
@@ -73,7 +73,7 @@ for (N in c(390, 2200)) {
     
     # Create dataframe to save results for setting
     sett_res = data.frame(sim = paste(sim_seed, 1:num_reps, sep = "-"), 
-                          N, beta0 = fix_beta0, beta1 = fix_beta1, muU = mu, sigmaU = fix_sigmaU, pV = fix_pV, avg_prev = NA, ## simulation setting
+                          N, beta0 = fix_beta0, beta1 = fix_beta1, muU = mu, sigmaU = fix_sigmaU, q = fix_q, avg_prev = NA, ## simulation setting
                           beta0_gs = NA, se_beta0_gs = NA, beta1_gs = NA, se_beta1_gs = NA, ## gold standard analysis
                           beta0_n = NA, se_beta0_n = NA, beta1_n = NA, se_beta1_n = NA, ## naive analysis
                           beta0_cc = NA, se_beta0_cc = NA, beta1_cc = NA, se_beta1_cc = NA, ## complete case analysis
@@ -107,7 +107,7 @@ for (N in c(390, 2200)) {
       
       # Select subset of neighborhoods/rows for map-based measures
       query_rows = sample(x = 1:N, 
-                          size = ceiling(fix_pV * N), 
+                          size = ceiling(fix_q * N), 
                           replace = FALSE)
       
       # Make X NA/missing for rows not in selected subset (query_rows)
