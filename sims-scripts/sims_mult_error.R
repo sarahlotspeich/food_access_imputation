@@ -73,7 +73,7 @@ for (N in c(390, 2200)) {
     
     # Create dataframe to save results for setting
     sett_res = data.frame(sim = paste(sim_seed, 1:num_reps, sep = "-"), 
-                          N, beta0 = fix_beta0, beta1 = fix_beta1, muU = fix_muW, sigmaU = sigma, q = fix_q, avg_prev = NA, ## simulation setting
+                          N, beta0 = fix_beta0, beta1 = fix_beta1, muW = fix_muW, sigmaW = sigma, q = fix_q, avg_prev = NA, ## simulation setting
                           beta0_gs = NA, se_beta0_gs = NA, beta1_gs = NA, se_beta1_gs = NA, ## gold standard analysis
                           beta0_n = NA, se_beta0_n = NA, beta1_n = NA, se_beta1_n = NA, ## naive analysis
                           beta0_cc = NA, se_beta0_cc = NA, beta1_cc = NA, se_beta1_cc = NA, ## complete case analysis
