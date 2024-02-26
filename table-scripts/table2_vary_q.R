@@ -12,9 +12,7 @@ library(kableExtra) ### To format pretty tables
 # //////////////////////////////////////////////////////////////////////
 # Read in simulation results from GitHub ///////////////////////////////
 # //////////////////////////////////////////////////////////////////////
-
-# Read in simulation results 
-file_urls = c(paste0("https://raw.githubusercontent.com/sarahlotspeich/food/main/sims-data/vary_q/proximity_N", rep(c(390, 2200), each = 5), 
+file_urls = c(paste0("https://raw.githubusercontent.com/sarahlotspeich/food/main/sims-data/vary_q/proximity_N", rep(c(390, 2200), each = 4), 
                      "_q", rep(c(10, 25, 50, 75), times = 2), 
                      "_seed11422.csv"))
 res = do.call(bind_rows, 

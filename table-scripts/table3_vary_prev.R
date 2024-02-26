@@ -1,18 +1,26 @@
 # //////////////////////////////////////////////////////////////////////
 # Replicate Table 3 ////////////////////////////////////////////////////
 # Caption begins "Simulation results under higher disease prevalence ///
-# and prevalence ratios for map-based proximity to healthy foods." /////
+# and varied prevalence ratios for map-based proximity to healthy //////
+# foods, as controlled by the coefficients $\beta_0$ (\textbf{Prev.} ///
+# $=\exp(\beta_0)$) and $\beta_1$ (\textbf{PR} $=\exp(\beta_1)$), //////
+# respectively. ////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////
 
-# Load packages
-library(dplyr) # To wrangle data
-library(kableExtra) # To format pretty tables
+## Load packages
+library(dplyr) ### To wrangle data
+library(kableExtra) ### To format pretty tables
 
 # //////////////////////////////////////////////////////////////////////
 # Read in simulation results from GitHub ///////////////////////////////
 # //////////////////////////////////////////////////////////////////////
-res = read.csv(file = "https://raw.githubusercontent.com/sarahlotspeich/food/main/sims-data/vary_prev_sims_combined.csv")
-## Note: Simulations were run on random seed 114 (with 1000 reps per seed, per setting)
+file_urls = c(paste0("https://raw.githubusercontent.com/sarahlotspeich/food/main/sims-data/vary_prev/proximity_prev", rep(c(7, 11, 33), each = 5), 
+                     "_pr", rep(c(95, 99, 100, 101, 105), times = 3), 
+                     "_seed11422.csv"))
+res = do.call(bind_rows, 
+              lapply(X = file_urls, 
+                     FUN = read.csv))
+## Note: Simulations were run on random seed 11422 (with 1000 reps per seed, per setting)
 ## This information is captured in the "sim" variable which is of the form seed-replicate. 
 
 # //////////////////////////////////////////////////////////////////////
@@ -27,45 +35,49 @@ res |>
 # //////////////////////////////////////////////////////////////////////
 # Summarize simulation results by setting //////////////////////////////
 # //////////////////////////////////////////////////////////////////////
+## Function to calculate empirical coverage probability of 95% confidence intervals
 cp = function(est, se, truth) {
   mean((est - 1.96 * se) <= truth & truth <= (est + 1.96 * se))
 }
 res_summ = res |> 
-  group_by(beta0, beta1) |> 
-  summarize(bias_gs = mean((beta_gs - beta1) / ifelse(beta1 == 0, 1, beta1)), ese_gs = sd(beta_gs), ase_gs = mean(se_beta_gs), 
-            cp_gs = cp(est = beta_gs, se = se_beta_gs, truth = beta1), 
-            bias_n = mean((beta_n - beta1) / ifelse(beta1 == 0, 1, beta1)), ese_n = sd(beta_n), ase_n = mean(se_beta_n), 
-            cp_n = cp(est = beta_n, se = se_beta_n, truth = beta1), 
-            bias_cc = mean((beta_cc - beta1) / ifelse(beta1 == 0, 1, beta1)), ese_cc = sd(beta_cc), ase_cc = mean(se_beta_cc), 
-            cp_cc = cp(est = beta_cc, se = se_beta_cc, truth = beta1), 
-            bias_imp = mean((beta_imp - beta1) / ifelse(beta1 == 0, 1, beta1)), ese_imp = sd(beta_imp), ase_imp = mean(se_beta_imp), 
-            cp_imp = cp(est = beta_imp, se = se_beta_imp, truth = beta1)
-            ) |> 
-  ungroup()
+  dplyr::mutate(prev = exp(beta0), 
+                pr = exp(beta1)) |> 
+  group_by(prev, pr) |> 
+  summarize(bias_gs = mean((beta1_gs - beta1) / ifelse(beta1 == 0, 1, beta1)), ese_gs = sd(beta1_gs), 
+            bias_n = mean((beta1_n - beta1) / ifelse(beta1 == 0, 1, beta1)), ese_n = sd(beta1_n), 
+            bias_cc = mean((beta1_cc - beta1) / ifelse(beta1 == 0, 1, beta1)), ese_cc = sd(beta1_cc), 
+            bias_imp = mean((beta1_imp - beta1) / ifelse(beta1 == 0, 1, beta1)), ese_imp = sd(beta1_imp), ase_imp = mean(se_beta1_imp), 
+            cp_imp = cp(est = beta1_imp, se = se_beta1_imp, truth = beta1)
+  ) |> 
+  dplyr::mutate(re_cc = (ese_gs ^ 2) / (ese_cc ^ 2), 
+                re_imp = (ese_gs ^ 2) / (ese_imp ^ 2)) |> 
+  dplyr::select(prev, pr, dplyr::ends_with(c("gs", "n", "cc", "imp")))
 
 # //////////////////////////////////////////////////////////////////////
 # Format table for export to LaTex /////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////
-# Write function to add "padded" zeros and wrap with $$ for consistency 
+## Write function to add "padded" zeros and wrap with $$ for consistency 
 format_num = function(num, digits = 3) {
-  paste0("$", format(round(num, 3), nsmall = digits), "$")
+  paste0("$", format(round(num, digits = digits), nsmall = digits), "$")
 }
 
-# Format res_summ for LaTex
+## Format res_summ for LaTex
 res_summ = res_summ |> 
-  mutate_at(.vars = 3:18, .funs = format_num, digits = 3) |>
-  mutate(approx.prev = format_num(num = exp(beta0), digits = 2),
-         prev.ratio = format_num(num = exp(beta1), digits = 2)) |> 
-  select(approx.prev, prev.ratio, everything(), -beta0, -beta1) |> 
-  arrange(approx.prev, prev.ratio)
+  mutate_at(.vars = 3:14, .funs = format_num, digits = 3) |>
+  mutate(prev = format_num(num = prev, digits = 2), 
+         pr = format_num(num = pr, digits = 2))
 ## Change column names 
-colnames(res_summ) = c("Prev.", "PR", rep(c("Bias", "ESE", "ASE", "CP"), times = 4))
+colnames(res_summ) = c("Prev.", "PR", 
+                       rep(c("Bias", "ESE"), times = 2),
+                       "Bias", "ESE", "RE",
+                       "Bias", "ESE", "ASE", "CP", "RE")
 res_summ |> 
   kable(format = "latex", 
         booktabs = TRUE, 
         escape = FALSE, 
-        align = "ccrcccrcccrcccrccc") |> 
+        align = "rcrcrcrccrcccc") |> 
   kable_styling() |> 
-  add_header_above(header = c(" " = 2, "Gold Standard" = 4, "Naive" = 4, "Complete Case" = 4, "Imputation" = 4), 
+  add_header_above(header = c(" " = 2, "Gold Standard" = 2, "Naive" = 2, "Complete Case" = 3, "Imputation" = 5), 
                    bold = TRUE) |> 
   row_spec(row = 0, bold = TRUE)
+## And a \multicolumn used to separate the three parameters
