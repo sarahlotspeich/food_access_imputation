@@ -38,7 +38,8 @@ res_summ = res |>
   ) |> 
   dplyr::mutate(re_cc = (ese_gs ^ 2) / (ese_cc ^ 2), 
                 re_imp = (ese_gs ^ 2) / (ese_imp ^ 2)) |> 
-  dplyr::select(N, muU, dplyr::ends_with(c("gs", "n", "cc", "imp")))
+  dplyr::select(N, muU, dplyr::ends_with(c("gs", "n", "cc", "imp"))) |> 
+  dplyr::arrange(N, desc(muU))
 
 # //////////////////////////////////////////////////////////////////////
 # Format table for export to LaTex /////////////////////////////////////
