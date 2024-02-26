@@ -2,7 +2,7 @@
 # Replicate Table 1 ////////////////////////////////////////////////////
 # Caption begins "Simulation results under varied additive errors in ///
 # straight-line proximity to healthy foods, as controlled by the ///////
-# standard deviation $\sigma_U$ of the errors $U$. /////////////////////
+# standard deviation $\sigma_U$ of the errors $U$." ////////////////////
 # //////////////////////////////////////////////////////////////////////
 
 ## Load packages
