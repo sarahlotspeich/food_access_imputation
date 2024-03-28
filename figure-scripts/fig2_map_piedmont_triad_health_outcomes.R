@@ -66,7 +66,7 @@ plot_tract_health = function(fill_var, title, legend_title = "", mid) {
       labels = scales::percent,
       guide = guide_colourbar(direction = "vertical",
                               barwidth = 1,
-                              barheight = 10)) +
+                              barheight = 8)) +
     # scale_fill_viridis_c(option = "viridis", 
     #                      name = legend_title, 
     #                      labels = scales::percent,
@@ -108,8 +108,8 @@ ggpubr::ggarrange(plot_chd, plot_diabetes,
 
 ggsave(filename = "~/Documents/food/figures/fig2_map_piedmont_triad_health_outcomes.png",
        device = "png",
-       width = 10,
-       height = 8,
+       width = 7,
+       height = 6,
        units = "in")
 ggsave(plot = plot_chd, 
        filename = "~/Documents/food/figures/fig2_map_piedmont_triad_chd.png",
@@ -117,3 +117,4 @@ ggsave(plot = plot_chd,
        width = 4,
        height = 4,
        units = "in")
+
