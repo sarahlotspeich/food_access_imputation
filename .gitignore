@@ -28,3 +28,9 @@ piedmont-triad-data/closest_healthy_foods_store_2022.R
 piedmont-triad-data/addl_closest_healthy_foods_store_2022.csv
 
 piedmont-triad-data/check_geocode_error.R
+
+piedmont-triad-data/piedmont_triad_acs_data.pdf
+
+piedmont-triad-data/piedmont_triad_acs_data.Rmd
+
+piedmont-triad-data/fitme_example.R
