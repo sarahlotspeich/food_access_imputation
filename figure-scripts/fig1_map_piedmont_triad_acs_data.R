@@ -8,6 +8,7 @@ library(tidycensus) ## to get underlying census tract map shapes
 ## Set API keys (redacted to avoid violating use agreements)
 ## See ex_set_api_keys.R to set up your own script
 source("~/Documents/food/set_api_keys.R")
+
 ############################################################################################
 ## LOAD MAP DATA FOR FORSYTH AND BORDERING COUNTIES' CENSUS TRACTS /////////////////////////
 ## To align with CDC Places dataset, use 2015 census geometry. /////////////////////////////
@@ -32,6 +33,7 @@ counties = get_acs(state = "NC",
   dplyr::mutate(NAME = sub(pattern = " County, North Carolina", 
                            replacement = "", 
                            x = NAME))
+
 ############################################################################################
 ## LOAD ACS and RUCA DATA FOR PIEDMONT TRIAD CENSUS TRACTS /////////////////////////////////
 ############################################################################################
