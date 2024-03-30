@@ -50,7 +50,7 @@ wake_map +
            label = paste("Straight-line\ndistance:\n", 
                          round(straight_dist, 2), 
                          "miles", sep = " "),
-           size = 12, color = "#721F81FF",
+           size = 12, color = "#FD7446",
            fill = "white", label.size = NA) +
   annotate(geom = "label", 
            x = min(drive_route$lon) - 0.001, 
@@ -58,15 +58,15 @@ wake_map +
            label = paste("Map-based\ndistance:\n", 
                          round(drive_dist, 2), 
                          "miles", sep = " "),
-           size = 12, color = "#F1605DFF",
+           size = 12, color = "#709AE1",
            fill = "white", label.size = NA) +
   theme(legend.position = c(0.3, 0.7), 
         legend.title = element_blank(),
         legend.background = element_rect(color = "black")) + 
-  scale_color_manual(values = c("#F1605DFF", "#78247a"),
+  scale_color_manual(values = c("#709AE1", "#FD7446"),
                      guide = "none") + 
-  coord_map(ylim=c(36.120, 36.16), 
-            xlim = c(-80.31, -80.27))
+  coord_map(ylim=c(36.11, 36.155), 
+            xlim = c(-80.30, -80.27))
 
 # Save Figure 1
 ggsave(filename = "figures/fig4_map_comparing_distances.png", 
