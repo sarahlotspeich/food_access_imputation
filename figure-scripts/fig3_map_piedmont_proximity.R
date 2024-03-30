@@ -48,7 +48,7 @@ map_data = food_access |>
                 dist_closest_map, 
                 dist_closest_map_cc, 
                 dist_closest_map_imp) |> 
-  dplyr::left_join(piedmont_triad_ct, 
+  dplyr::right_join(piedmont_triad_ct, 
                    by = dplyr::join_by(LocationID == GEOID)) |> 
   dplyr::select(-variable, -estimate, -moe)
 
@@ -57,14 +57,24 @@ map_data = food_access |>
 ############################################################################################
 med_map_based = median(map_data$dist_closest_map) ## 1.514352 miles
 
-### Gold Standard
-fig3a = piedmont_triad_ct |> 
+## Save as Figure 3
+map_data |> 
+  tidyr::gather("dist_method", "proximity", -c(1, 6:7)) |> 
+  dplyr::mutate(dist_method = factor(x = dist_method, 
+                                     levels = c("dist_closest_straight", 
+                                                "dist_closest_map", 
+                                                "dist_closest_map_imp", 
+                                                "dist_closest_map_cc"), 
+                                     labels = c("Naive", 
+                                                "Gold Standard", 
+                                                "Imputation", 
+                                                "Complete Case"))) |> 
   ggplot() + 
-  geom_sf(aes(fill = dist_closest_straight, 
+  geom_sf(aes(fill = proximity, 
               geometry = geometry)) + 
   scale_fill_gradientn(
     colours = colorRampPalette(c('#709AE1', '#FFFFFF', '#FD7446'))(100),
-    rescaler = ~ scales::rescale_mid(.x, mid = 5),
+    #rescaler = ~ scales::rescale_mid(.x, mid = med_map_based),
     guide = guide_colourbar(direction = "horizontal",
                             barwidth = 8,
                             barheight = 1),
@@ -72,64 +82,45 @@ fig3a = piedmont_triad_ct |>
   theme_void(base_size = 10) + 
   theme(plot.margin = margin(l=25, r=20, t=20, b=25),
         legend.position = "bottom", 
-        plot.title = element_text(face = "bold", hjust = 0.5)) + 
-  ggtitle(label = "Naive")
-### Gold Standard
-fig3b = piedmont_triad_ct |> 
-  ggplot() + 
-  geom_sf(aes(fill = dist_closest_map, 
-              geometry = geometry)) + 
-  scale_fill_gradientn(
-    colours = colorRampPalette(c('#709AE1', '#FFFFFF', '#FD7446'))(100),
-    rescaler = ~ scales::rescale_mid(.x, mid = 5),
-    guide = guide_colourbar(direction = "horizontal",
-                            barwidth = 8,
-                            barheight = 1),
-    name = "Proximity to Healthy Foods (in Miles):") +
-  theme_void(base_size = 10) + 
-  theme(plot.margin = margin(l=25, r=20, t=20, b=25),
-        legend.position = "bottom", 
-        plot.title = element_text(face = "bold", hjust = 0.5)) + 
-  ggtitle(label = "Gold Standard")
-### Complete Case
-fig3c = piedmont_triad_ct |> 
-  ggplot() + 
-  geom_sf(aes(fill = dist_closest_map_cc, 
-              geometry = geometry)) + 
-  scale_fill_gradientn(
-    colours = colorRampPalette(c('#709AE1', '#FFFFFF', '#FD7446'))(100),
-    rescaler = ~ scales::rescale_mid(.x, mid = 5),
-    guide = guide_colourbar(direction = "horizontal",
-                            barwidth = 8,
-                            barheight = 1),
-    name = "Proximity to Healthy Foods (in Miles):") +
-  theme_void(base_size = 10) + 
-  theme(plot.margin = margin(l=25, r=20, t=20, b=25),
-        legend.position = "bottom", 
-        plot.title = element_text(face = "bold", hjust = 0.5)) + 
-  ggtitle(label = "Complete Case")
-### Imputation
-fig3d = piedmont_triad_ct |> 
-  ggplot() + 
-  geom_sf(aes(fill = dist_closest_imp, 
-              geometry = geometry)) + 
-  scale_fill_gradientn(
-    colours = colorRampPalette(c('#709AE1', '#FFFFFF', '#FD7446'))(100),
-    rescaler = ~ scales::rescale_mid(.x, mid = 5),
-    guide = guide_colourbar(direction = "horizontal",
-                            barwidth = 8,
-                            barheight = 1),
-    name = "Proximity to Healthy Foods (in Miles):") +
-  theme_void(base_size = 10) + 
-  theme(plot.margin = margin(l=25, r=20, t=20, b=25),
-        legend.position = "bottom", 
-        plot.title = element_text(face = "bold", hjust = 0.5)) + 
-  ggtitle(label = "Imputation")
-ggpubr::ggarrange(fig3a, fig3b, fig3c, fig3d, 
-                  common.legend = TRUE, 
-                  legend = "bottom")
-ggsave(filename = "~/Downloads/fig3_map_proximity_piedmont.png", 
+        strip.text = element_text(face = "bold", hjust = 0.5)) + 
+  facet_wrap(~ dist_method, nrow = 2, ncol = 2)
+
+ggsave(filename = "~/Documents/food/figures/fig3_map_proximity_piedmont.png", 
        device = "png", 
        width = 5, 
+       height = 5, 
+       units = "in")
+
+## Save as Figure 3
+map_data |> 
+  tidyr::gather("dist_method", "proximity", -c(1, 6:7)) |> 
+  dplyr::mutate(dist_method = factor(x = dist_method, 
+                                     levels = c("dist_closest_straight", 
+                                                "dist_closest_map", 
+                                                "dist_closest_map_imp", 
+                                                "dist_closest_map_cc"), 
+                                     labels = c("Naive", 
+                                                "Gold Standard", 
+                                                "Imputation", 
+                                                "Complete Case"))) |> 
+  ggplot() + 
+  geom_sf(aes(fill = proximity, 
+              geometry = geometry)) + 
+  scale_fill_gradientn(
+    colours = colorRampPalette(c('#709AE1', '#FFFFFF', '#FD7446'))(100),
+    #rescaler = ~ scales::rescale_mid(.x, mid = med_map_based),
+    guide = guide_colourbar(direction = "horizontal",
+                            barwidth = 8,
+                            barheight = 1),
+    name = "Proximity to Healthy Foods (in Miles):") +
+  theme_void(base_size = 10) + 
+  theme(plot.margin = margin(l=25, r=20, t=20, b=25),
+        legend.position = "bottom", 
+        strip.text = element_text(face = "bold", hjust = 0.5)) + 
+  facet_wrap(~ dist_method, nrow = 1, ncol = 4)
+
+ggsave(filename = "~/Documents/food/figures/fig3_map_proximity_piedmont_wide.png", 
+       device = "png", 
+       width = 10, 
        height = 5, 
        units = "in")
