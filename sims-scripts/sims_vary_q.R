@@ -96,7 +96,7 @@ for (N in c(390, 2200)) {
       sett_res[r, c("beta0_gs", "beta1_gs")] = coefficients(fit_gs) ## estimated log prevalence ratio
       sett_res[r, c("se_beta0_gs", "se_beta1_gs")] = sqrt(diag(vcov(fit_gs))) ## and its standard error
       
-      # Fit the gold standard model
+      # Fit the naive model
       fit_n = glm(formula = Cases ~ Xstar, 
                   family = poisson,
                   offset = log(P),
