@@ -6,7 +6,7 @@
 ##                          ref = "main") 
 
 # Load libraries
-library(possum) ## for multiple imputation estimator
+library(possum) ## for multiple imputation estimatorx
 library(tictoc) ## to calculate runtime
 
 # Random seed to be used for each simulation setting
@@ -130,7 +130,7 @@ for (N in c(390, 2200)) {
       
       # Save results
       write.csv(x = sett_res,
-                file = paste0("vary_q/proximity_N", N, "_q", 100 * q, "_seed", sim_seed, ".csv"), 
+                file = paste0("sims-data/vary_q/proximity_N", N, "_q", 100 * q, "_seed", sim_seed, ".csv"), 
                 row.names = F)
     }
   }
