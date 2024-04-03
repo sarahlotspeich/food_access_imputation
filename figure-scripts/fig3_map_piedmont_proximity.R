@@ -55,7 +55,8 @@ map_data = food_access |>
 ############################################################################################
 ## MAKE MAP OF OBSERVED/PREDICTED PROXIMITY ////////////////////////////////////////////////
 ############################################################################################
-med_map_based = median(map_data$dist_closest_map) ## 1.514352 miles
+med_map_based = median(map_data$dist_closest_map, na.rm = TRUE) ## 1.514352 miles
+med_straight_line = median(map_data$dist_closest_straight, na.rm = TRUE) ## 1.006827 miles
 
 ## Save as Figure 3
 map_data |> 
@@ -74,7 +75,7 @@ map_data |>
               geometry = geometry)) + 
   scale_fill_gradientn(
     colours = colorRampPalette(c('#709AE1', '#FFFFFF', '#FD7446'))(100),
-    #rescaler = ~ scales::rescale_mid(.x, mid = med_map_based),
+    rescaler = ~ scales::rescale_mid(.x, mid = 2), #mid = med_map_based),
     guide = guide_colourbar(direction = "horizontal",
                             barwidth = 8,
                             barheight = 1),
