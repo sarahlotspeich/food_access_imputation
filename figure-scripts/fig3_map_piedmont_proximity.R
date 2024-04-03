@@ -109,7 +109,7 @@ map_data |>
               geometry = geometry)) + 
   scale_fill_gradientn(
     colours = colorRampPalette(c('#709AE1', '#FFFFFF', '#FD7446'))(100),
-    #rescaler = ~ scales::rescale_mid(.x, mid = med_map_based),
+    rescaler = ~ scales::rescale_mid(.x, mid = 2),
     guide = guide_colourbar(direction = "horizontal",
                             barwidth = 8,
                             barheight = 1),
