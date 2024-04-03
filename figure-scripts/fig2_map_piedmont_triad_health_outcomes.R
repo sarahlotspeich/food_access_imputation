@@ -53,9 +53,6 @@ state_avg = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food/main
 ## DEFINE MAP-MAKING FUNCTION //////////////////////////////////////////////////////////////
 ############################################################################################
 plot_tract_health = function(fill_var, title, legend_title = "", mid) {
-  fill_var_bounds = health_geo |> 
-    dplyr::summarize(min = min({{ fill_var }}, na.rm = TRUE), 
-                     max = max({{ fill_var }}, na.rm = TRUE))
   health_geo |> 
     ggplot() + 
     geom_sf(aes(fill = {{ fill_var }}, geometry = geometry)) + 
