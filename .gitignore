@@ -34,3 +34,7 @@ piedmont-triad-data/piedmont_triad_acs_data.pdf
 piedmont-triad-data/piedmont_triad_acs_data.Rmd
 
 piedmont-triad-data/fitme_example.R
+
+reports/rank-proximity.Rmd
+
+reports/rank-proximity.html
