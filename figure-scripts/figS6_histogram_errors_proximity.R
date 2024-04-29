@@ -32,10 +32,10 @@ nrow(food_access) ## N = 387 neighborhoods (exclude the tract with population = 
 
 ## Merge food_access with imputed data and geometry
 map_data = food_access |> 
-  dplyr::mutate(error = dist_closest_map - dist_closest_straight) |> 
+  dplyr::mutate(error = X_full - Xstar) |> 
   dplyr::select(LocationID, 
-                dist_closest_straight, 
-                dist_closest_map, 
+                Xstar, 
+                X_full, 
                 error) |> 
   dplyr::right_join(piedmont_triad_ct, 
                    by = dplyr::join_by(LocationID == GEOID)) |> 
@@ -51,7 +51,7 @@ map_data |>
   theme(plot.margin = margin(l=25, r=20, t=20, b=25),
         legend.position = "bottom", 
         strip.text = element_text(face = "bold", hjust = 0.5)) + 
-  labs(x = "Magnitude of Error in Straight-Line Proximity (X*)", 
+  labs(x = "Magnitude of Additive Error in Straight-Line Proximity", 
        y = "Number of Census Tracts")
 
 ggsave(filename = "~/Documents/food/figures/figS6_histogram_errors_piedmont.png", 
