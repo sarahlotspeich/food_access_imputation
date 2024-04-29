@@ -18,7 +18,7 @@ nrow(food_access) ## N = 387 neighborhoods (exclude the tract with population = 
 
 ## Merge food_access with imputed data and geometry
 map_data = food_access |> 
-  dplyr::mutate(add_error = X_full - Xstar, 
+  dplyr::mutate(add_error = Xstar - X_full, 
                 mult_error = Xstar / X_full) 
 
 ############################################################################################
