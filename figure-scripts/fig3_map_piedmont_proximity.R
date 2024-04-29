@@ -34,19 +34,19 @@ nrow(food_access) ## N = 387 neighborhoods (exclude the tract with population = 
 ## GET PREDICTIONS FROM IMPUTATION /////////////////////////////////////////////////////////
 ############################################################################################
 ## Deterministic imputation
-imp_data = possum::impPossum_data(imputation_formula = dist_closest_map_cc ~ dist_closest_straight, 
+imp_data = possum::impPossum_data(imputation_formula = X_partial ~ Xstar, 
                                   data = food_access, 
                                   B = 0) |> 
-  dplyr::rename(dist_closest_map_imp = dist_closest_map_cc) |> 
+  dplyr::rename(dist_closest_map_imp = X_partial) |> 
   dplyr::select(LocationID, dist_closest_map_imp)
 
 ## Merge food_access with imputed data and geometry
 map_data = food_access |> 
   dplyr::left_join(imp_data) |> 
   dplyr::select(LocationID, 
-                dist_closest_straight, 
-                dist_closest_map, 
-                dist_closest_map_cc, 
+                Xstar, 
+                X_full, 
+                X_partial, 
                 dist_closest_map_imp) |> 
   dplyr::right_join(piedmont_triad_ct, 
                    by = dplyr::join_by(LocationID == GEOID)) |> 
@@ -55,17 +55,17 @@ map_data = food_access |>
 ############################################################################################
 ## MAKE MAP OF OBSERVED/PREDICTED PROXIMITY ////////////////////////////////////////////////
 ############################################################################################
-med_map_based = median(map_data$dist_closest_map, na.rm = TRUE) ## 1.514352 miles
-med_straight_line = median(map_data$dist_closest_straight, na.rm = TRUE) ## 1.006827 miles
+med_map_based = median(map_data$X_full, na.rm = TRUE) ## 1.514352 miles
+med_straight_line = median(map_data$Xstar, na.rm = TRUE) ## 1.006827 miles
 
 ## Save as Figure 3
 map_data |> 
   tidyr::gather("dist_method", "proximity", -c(1, 6:7)) |> 
   dplyr::mutate(dist_method = factor(x = dist_method, 
-                                     levels = c("dist_closest_straight", 
-                                                "dist_closest_map", 
+                                     levels = c("Xstar", 
+                                                "X_full", 
                                                 "dist_closest_map_imp", 
-                                                "dist_closest_map_cc"), 
+                                                "X_partial"), 
                                      labels = c("Naive", 
                                                 "Gold Standard", 
                                                 "Imputation", 
@@ -96,10 +96,10 @@ ggsave(filename = "~/Documents/food/figures/fig3_map_proximity_piedmont.png",
 map_data |> 
   tidyr::gather("dist_method", "proximity", -c(1, 6:7)) |> 
   dplyr::mutate(dist_method = factor(x = dist_method, 
-                                     levels = c("dist_closest_straight", 
-                                                "dist_closest_map", 
+                                     levels = c("Xstar", 
+                                                "X_full", 
                                                 "dist_closest_map_imp", 
-                                                "dist_closest_map_cc"), 
+                                                "X_partial"), 
                                      labels = c("Naive", 
                                                 "Gold Standard", 
                                                 "Imputation", 
