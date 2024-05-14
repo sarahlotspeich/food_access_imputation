@@ -269,6 +269,7 @@ piedmont_triad_acs_data = income |>
   dplyr::left_join(college) |> 
   dplyr::left_join(fem_house)
 piedmont_triad_acs_data |> 
+  filter(GEOID != 37081980100)  |> ## exclude PTI
   write.csv("~/Documents/food/piedmont-triad-data/piedmont_triad_acs_data.csv", 
             row.names = FALSE)
 state_avg |> 
