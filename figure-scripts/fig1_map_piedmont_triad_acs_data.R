@@ -68,7 +68,7 @@ map_counties = ggplot() +
   theme_void(base_size = 8) + 
   theme(plot.margin = margin(0, 0, 0, 0))
 ggsave(plot = map_counties, 
-       filename = "~/Documents/food/figures/map_piemond_counties.png",
+       filename = "~/Documents/food/figures/map_piemont_counties.png",
        device = "png",
        width = 4,
        height = 4,
@@ -210,11 +210,11 @@ ggpubr::ggarrange(map_density, map_income,
                   map_poverty, map_snap, 
                   map_cars, map_insured, 
                   map_college, map_fem, 
-                  ncol = 2, nrow = 4, 
+                  ncol = 3, nrow = 3, 
                   labels = "AUTO")
  
 ggsave(filename = "~/Documents/food/figures/fig1_map_piedmont_triad_acs_data.png",
        device = "png",
-       width = 7,
-       height = 8,
+       width = 10,
+       height = 10,
        units = "in")
