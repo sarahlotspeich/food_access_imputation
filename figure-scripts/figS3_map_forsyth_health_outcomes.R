@@ -113,12 +113,12 @@ ggsave(filename = "~/Documents/food/figures/figS2_map_forsyth_health_outcomes.pd
 ggpubr::ggarrange(plot_chd, plot_diabetes, 
                   plot_hbp, plot_obesity, 
                   ncol = 4, nrow = 1)
-ggsave(filename = "~/Documents/food/figures/figS2_map_forsyth_health_outcomes_wide.png",
+ggsave(filename = "~/Documents/food/figures/figS3_map_forsyth_health_outcomes_wide.png",
        device = "png",
        width = 12,
        height = 6,
        units = "in")
-ggsave(filename = "~/Documents/food/figures/figS2_map_forsyth_health_outcomes_wide.pdf",
+ggsave(filename = "~/Documents/food/figures/figS3_map_forsyth_health_outcomes_wide.pdf",
        device = "pdf",
        width = 12,
        height = 6,
