@@ -119,5 +119,13 @@ res |>
 # //////////////////////////////////////////////////////////////////////
 # Save as 9" wide x 5" tall ////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////
-ggsave("figures/figS4_inclY_in_imputation_model_PR.png", 
-       width = 9, height = 5, units = "in")
+ggsave("figures/figS6_incl_in_imputation_model_PR.png", 
+       device = "png",
+       width = 9, 
+       height = 5, 
+       units = "in")
+ggsave("figures/figS6_incl_in_imputation_model_PR.pdf", 
+       device = "pdf",
+       width = 9, 
+       height = 5, 
+       units = "in")
