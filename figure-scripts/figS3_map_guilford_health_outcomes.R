@@ -23,14 +23,14 @@ nrow(tracts) ## M = 119 census tracts (neighborhoods)
 
 ## Load health outcomes data
 health = read.csv(file = "https://raw.githubusercontent.com/sarahlotspeich/food/main/piedmont-triad-data/disease_prevalences_2022.csv") |> 
-  dplyr::filter(toupper(CountyName) %in% toupper(piedmont_triad)) |> 
+  dplyr::filter(toupper(CountyName) == "GUILFORD") |> 
   dplyr::mutate(TractFIPS = as.character(TractFIPS), ### to merge with tracts must be character
                 BPHIGH = BPHIGH / POP, ### cases of high blood pressure --> prevalence of high blood pressure
                 CHD = CHD / POP, ### cases of coronary heart disease --> prevalence of coronary heart disease
                 DIABETES = DIABETES / POP, ### cases of diabetes --> prevalence of diabetes
                 OBESITY = OBESITY / POP ### cases of obesity --> prevalence of obesity
                 )
-length(unique(health$TractFIPS)) ## M = 387 census tracts (neighborhoods)
+length(unique(health$TractFIPS)) ## M = 118 census tracts (neighborhoods)
 
 # Merge health outcomes with map data
 health_geo = health |> 
@@ -110,10 +110,20 @@ ggsave(filename = "~/Documents/food/figures/figS3_map_guilford_health_outcomes.p
        width = 6,
        height = 5,
        units = "in")
+ggsave(filename = "~/Documents/food/figures/figS3_map_guilford_health_outcomes.pdf",
+       device = "pdf",
+       width = 6,
+       height = 5,
+       units = "in")
 ggpubr::ggarrange(plot_chd, plot_diabetes, 
                   plot_hbp, plot_obesity, 
                   ncol = 4, nrow = 1)
 ggsave(filename = "~/Documents/food/figures/figS3_map_guilford_health_outcomes_wide.png",
+       device = "png",
+       width = 12,
+       height = 6,
+       units = "in")
+ggsave(filename = "~/Documents/food/figures/figS3_map_guilford_health_outcomes_wide.pdf",
        device = "png",
        width = 12,
        height = 6,
