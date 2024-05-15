@@ -15,7 +15,8 @@ nrow(food_access) ## N = 387 neighborhoods (exclude the tract with population = 
 ## MAKE SCATTER PLOT OF STRAIGHT-LINE VS MAP-BASED PROXIMITY ///////////////////////////////
 ############################################################################################
 food_access |> 
-  ggplot(aes(x = dist_closest_straight, y = dist_closest_map)) + 
+  ggplot(aes(x = Xstar, 
+             y = X_full)) + 
   geom_point() + 
   geom_smooth(method = "lm", 
               se = FALSE, 
@@ -37,6 +38,11 @@ food_access |>
 
 ggsave(filename = "~/Documents/food/figures/fig6_scatterplot_proximity_piedmont.png", 
        device = "png", 
+       width = 5, 
+       height = 5, 
+       units = "in")
+ggsave(filename = "~/Documents/food/figures/fig6_scatterplot_proximity_piedmont.pdf", 
+       device = "pdf", 
        width = 5, 
        height = 5, 
        units = "in")
