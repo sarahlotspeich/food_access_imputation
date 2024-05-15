@@ -95,31 +95,76 @@ plot_hbp = plot_tract_health(fill_var = BPHIGH,
                              city_hall = ws_city_hall)
 
 ############################################################################################
+## GET DATA ////////////////////////////////////////////////////////////////////////////////
+############################################################################################
+## Load map data (census tracts)
+tracts = get_acs(state = "NC", 
+                 geography = "tract", 
+                 county = "GUILFORD",
+                 variables = "B19013_001",
+                 geometry = TRUE, 
+                 year = 2015)
+nrow(tracts) ## M = 119 census tracts (neighborhoods)
+
+## Load health outcomes data
+health = read.csv(file = "https://raw.githubusercontent.com/sarahlotspeich/food/main/piedmont-triad-data/disease_prevalences_2022.csv") |> 
+  dplyr::filter(toupper(CountyName) == "GUILFORD") |> 
+  dplyr::mutate(TractFIPS = as.character(TractFIPS), ### to merge with tracts must be character
+                BPHIGH = BPHIGH / POP, ### cases of high blood pressure --> prevalence of high blood pressure
+                CHD = CHD / POP, ### cases of coronary heart disease --> prevalence of coronary heart disease
+                DIABETES = DIABETES / POP, ### cases of diabetes --> prevalence of diabetes
+                OBESITY = OBESITY / POP ### cases of obesity --> prevalence of obesity
+  )
+length(unique(health$TractFIPS)) ## M = 118 census tracts (neighborhoods)
+
+# Merge health outcomes with map data
+health_geo = health |> 
+  dplyr::full_join(tracts, by = c("TractFIPS" = "GEOID"))
+
+## Missing data for one census tract in Guilford County that seems to have no population
+### And be missing the ACS data, as well
+health_geo |> 
+  dplyr::filter(is.na(BPHIGH))
+
+############################################################################################
+## MAPS FROM EACH HEALTH VARIABLE //////////////////////////////////////////////////////////
+############################################################################################
+gso_city_hall = ggmap::geocode(location = "300 W Washington St Suite 220, Greensboro, NC 27401")
+
+## 1. Prevalence of diagnosed diabetes among adults aged >=18 years
+plot_diabetes_gso = plot_tract_health(fill_var = DIABETES, 
+                                      title = paste0("Diagnosed Diabetes\n(State Average = ", round(as.numeric(state_avg["DIABETES"] * 100)), "%)"), 
+                                      mid = as.numeric(state_avg["DIABETES"]), 
+                                      city_hall = gso_city_hall)
+## 2. Prevalence of coronary heart disease among adults aged >=18 years
+plot_chd_gso = plot_tract_health(fill_var = CHD, 
+                                 title = paste0("Coronary Heart Disease\n(State Average = ", round(as.numeric(state_avg["CHD"] * 100)), "%)"),
+                                 mid = as.numeric(state_avg["CHD"]),
+                                 city_hall = gso_city_hall)
+## 3. Prevalence of obesity among adults aged >=18 years
+plot_obesity_gso = plot_tract_health(fill_var = OBESITY,
+                                     title = paste0("Obesity\n(State Average = ", round(as.numeric(state_avg["OBESITY"] * 100)), "%)"),
+                                     mid = as.numeric(state_avg["OBESITY"]),
+                                     city_hall = gso_city_hall)
+## 4. Prevalence of high blood pressure among adults aged >=18 years
+plot_hbp_gso = plot_tract_health(fill_var = BPHIGH, 
+                                 title = paste0("High Blood Pressure\n(State Average = ", round(as.numeric(state_avg["BPHIGH"] * 100)), "%)"),
+                                 mid = as.numeric(state_avg["BPHIGH"]),
+                                 city_hall = gso_city_hall)
+
+############################################################################################
 ## COMBINE MAPS AND SAVE ///////////////////////////////////////////////////////////////////
 ############################################################################################
-ggpubr::ggarrange(plot_chd, plot_diabetes, 
-                  plot_hbp, plot_obesity, 
+ggpubr::ggarrange(plot_diabetes, plot_obesity, 
+                  plot_diabetes_gso, plot_obesity_gso,
                   ncol = 2, nrow = 2)
-ggsave(filename = "~/Documents/food/figures/figS2_map_forsyth_health_outcomes.png",
+ggsave(filename = "~/Documents/food/figures/figS3_map_forsyth_guilford_health_outcomes.png",
        device = "png",
        width = 6,
        height = 5,
        units = "in")
-ggsave(filename = "~/Documents/food/figures/figS2_map_forsyth_health_outcomes.pdf",
+ggsave(filename = "~/Documents/food/figures/figS3_map_forsyth_guilford_health_outcomes.pdf",
        device = "pdf",
        width = 6,
        height = 5,
-       units = "in")
-ggpubr::ggarrange(plot_chd, plot_diabetes, 
-                  plot_hbp, plot_obesity, 
-                  ncol = 4, nrow = 1)
-ggsave(filename = "~/Documents/food/figures/figS3_map_forsyth_health_outcomes_wide.png",
-       device = "png",
-       width = 12,
-       height = 6,
-       units = "in")
-ggsave(filename = "~/Documents/food/figures/figS3_map_forsyth_health_outcomes_wide.pdf",
-       device = "pdf",
-       width = 12,
-       height = 6,
        units = "in")
