@@ -98,10 +98,10 @@ ggpubr::ggarrange(plot_diabetes, plot_obesity,
 ggsave(filename = "~/Documents/food/figures/fig1_map_piedmont_triad_health_outcomes.png",
        device = "png",
        width = 7,
-       height = 6,
+       height = 3,
        units = "in")
 ggsave(filename = "~/Documents/food/figures/fig1_map_piedmont_triad_health_outcomes.pdf",
        device = "pdf",
        width = 7,
-       height = 6,
+       height = 3,
        units = "in")
