@@ -50,6 +50,11 @@ ggsave(filename = "figures/figS1_map_piedmont_triad_SNAP_long.png",
        width = 8, 
        height = 10, 
        units = "in")
+ggsave(filename = "figures/figS1_map_piedmont_triad_SNAP_long.pdf", 
+       device = "pdf", 
+       width = 8, 
+       height = 10, 
+       units = "in")
 
 # Make map (faceted by store type)
 tracts |> 
@@ -69,6 +74,11 @@ tracts |>
 ## Save map 
 ggsave(filename = "figures/figS1_map_piedmont_triad_SNAP_wide.png", 
        device = "png", 
+       width = 10, 
+       height = 8, 
+       units = "in")
+ggsave(filename = "figures/figS1_map_piedmont_triad_SNAP_wide.pdf", 
+       device = "pdf", 
        width = 10, 
        height = 8, 
        units = "in")
