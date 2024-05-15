@@ -213,12 +213,12 @@ ggpubr::ggarrange(map_density, map_income,
                   ncol = 3, nrow = 3, 
                   labels = "AUTO")
  
-ggsave(filename = "~/Documents/food/figures/fig1_map_piedmont_triad_acs_data.png",
+ggsave(filename = "~/Documents/food/figures/figS1_map_piedmont_triad_acs_data.png",
        device = "png",
        width = 10,
        height = 10,
        units = "in")
-ggsave(filename = "~/Documents/food/figures/fig1_map_piedmont_triad_acs_data.pdf",
+ggsave(filename = "~/Documents/food/figures/figS1_map_piedmont_triad_acs_data.pdf",
        device = "pdf",
        width = 10,
        height = 10,
