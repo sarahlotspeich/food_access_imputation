@@ -93,27 +93,15 @@ plot_hbp = plot_tract_health(fill_var = BPHIGH,
 ############################################################################################
 ## COMBINE MAPS AND SAVE ///////////////////////////////////////////////////////////////////
 ############################################################################################
-ggpubr::ggarrange(plot_chd, plot_diabetes, 
-                  plot_hbp, plot_obesity, 
-                  ncol = 2, nrow = 2)
-
-ggsave(filename = "~/Documents/food/figures/fig2_map_piedmont_triad_health_outcomes.png",
+ggpubr::ggarrange(plot_diabetes, plot_obesity, 
+                  ncol = 2, nrow = 1)
+ggsave(filename = "~/Documents/food/figures/fig1_map_piedmont_triad_health_outcomes.png",
        device = "png",
        width = 7,
        height = 6,
        units = "in")
-ggpubr::ggarrange(plot_chd, plot_diabetes, 
-                  plot_hbp, plot_obesity, 
-                  ncol = 4, nrow = 1)
-ggsave(filename = "~/Documents/food/figures/fig2_map_piedmont_triad_health_outcomes_wide.png",
-       device = "png",
-       width = 12,
+ggsave(filename = "~/Documents/food/figures/fig1_map_piedmont_triad_health_outcomes.pdf",
+       device = "pdf",
+       width = 7,
        height = 6,
        units = "in")
-ggsave(plot = plot_chd, 
-       filename = "~/Documents/food/figures/fig2_map_piedmont_triad_chd.png",
-       device = "png",
-       width = 4,
-       height = 4,
-       units = "in")
-
