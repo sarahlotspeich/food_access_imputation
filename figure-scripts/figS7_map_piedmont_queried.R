@@ -47,7 +47,7 @@ map_data = food_access |>
 ## MAKE MAP OF OBSERVED/PREDICTED PROXIMITY ////////////////////////////////////////////////
 ############################################################################################
 map_data |> 
-  dplyr::mutate(queried = factor(x = !is.na(dist_closest_map_cc), 
+  dplyr::mutate(queried = factor(x = !is.na(X_partial), 
                                  levels = c(FALSE, TRUE), 
                                  labels = c("Unqueried", "Queried"))) |> 
   ggplot() + 
@@ -65,8 +65,13 @@ map_data |>
   theme(plot.margin = margin(l=25, r=20, t=20, b=25),
         legend.position = "bottom") 
 
-ggsave(filename = "~/Documents/food/figures/figS5_map_piedmont_queried.png", 
+ggsave(filename = "~/Documents/food/figures/figS7_map_piedmont_queried.png", 
        device = "png", 
+       width = 5, 
+       height = 5, 
+       units = "in")
+ggsave(filename = "~/Documents/food/figures/figS7_map_piedmont_queried.pdf", 
+       device = "pdf", 
        width = 5, 
        height = 5, 
        units = "in")
