@@ -108,13 +108,15 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 
 **Figure S4.** Choropleth maps of socioeconomic factors across the census tracts of the Piedmont Triad, North Carolina. 
 
-  - [Data (Food Access + Health)](piedmont-triad-data/analysis_data.csv)
-  - [Figure](figures/figS2_cum_comp_time_line.png)
-  - [Script (Make Figure)](figure-scripts/figS2_cum_comp_time_line.R)
+  - [Data (RUCA)](piedmont-triad-data/ruca2010revised.csv)
+  - [Data (ACS)](piedmont-triad-data/piedmont_triad_acs_data.csv)
+  - [Figure](figures/figS4_map_piedmont_triad_acs_data.png)
+  - [Script (Make Figure)](figure-scripts/figS4_map_piedmont_triad_acs_data.R)
 
-**Figure S1.** Map of $n = 525$ authorized SNAP retailers (as of 2022) in Forsyth County and the surrounding areas broken down by store type
+**Figure S5.** Map of $n = 701$ authorized SNAP retailers (as of 2022) in the Piedmont Triad, North Carolina, broken down by store type.
 
-  - [Figure](figures/figS1_map_SNAP.png)
-  - [Script (Make Figure)](figures/figS1_map_SNAPs.R)
+  - [Data (SNAP)](piedmont-triad-data/healthy_foods_stores_2022.csv)
+  - [Figure](figures/figS5_map_piedmont_triad_SNAP_wide.png)
+  - [Script (Make Figure)](figures/figS5_map_SNAP.R)
 
 **Figure S2.** Estimated log prevalence ratios for food access $X$ on health. The five possible ways to include the analysis model outcome in the imputation model for $X$ were considered. 
