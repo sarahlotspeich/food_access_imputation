@@ -114,7 +114,7 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
   - [Figure](figures/figS4_map_piedmont_triad_acs_data.png)
   - [Script (Make Figure)](figure-scripts/figS4_map_piedmont_triad_acs_data.R)
 
-**Figure S5.** Map of $n = 701$ authorized SNAP retailers (as of 2022) in the Piedmont Triad, North Carolina, broken down by store type.
+**Figure S5.** Map of $M = 701$ authorized SNAP retailers (as of 2022) in the Piedmont Triad, North Carolina, broken down by store type.
 
   - [Data (SNAP)](piedmont-triad-data/healthy_foods_stores_2022.csv)
   - [Figure](figures/figS5_map_piedmont_triad_SNAP_wide.png)
