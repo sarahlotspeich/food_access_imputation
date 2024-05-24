@@ -75,19 +75,23 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 
 ## Figures 
 
-**Figure 1.** Maps of socioeconomic factors across the census tracts of Forsyth County, North Carolina and its surrounding counties. Data were taken from the 2015 American Community Survey. 
+**Figure 1.** Choropleth map of food access, as measured by proximity to healthy foods for each neighborhood (census tract) in the Piedmont Triad, North Carolina, according to the data used for the naive, gold standard, imputation, and complete-case analyses.
 
-  - [Data](forsyth-data/forsyth_acs_data.csv)
-  - [Figure](figures/fig1_map_forsyth_acs_data.png)
-  - [Script (Make Figure)](figure-scripts/fig1_map_forsyth_acs_data.R)
+  - [Data (Food Access + Health)](piedmont-triad-data/analysis_data.csv)
+  - [Figure](figures/fig1_map_proximity_piedmont.png)
+  - [Script (Make Figure)](figure-scripts/fig1_map_piedmont_proximity.R)
 
-**Figure 2.** Choropleth map of the crude prevalence of adverse health outcomes for each census tract in Forsyth County, North Carolina and its surrounding counties. Data were taken from the 2022 Centers for Disease Control and Prevention PLACES dataset. 
+**Figure 2.** Choropleth maps of the crude prevalence of diagnosed diabetes and obesity for census tracts in the Piedmont Triad, North Carolina.
 
   - [Data (PLACES)](piedmont-triad-data/disease_prevalences_2022.csv)
-  - [Figure](figures/fig2_map_forsyth_health_outcomes.png)
-  - [Script (Make Figure)](figure-scripts/fig2_map_forsyth_health_outcomes.R)
+  - [Figure](figures/fig2_map_piedmont_triad_health_outcomes.png)
+  - [Script (Make Figure)](figure-scripts/fig2_map_piedmont_triad_health_outcomes.R)
 
-**Figure 3.** 
+**Figure 3.** Scatter plot of straight-line versus map-based proximity to healthy foods store for neighborhoods in the Piedmont Triad, North Carolina using the fully-queried data ($N = 387$).
+
+  - [Data (PLACES)](piedmont-triad-data/disease_prevalences_2022.csv)
+  - [Figure](figures/fig3_scatterplot_proximity_piedmont.png)
+  - [Script (Make Figure)](figure-scripts/fig3_scatterplot_proximity_piedmont.R)
 
 **Figure S1.** Straight-line and map-based distances from Reynolda House (square symbol) to a nearby Food Lion grocery store (triangle symbol) in Winston-Salem, North Carolina. 
 
