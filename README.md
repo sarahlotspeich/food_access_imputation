@@ -136,4 +136,4 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 
   - [Data (Food Access + Health)](piedmont-triad-data/analysis_data.csv)
   - [Figure](figures/figS8_histogram_errors_piedmont.png)
-  - [Script (Make Figure)](figure-scripts/figS8_histogram_errors_piedmont.R)
+  - [Script (Make Figure)](figure-scripts/figS8_histogram_errors_proximity.R)
