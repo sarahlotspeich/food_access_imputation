@@ -26,6 +26,9 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 
   - [Download Data](https://www2.census.gov/geo/docs/reference/cenpop2010/tract/CenPop2010_Mean_TR37.txt)
 
+**4.  Rural-Urban Commuting Areas (RUCA)** taken from the United States Department of Agriculture (2010 Release).
+
+  -  [Download Data](https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes/documentation/)
 
 ## Tables 
 
