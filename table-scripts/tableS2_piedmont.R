@@ -6,7 +6,7 @@ library(dplyr) ## for data wrangling
 ## Analytical dataset for food access models
 food_access = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/analysis_data.csv")
 
-## Rural/urban continuum data (2010 release)
+## Rural/urban commuting areas (RUCA) data (2010 release)
 ruca = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/ruca2010revised.csv") |> 
   dplyr::mutate(PrimaryRUCA = factor(PrimaryRUCA, 
                                      levels = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 99), 
