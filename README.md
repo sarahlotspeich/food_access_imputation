@@ -94,6 +94,13 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
   - [Figure](figures/figS2_cum_comp_time_line.png)
   - [Script (Make Figure)](figure-scripts/figS2_cum_comp_time_line.R)
 
+**Figure S3.** Estimated prevalence ratios for food access $X$ on health using multiple imputation. The five possible ways to include the analysis model outcome... in the imputation model for $X$ were considered. 
+
+  - [Script (Run Simulations Locally)](sims-scripts/sims_incl_outcome.R)
+  - [Data (Simulation Results)](sims-data/include_outcome/)
+  - [Figure](figures/figS3_incl_in_imputation_model_PR.png)
+  - [Script (Make Figure)](figure-scripts/figS3_inclY_in_imputation_model.R)
+
 **Figure S1.** Map of $n = 525$ authorized SNAP retailers (as of 2022) in Forsyth County and the surrounding areas broken down by store type
 
   - [Figure](figures/figS1_map_SNAP.png)
