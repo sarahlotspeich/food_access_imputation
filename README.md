@@ -13,35 +13,30 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 **Table 1.** Simulation results under increasing severity of errors in straight-line proximity to healthy foods, as controlled by the error standard deviation $\sigma_U$.
 
   - [Script (Run Simulations Locally)](sims-scripts/sims_vary_sigmaU.R)
-  - [Script (Run Simulations on a Cluster)](sims-scripts/sims_vary_sigmaU_cluster.R)
   - [Script (Make Table)](table-scripts/table1_vary_sigmaU.R)
   - [Data (Simulation Results)](sims-data/vary_sigmaU_sims_combined.csv)
 
 **Table 2.** Simulation results under increasing proportion of neighborhoods queried to obtain map-based proximity to healthy foods, as controlled by $p_V$.
 
   - [Script (Run Simulations Locally)](sims-scripts/sims_vary_pV.R)
-  - [Script (Run Simulations on a Cluster)](sims-scripts/sims_vary_pV_cluster.R)
   - [Script (Make Table)](table-scripts/table2_vary_pV.R)
   - [Data (Simulation Results)](sims-data/vary_pV_sims_combined.csv)
 
 **Table 3.** Simulation results under higher disease prevalence and prevalence ratios for map-based proximity to healthy foods, as controlled by the coefficients $\beta_0$ and $\beta_1$, respectively.
 
   - [Script (Run Simulations Locally)](sims-scripts/sims_vary_prev.R)
-  - [Script (Run Simulations on a Cluster)](sims-scripts/sims_vary_prev_cluster.R)
   - [Script (Make Table)](table-scripts/table3_vary_prev.R)
   - [Data (Simulation Results)](sims-data/vary_prev_sims_combined.csv)
 
 **Table 4.** Simulation results under increasingly severe multiplicative errors in straight-line proximity to healthy foods, as controlled by the max of the error distribution $\tau_W$. 
 
   - [Script (Run Simulations Locally)](sims-scripts/sims_mult_error.R)
-  - [Script (Run Simulations on a Cluster)](sims-scripts/sims_vary_mult_error_cluster.R)
   - [Script (Make Table)](table-scripts/table4_mult_error.R)
   - [Data (Simulation Results)](sims-data/mult_error_sims_combined.csv)
 
 **Table S1.** Simulation results under increasing severity of errors in straight-line proximity to healthy foods, as controlled by the error mean $\mu_U$.
 
   - [Script (Run Simulations Locally)](sims-scripts/sims_vary_muU.R)
-  - [Script (Run Simulations on a Cluster)](sims-scripts/sims_vary_muU_cluster.R)
   - [Script (Make Table)](table-scripts/tableS1_vary_muU.R)
   - [Data (Simulation Results)](sims-data/vary_muU_sims_combined.csv)  
 
