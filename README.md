@@ -30,6 +30,11 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 
   -  [Download Data](https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes/documentation/)
 
+**5.  American Community Survey (ACS)** taken from the United States Census Bureau (2015 Release).
+
+  - [Script (Build Data)](piedmont-triad-data/piedmont_triad_acs_data.R)
+  - [Data](piedmont-triad-data/piedmont_triad_acs_data.csv)
+
 ## Tables 
 
 **Table 1.** Simulation results under increasing severity of errors in straight-line proximity to healthy foods, as controlled by the error standard deviation $\sigma_U$.
@@ -100,6 +105,12 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
   - [Data (Simulation Results)](sims-data/include_outcome/)
   - [Figure](figures/figS3_incl_in_imputation_model_PR.png)
   - [Script (Make Figure)](figure-scripts/figS3_inclY_in_imputation_model.R)
+
+**Figure S4.** Choropleth maps of socioeconomic factors across the census tracts of the Piedmont Triad, North Carolina. 
+
+  - [Data (Food Access + Health)](piedmont-triad-data/analysis_data.csv)
+  - [Figure](figures/figS2_cum_comp_time_line.png)
+  - [Script (Make Figure)](figure-scripts/figS2_cum_comp_time_line.R)
 
 **Figure S1.** Map of $n = 525$ authorized SNAP retailers (as of 2022) in Forsyth County and the surrounding areas broken down by store type
 
