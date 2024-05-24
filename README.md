@@ -19,8 +19,8 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 **2.  Disease Prevalence by Neighborhood (Census Tract)** taken from the United States Centers for Disease Control and Prevention (CDC’s) PLACES Dataset (2022 Release). 
 
   - [Download Data](https://data.cdc.gov/500-Cities-Places/PLACES-Census-Tract-Data-GIS-Friendly-Format-2022-/shc3-fzig/data)
-  - [Script (Filter Data)](forsyth-data/disease_prevalences_2022.R)
-  - [Data (Filtered Data)](forsyth-data/disease_prevalences_2022.csv)
+  - [Script (Filter Data)](piedmont-triad-data/disease_prevalences_2022.R)
+  - [Data (Filtered Data)](piedmont-triad-data/disease_prevalences_2022.csv)
 
 **3.  Neighborhood (Census Tract) Population Centers** taken from the United States Census Bureau (2010 Release). 
 
@@ -83,6 +83,7 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 
 **Figure 2.** Choropleth map of the crude prevalence of adverse health outcomes for each census tract in Forsyth County, North Carolina and its surrounding counties. Data were taken from the 2022 Centers for Disease Control and Prevention PLACES dataset. 
 
+  - [Data (PLACES)](piedmont-triad-data/disease_prevalences_2022.csv)
   - [Figure](figures/fig2_map_forsyth_health_outcomes.png)
   - [Script (Make Figure)](figure-scripts/fig2_map_forsyth_health_outcomes.R)
 
@@ -124,3 +125,11 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
   - [Data (Food Access + Health)](piedmont-triad-data/analysis_data.csv)
   - [Figure](figures/figS6_map_piedmont_queried.png)
   - [Script (Make Figure)](figure-scripts/figS6_map_piedmont_queried.R)
+
+**Figure S7.** Choropleth maps of the crude prevalence of adverse health outcomes for census tracts in Forsyth County (top row) and Guilford County (bottom row), North Carolina. 
+
+  - [Data (PLACES)](piedmont-triad-data/disease_prevalences_2022.csv)
+
+**Figure S8.** Histogram of additive errors ($U$) and multiplicative errors ($W$) in straight-line proximity to healthy foods ($X^*$) from the fully queried data ($N = 387$) for the Piedmont Triad, North Carolina.
+
+  - [Data (Food Access + Health)](piedmont-triad-data/analysis_data.csv)
