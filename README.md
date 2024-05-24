@@ -119,4 +119,8 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
   - [Figure](figures/figS5_map_piedmont_triad_SNAP_wide.png)
   - [Script (Make Figure)](figures/figS5_map_SNAP.R)
 
-**Figure S2.** Estimated log prevalence ratios for food access $X$ on health. The five possible ways to include the analysis model outcome in the imputation model for $X$ were considered. 
+**Figure S6.** Map of census tracts in the Piedmont Triad, North Carolina, colored according to whether it was treated as queried in the partially queried analysis. 
+
+  - [Data (Food Access + Health)](piedmont-triad-data/analysis_data.csv)
+  - [Figure](figures/figS6_map_piedmont_queried.png)
+  - [Script (Make Figure)](figure-scripts/figS6_map_piedmont_queried.R)
