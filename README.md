@@ -60,7 +60,7 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 
   - [Script (Run Simulations Locally)](sims-scripts/sims_vary_muU.R)
   - [Script (Make Table)](table-scripts/tableS1_vary_muU.R)
-  - [Data (Simulation Results)](sims-data/vary_muU_sims_combined.csv)
+  - [Data (Simulation Results)](sims-data/vary_muU/)
 
 **Table S2.** Descriptive statistics of the $N = 387$ census tracts in the Piedmont Triad, North Carolina.
 
