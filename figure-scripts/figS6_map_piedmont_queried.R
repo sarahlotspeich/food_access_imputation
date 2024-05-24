@@ -7,7 +7,7 @@ library(tidycensus) ## to get underlying census tract map shapes
 
 # Set API keys (redacted to avoid violating use agreements)
 ## See ex_set_api_keys.R to set up your own script
-source("set_api_keys.R")
+source("food_access_imputation/set_api_keys.R")
 
 ############################################################################################
 ## LOAD MAP DATA FOR FORSYTH AND BORDERING COUNTIES' CENSUS TRACTS /////////////////////////
@@ -65,12 +65,12 @@ map_data |>
   theme(plot.margin = margin(l=25, r=20, t=20, b=25),
         legend.position = "bottom") 
 
-ggsave(filename = "~/Documents/food/figures/figS7_map_piedmont_queried.png", 
+ggsave(filename = "figures/figS6_map_piedmont_queried.png", 
        device = "png", 
        width = 5, 
        height = 5, 
        units = "in")
-ggsave(filename = "~/Documents/food/figures/figS7_map_piedmont_queried.pdf", 
+ggsave(filename = "figures/figS6_map_piedmont_queried.pdf", 
        device = "pdf", 
        width = 5, 
        height = 5, 
