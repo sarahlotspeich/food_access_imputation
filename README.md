@@ -26,6 +26,9 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 
   - [Download Data](https://www2.census.gov/geo/docs/reference/cenpop2010/tract/CenPop2010_Mean_TR37.txt)
 
+**4.  Rural-Urban Commuting Areas (RUCA)** taken from the United States Department of Agriculture (2010 Release).
+
+  -  [Download Data](https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes/documentation/)
 
 ## Tables 
 
@@ -63,7 +66,7 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 
   - [Script (Make Table)](table-scripts/tableS2_piedmont.R)
   - [Data (Rural/Urban)](piedmont-triad-data/ruca2010revised.csv)
-  - [Data (Acces + Health)](piedmont-triad-data/analysis_data.csv)
+  - [Data (Food Access + Health)](piedmont-triad-data/analysis_data.csv)
 
 ## Figures 
 
@@ -80,10 +83,16 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 
 **Figure 3.** 
 
-**Figure 4.** Straight-line and map-based distances from Reynolda House (square symbol) to a nearby Food Lion grocery store (triangle symbol) in Winston-Salem, North Carolina. 
+**Figure S1.** Straight-line and map-based distances from Reynolda House (square symbol) to a nearby Food Lion grocery store (triangle symbol) in Winston-Salem, North Carolina. 
 
-  - [Figure](figures/fig4_map_comparing_distances.png)
-  - [Script (Make Figure)](figure-scripts/fig4_map_comparing_distances.R)
+  - [Figure](figures/figS1_map_comparing_distances.png)
+  - [Script (Make Figure)](figure-scripts/figS1_map_comparing_distances.R)
+
+**Figure S2.** Line graph of the cumulative computing time (in seconds) for the map-based versus straight-line distance calculations in the Piedmont Triad data. 
+
+  - [Data (Food Access + Health)](piedmont-triad-data/analysis_data.csv)
+  - [Figure](figures/figS2_cum_comp_time_line.png)
+  - [Script (Make Figure)](figure-scripts/figS2_cum_comp_time_line.R)
 
 **Figure S1.** Map of $n = 525$ authorized SNAP retailers (as of 2022) in Forsyth County and the surrounding areas broken down by store type
 
