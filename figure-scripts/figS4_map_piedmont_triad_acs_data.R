@@ -4,75 +4,47 @@
 ## Load libraries
 library(ggplot2) ## to make maps
 library(tidycensus) ## to get underlying census tract map shapes
+library(dplyr) ## to wrangle data
 
 ## Set API keys (redacted to avoid violating use agreements)
 ## See ex_set_api_keys.R to set up your own script
-source("~/Documents/food/set_api_keys.R")
+source("food_access_imputation/set_api_keys.R")
 
 ############################################################################################
 ## LOAD MAP DATA FOR FORSYTH AND BORDERING COUNTIES' CENSUS TRACTS /////////////////////////
 ## To align with CDC Places dataset, use 2015 census geometry. /////////////////////////////
 ############################################################################################
-# Census tract outlines
+## Define counties in the Piedmont Triad
 piedmont_triad = c("SURRY", "STOKES", "ROCKINGHAM", "CASWELL", 
                    "YADKIN", "FORSYTH", "GUILFORD", "ALAMANCE", 
                    "DAVIE", "DAVIDSON", "RANDOLPH", "MONTGOMERY")
+
+## Census tract outlines
 piedmont_triad_ct = get_acs(state = "NC",
                             geography = "tract",
                             county = piedmont_triad,
                             variables = "B01003_001", ## total population,
                             geometry = TRUE,
                             year = 2015)
-# County outlines
-counties = get_acs(state = "NC", 
-                   geography = "county", 
-                   county = piedmont_triad,
-                   variables = "B19013_001",
-                   geometry = TRUE, 
-                   year = 2015) |> 
-  dplyr::mutate(NAME = sub(pattern = " County, North Carolina", 
-                           replacement = "", 
-                           x = NAME))
 
 ############################################################################################
 ## LOAD ACS and RUCA DATA FOR PIEDMONT TRIAD CENSUS TRACTS /////////////////////////////////
 ############################################################################################
-acs = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food/main/piedmont-triad-data/piedmont_triad_acs_data.csv")
+acs = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/piedmont_triad_acs_data.csv")
 
-## Merge ACS data into map data 
+## Merge in 2015 ACS data
 piedmont_triad_ct = piedmont_triad_ct |> 
   dplyr::mutate(GEOID = as.numeric(GEOID)) |> 
   dplyr::left_join(acs)
 
-## 2010 rural/urban continuum codes (merge into health outcomes and food access)
-ruca = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food/main/forsyth-data/ruca2010revised.csv")
+## Merge in 2010 RUCA codes 
+ruca = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/ruca2010revised.csv")
 piedmont_triad_ct = piedmont_triad_ct |> 
   dplyr::left_join(y = ruca, 
                    by = dplyr::join_by(GEOID == StateCountyTract))
 
-############################################################################################
-## MAPS OF COUNTIES ////////////////////////////////////////////////////////////////////////
-############################################################################################
-map_counties = ggplot() + 
-  geom_sf(data = counties, 
-          aes(geometry = geometry, 
-              fill = NAME), 
-          color = "black", 
-          size = 25) +   
-  geom_sf_label(data = counties, 
-                aes(geometry = geometry, 
-                    label = NAME), 
-                color = "black") + 
-  scale_fill_viridis_d(option = "viridis", 
-                       guide = "none") +
-  theme_void(base_size = 8) + 
-  theme(plot.margin = margin(0, 0, 0, 0))
-ggsave(plot = map_counties, 
-       filename = "~/Documents/food/figures/map_piemont_counties.png",
-       device = "png",
-       width = 4,
-       height = 4,
-       units = "in")
+## State averages of each variable
+state_avg = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/state_average_acs_data.csv")
 
 ############################################################################################
 ## CREATE FUNCTION TO MAP VARIABLES FROM ACS DATA //////////////////////////////////////////
@@ -131,26 +103,10 @@ plot_tract_acs = function(fill_var, title, legend_title = "", mid, label_scale =
   }
 }
 
-## State averages of each variable
-state_avg = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food/main/piedmont-triad-data/state_average_acs_data.csv")
-
-## Center each variable at its state average 
-# piedmont_triad_ct = piedmont_triad_ct |> 
-#   dplyr::mutate(INCOME = INCOME - state_avg$INCOME, 
-#                 PERC_POVERTY = PERC_POVERTY - state_avg$PERC_POVERTY, 
-#                 PERC_SNAP = PERC_SNAP - state_avg$PERC_SNAP, 
-#                 PERC_CAR = PERC_CAR - state_avg$PERC_CAR, 
-#                 PERC_INSURED = PERC_INSURED - state_avg$PERC_INSURED, 
-#                 PERC_COLLEGE = PERC_COLLEGE - state_avg$PERC_COLLEGE, 
-#                 PERC_FEM_HEAD = PERC_FEM_HEAD - state_avg$PERC_FEM_HEAD, 
-#                 PopulationDensity = PopulationDensity - 624.7
-#   )
-
 ############################################################################################
 ## MAPS FROM EACH ACS VARIABLE /////////////////////////////////////////////////////////////
 ############################################################################################
 ## 1. Median family income (past 12 months) per census tract
-round(state_avg$INCOME) ## 54036
 map_income = plot_tract_acs(fill_var = INCOME, 
                             title = "Median Family Income\n(State Average = $54,036)", 
                             label_scale = scales::dollar, 
@@ -213,12 +169,12 @@ ggpubr::ggarrange(map_density, map_income,
                   ncol = 3, nrow = 3, 
                   labels = "AUTO")
  
-ggsave(filename = "~/Documents/food/figures/figS1_map_piedmont_triad_acs_data.png",
+ggsave(filename = "figures/figS4_map_piedmont_triad_acs_data.png",
        device = "png",
        width = 10,
        height = 10,
        units = "in")
-ggsave(filename = "~/Documents/food/figures/figS1_map_piedmont_triad_acs_data.pdf",
+ggsave(filename = "figures/figS4_map_piedmont_triad_acs_data.pdf",
        device = "pdf",
        width = 10,
        height = 10,
