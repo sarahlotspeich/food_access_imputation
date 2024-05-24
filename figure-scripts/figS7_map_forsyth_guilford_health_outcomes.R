@@ -4,10 +4,11 @@
 ## Load libraries
 library(ggplot2) ## to make maps
 library(tidycensus) ## to get underlying census tract map shapes
+library(dplyr) ## to wrangle data
 
 ## Set API keys (redacted to avoid violating use agreements)
 ## See ex_set_api_keys.R to set up your own script
-source("set_api_keys.R")
+source("food_access_imputation/set_api_keys.R")
 
 ############################################################################################
 ## GET DATA ////////////////////////////////////////////////////////////////////////////////
@@ -23,28 +24,28 @@ nrow(tracts) ## M = 93 census tracts (neighborhoods)
 
 ## Load health outcomes data
 health = read.csv(file = "https://raw.githubusercontent.com/sarahlotspeich/food/main/piedmont-triad-data/disease_prevalences_2022.csv") |> 
-  dplyr::filter(toupper(CountyName) == "FORSYTH") |> 
-  dplyr::mutate(TractFIPS = as.character(TractFIPS), ### to merge with tracts must be character
-                BPHIGH = BPHIGH / POP, ### cases of high blood pressure --> prevalence of high blood pressure
-                CHD = CHD / POP, ### cases of coronary heart disease --> prevalence of coronary heart disease
-                DIABETES = DIABETES / POP, ### cases of diabetes --> prevalence of diabetes
-                OBESITY = OBESITY / POP ### cases of obesity --> prevalence of obesity
-                )
+  filter(toupper(CountyName) == "FORSYTH") |> 
+  mutate(TractFIPS = as.character(TractFIPS), ### to merge with tracts must be character
+         BPHIGH = BPHIGH / POP, ### cases of high blood pressure --> prevalence of high blood pressure
+         CHD = CHD / POP, ### cases of coronary heart disease --> prevalence of coronary heart disease
+         DIABETES = DIABETES / POP, ### cases of diabetes --> prevalence of diabetes
+         OBESITY = OBESITY / POP ### cases of obesity --> prevalence of obesity
+        )
 length(unique(health$TractFIPS)) ## 93 census tracts in Forsyth
 
 # Merge health outcomes with map data
 health_geo = health |> 
-  dplyr::full_join(tracts, by = c("TractFIPS" = "GEOID"))
+  full_join(tracts, by = c("TractFIPS" = "GEOID"))
 
 # Read in state average (median) prevalences for each disease to center 
-state_avg = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food/main/piedmont-triad-data/state_average_disease.csv")
+state_avg = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/state_average_disease.csv")
 
 ############################################################################################
 ## DEFINE MAP-MAKING FUNCTION //////////////////////////////////////////////////////////////
 ############################################################################################
 plot_tract_health = function(fill_var, title, legend_title = "", mid, city_hall) {
   fill_var_bounds = health_geo |> 
-    dplyr::summarize(min = min({{ fill_var }}, na.rm = TRUE), 
+    summarize(min = min({{ fill_var }}, na.rm = TRUE), 
                      max = max({{ fill_var }}, na.rm = TRUE))
   health_geo |> 
     ggplot() + 
@@ -107,24 +108,24 @@ tracts = get_acs(state = "NC",
 nrow(tracts) ## M = 119 census tracts (neighborhoods)
 
 ## Load health outcomes data
-health = read.csv(file = "https://raw.githubusercontent.com/sarahlotspeich/food/main/piedmont-triad-data/disease_prevalences_2022.csv") |> 
-  dplyr::filter(toupper(CountyName) == "GUILFORD") |> 
-  dplyr::mutate(TractFIPS = as.character(TractFIPS), ### to merge with tracts must be character
-                BPHIGH = BPHIGH / POP, ### cases of high blood pressure --> prevalence of high blood pressure
-                CHD = CHD / POP, ### cases of coronary heart disease --> prevalence of coronary heart disease
-                DIABETES = DIABETES / POP, ### cases of diabetes --> prevalence of diabetes
-                OBESITY = OBESITY / POP ### cases of obesity --> prevalence of obesity
+health = read.csv(file = "https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/disease_prevalences_2022.csv") |> 
+  filter(toupper(CountyName) == "GUILFORD") |> 
+  mutate(TractFIPS = as.character(TractFIPS), ### to merge with tracts must be character
+         BPHIGH = BPHIGH / POP, ### cases of high blood pressure --> prevalence of high blood pressure
+         CHD = CHD / POP, ### cases of coronary heart disease --> prevalence of coronary heart disease
+         DIABETES = DIABETES / POP, ### cases of diabetes --> prevalence of diabetes
+         OBESITY = OBESITY / POP ### cases of obesity --> prevalence of obesity
   )
 length(unique(health$TractFIPS)) ## M = 118 census tracts (neighborhoods)
 
 # Merge health outcomes with map data
 health_geo = health |> 
-  dplyr::full_join(tracts, by = c("TractFIPS" = "GEOID"))
+  full_join(tracts, by = c("TractFIPS" = "GEOID"))
 
 ## Missing data for one census tract in Guilford County that seems to have no population
 ### And be missing the ACS data, as well
 health_geo |> 
-  dplyr::filter(is.na(BPHIGH))
+  filter(is.na(BPHIGH))
 
 ############################################################################################
 ## MAPS FROM EACH HEALTH VARIABLE //////////////////////////////////////////////////////////
@@ -158,12 +159,12 @@ plot_hbp_gso = plot_tract_health(fill_var = BPHIGH,
 ggpubr::ggarrange(plot_diabetes, plot_obesity, 
                   plot_diabetes_gso, plot_obesity_gso,
                   ncol = 2, nrow = 2)
-ggsave(filename = "~/Documents/food/figures/figS3_map_forsyth_guilford_health_outcomes.png",
+ggsave(filename = "figures/figS7_map_forsyth_guilford_health_outcomes.png",
        device = "png",
        width = 6,
        height = 5,
        units = "in")
-ggsave(filename = "~/Documents/food/figures/figS3_map_forsyth_guilford_health_outcomes.pdf",
+ggsave(filename = "figures/figS7_map_forsyth_guilford_health_outcomes.pdf",
        device = "pdf",
        width = 6,
        height = 5,
