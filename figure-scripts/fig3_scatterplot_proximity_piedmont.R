@@ -8,7 +8,7 @@ library(ggplot2) ## to make maps
 ## LOAD FOOD ACCESS DATA FOR FORSYTH AND BORDERING COUNTIES' CENSUS TRACTS /////////////////
 ############################################################################################
 ## Proximity to health foods based on straight-line and map-based distances (census tracts)
-food_access = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food/main/piedmont-triad-data/analysis_data.csv")
+food_access = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/analysis_data.csv")
 nrow(food_access) ## N = 387 neighborhoods (exclude the tract with population = 0)
 
 ############################################################################################
@@ -36,12 +36,12 @@ food_access |>
   ylim(c(0, 16)) +
   coord_equal()
 
-ggsave(filename = "~/Documents/food/figures/fig6_scatterplot_proximity_piedmont.png", 
+ggsave(filename = "figures/fig3_scatterplot_proximity_piedmont.png", 
        device = "png", 
        width = 5, 
        height = 5, 
        units = "in")
-ggsave(filename = "~/Documents/food/figures/fig6_scatterplot_proximity_piedmont.pdf", 
+ggsave(filename = "fig3_scatterplot_proximity_piedmont.pdf", 
        device = "pdf", 
        width = 5, 
        height = 5, 
