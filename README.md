@@ -8,6 +8,25 @@ This repository contains R code and simulation data to reproduce results from th
 devtools::install_github("sarahlotspeich/possum", ref = "main")
 ```
 
+## Data 
+
+**1.  Healthy Foods Store Locations** taken from the United States Department of Agriculture’s (UDSA’s) Historical Supplemental Nutrition Assistance Program (SNAP) Retail Locator Data (2022 Release).
+
+  - [Download Data](https://www.fns.usda.gov/snap/retailer-locator)
+  - [Script (Filter Data)](forsyth-data/healthy_foods_stores_2022.R)
+  - [Data (Filtered Data)](forsyth-data/healthy_foods_stores_2022.csv)
+
+**2.  Disease Prevalence by Neighborhood (Census Tract)** taken from the United States Centers for Disease Control and Prevention (CDC’s) PLACES Dataset (2022 Release). 
+
+  - [Download Data](https://data.cdc.gov/500-Cities-Places/PLACES-Census-Tract-Data-GIS-Friendly-Format-2022-/shc3-fzig/data)
+  - [Script (Filter Data)](forsyth-data/disease_prevalences_2022.R)
+  - [Data (Filtered Data)](forsyth-data/disease_prevalences_2022.csv)
+
+**3.  Neighborhood (Census Tract) Population Centers** taken from the United States Census Bureau (2010 Release). 
+
+  - [Download Data](https://www2.census.gov/geo/docs/reference/cenpop2010/tract/CenPop2010_Mean_TR37.txt)
+
+
 ## Tables 
 
 **Table 1.** Simulation results under increasing severity of errors in straight-line proximity to healthy foods, as controlled by the error standard deviation $\sigma_U$.
@@ -38,7 +57,13 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 
   - [Script (Run Simulations Locally)](sims-scripts/sims_vary_muU.R)
   - [Script (Make Table)](table-scripts/tableS1_vary_muU.R)
-  - [Data (Simulation Results)](sims-data/vary_muU_sims_combined.csv)  
+  - [Data (Simulation Results)](sims-data/vary_muU_sims_combined.csv)
+
+**Table S2.** Descriptive statistics of the $N = 387$ census tracts in the Piedmont Triad, North Carolina.
+
+  - [Script (Make Table)](table-scripts/tableS2_piedmont.R)
+  - [Data (Rural/Urban)](piedmont-triad-data/ruca2010revised.csv)
+  - [Data (Acces + Health)](piedmont-triad-data/analysis_data.csv)
 
 ## Figures 
 
@@ -66,21 +91,3 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
   - [Script (Make Figure)](figures/figS1_map_SNAPs.R)
 
 **Figure S2.** Estimated log prevalence ratios for food access $X$ on health. The five possible ways to include the analysis model outcome in the imputation model for $X$ were considered. 
-
-## Data 
-
-**1.  Healthy Foods Store Locations** taken from the United States Department of Agriculture’s (UDSA’s) Historical Supplemental Nutrition Assistance Program (SNAP) Retail Locator Data (2022 Release).
-
-  - [Download Data](https://www.fns.usda.gov/snap/retailer-locator)
-  - [Script (Filter Data)](forsyth-data/healthy_foods_stores_2022.R)
-  - [Data (Filtered Data)](forsyth-data/healthy_foods_stores_2022.csv)
-
-**2.  Disease Prevalence by Neighborhood (Census Tract)** taken from the United States Centers for Disease Control and Prevention (CDC’s) PLACES Dataset (2022 Release). 
-
-  - [Download Data](https://data.cdc.gov/500-Cities-Places/PLACES-Census-Tract-Data-GIS-Friendly-Format-2022-/shc3-fzig/data)
-  - [Script (Filter Data)](forsyth-data/disease_prevalences_2022.R)
-  - [Data (Filtered Data)](forsyth-data/disease_prevalences_2022.csv)
-
-**3.  Neighborhood (Census Tract) Population Centers** taken from the United States Census Bureau (2010 Release). 
-
-  - [Download Data](https://www2.census.gov/geo/docs/reference/cenpop2010/tract/CenPop2010_Mean_TR37.txt)
