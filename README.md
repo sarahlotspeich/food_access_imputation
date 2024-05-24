@@ -129,7 +129,11 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 **Figure S7.** Choropleth maps of the crude prevalence of adverse health outcomes for census tracts in Forsyth County (top row) and Guilford County (bottom row), North Carolina. 
 
   - [Data (PLACES)](piedmont-triad-data/disease_prevalences_2022.csv)
+  - [Figure](figures/figS7_map_forsyth_guilford_health_outcomes.png)
+  - [Script (Make Figure)](figure-scripts/figS7_map_forsyth_guilford_health_outcomes.R)
 
 **Figure S8.** Histogram of additive errors ($U$) and multiplicative errors ($W$) in straight-line proximity to healthy foods ($X^*$) from the fully queried data ($N = 387$) for the Piedmont Triad, North Carolina.
 
   - [Data (Food Access + Health)](piedmont-triad-data/analysis_data.csv)
+  - [Figure](figures/figS8_histogram_errors_piedmont.png)
+  - [Script (Make Figure)](figure-scripts/figS8_histogram_errors_piedmont.R)
