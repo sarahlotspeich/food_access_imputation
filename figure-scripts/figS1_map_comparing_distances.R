@@ -3,7 +3,7 @@ library(ggplot2)
 
 # Set API keys (redacted to avoid violating use agreements)
 ## See ex_set_api_keys.R to set up your own script
-source("food/set_api_keys.R")
+source("food_access_imputation/set_api_keys.R")
 
 # Get a map of the area around Wake Forest
 wake_map = ggmap::qmap(location = c(lon = -80.291648, 
@@ -69,12 +69,12 @@ wake_map +
             xlim = c(-80.30, -80.27))
 
 # Save Figure S4
-ggsave(filename = "figures/figS4_map_comparing_distances.png", 
+ggsave(filename = "figures/figS1_map_comparing_distances.png", 
        device = "png", 
        units = "in", 
        width = 14, 
        height = 16)
-ggsave(filename = "figures/figS4_map_comparing_distances.pdf", 
+ggsave(filename = "figures/figS1_map_comparing_distances.pdf", 
        device = "pdf", 
        units = "in", 
        width = 14, 
