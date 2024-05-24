@@ -6,7 +6,7 @@ library(tidycensus) ## to get ACS data
 
 ## Set API keys (redacted to avoid violating use agreements)
 ## See ex_set_api_keys.R to set up your own script
-source("set_api_keys.R")
+source("food_access_imputation/set_api_keys.R")
 
 ############################################################################################
 ## DEFINE PIEDMONT TRIAD COUNTY NAMES //////////////////////////////////////////////////////
@@ -270,8 +270,8 @@ piedmont_triad_acs_data = income |>
   dplyr::left_join(fem_house)
 piedmont_triad_acs_data |> 
   filter(GEOID != 37081980100)  |> ## exclude PTI
-  write.csv("~/Documents/food/piedmont-triad-data/piedmont_triad_acs_data.csv", 
+  write.csv("food_access_imputation/piedmont-triad-data/piedmont_triad_acs_data.csv", 
             row.names = FALSE)
 state_avg |> 
-  write.csv("~/Documents/food/piedmont-triad-data/state_average_acs_data.csv", 
+  write.csv("food_access_imputation/piedmont-triad-data/state_average_acs_data.csv", 
             row.names = FALSE)
