@@ -90,7 +90,7 @@ for (i in 1:nrow(food_access)) {
     
     ## Save data
     food_access |> 
-      write.csv(file = "food_access_imputation/piedmont-triad-data/proximity_healthy_foods.csv", 
+      write.csv(file = "food_access_imputation/piedmont-triad-data/raw_proximity_healthy_foods.csv", 
                 row.names = FALSE)
   }
 }
