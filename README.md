@@ -15,7 +15,7 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 **1.  Merged Food Access Measures and Disease Prevalence** created using the **Healthy Food Store Locations**, **Disease Prevalence by Neighborhood (Census Tract)**, and **Neighborhood (Census Tract) Population Centers**. 
 
   - [Script (Calculate Proximity)](piedmont-triad-data/proximity_healthy_foods.R)
-  - *Note:* A small number of census tract population centers could not be geocoded based on the original address. They were manually reviewed and assigned the nearest address that *would* geocode, and then their proximity to healthy foods was recalculated. See the [raw data](piedmont-triad-data/proximity_healthy_foods.csv) and [Script](review_proximity_healthy_foods.R) for more details. 
+  - *Note:* A small number of census tract population centers could not be geocoded based on the original address. They were manually reviewed and assigned the nearest address that *would* geocode, and then their proximity to healthy foods was recalculated. See the [raw data](piedmont-triad-data/raw_proximity_healthy_foods.csv) and [Script](review_proximity_healthy_foods.R) for more details. 
   - [Data (Proximity)](piedmont-triad-data/review_proximity_healthy_foods.csv)
   - [Data (Food Access + Health)](piedmont-triad-data/analysis_data.csv)
 
