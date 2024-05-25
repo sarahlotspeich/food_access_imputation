@@ -1,6 +1,8 @@
 # Combining straight-line and map-based distances to investigate the connection between proximity to healthy foods and disease
 
-This repository contains R code and simulation data to reproduce results from the manuscript by Lotspeich, Mullan, D'Agostino McGowan, and Hepler (2023+). These simulations rely on the `possum` package, which implements the multiple imputation approach for covariate measurement error in Poisson regression from the paper. The package can be found in its own repo [here](https://github.com/sarahlotspeich/possum) and installed in `R` as follows:
+This repository contains R code and simulation data to reproduce results from the manuscript by Lotspeich, Mullan, D'Agostino McGowan, and Hepler (2023+). 
+
+These simulations rely on the `possum` package, which implements the multiple imputation approach for covariate measurement error in Poisson regression from the paper. The package can be found in its own repo [here](https://github.com/sarahlotspeich/possum) and installed in `R` as follows:
 
 ``` r
 # Run once
@@ -8,29 +10,38 @@ This repository contains R code and simulation data to reproduce results from th
 devtools::install_github("sarahlotspeich/possum", ref = "main")
 ```
 
-## Data 
+## Primary Data Source (Analysis)
 
-**1.  Healthy Foods Store Locations** taken from the United States Department of Agriculture’s (UDSA’s) Historical Supplemental Nutrition Assistance Program (SNAP) Retail Locator Data (2022 Release).
+**1.  Merged Food Access Measures and Disease Prevalence** created using the **Healthy Food Store Locations**, **Disease Prevalence by Neighborhood (Census Tract)**, and **Neighborhood (Census Tract) Population Centers**. 
+
+  - [Script (Calculate Proximity)](piedmont-triad-data/proximity_healthy_foods.R)
+  - [Script (Manual Review)](piedmont-triad-data/review_proximity_healthy_foods.R) A small number of census tract population centers could not be geocoded based on the original address. They were manually reviewed and assigned the nearest address that *would* geocode, and then their proximity to healthy foods was recalculated. 
+  - [Data (Proximity)](piedmont-triad-data/proximity_healthy_foods.csv)
+  - [Data](piedmont-triad-data/analysis_data.csv)
+
+**2.  Healthy Foods Store Locations** taken from the United States Department of Agriculture’s (UDSA’s) Historical Supplemental Nutrition Assistance Program (SNAP) Retail Locator Data (2022 Release).
 
   - [Download Data](https://www.fns.usda.gov/snap/retailer-locator)
   - [Script (Filter Data)](forsyth-data/healthy_foods_stores_2022.R)
   - [Data (Filtered Data)](forsyth-data/healthy_foods_stores_2022.csv)
 
-**2.  Disease Prevalence by Neighborhood (Census Tract)** taken from the United States Centers for Disease Control and Prevention (CDC’s) PLACES Dataset (2022 Release). 
+**3.  Disease Prevalence by Neighborhood (Census Tract)** taken from the United States Centers for Disease Control and Prevention (CDC’s) PLACES Dataset (2022 Release). 
 
   - [Download Data](https://data.cdc.gov/500-Cities-Places/PLACES-Census-Tract-Data-GIS-Friendly-Format-2022-/shc3-fzig/data)
   - [Script (Filter Data)](piedmont-triad-data/disease_prevalences_2022.R)
   - [Data (Filtered Data)](piedmont-triad-data/disease_prevalences_2022.csv)
 
-**3.  Neighborhood (Census Tract) Population Centers** taken from the United States Census Bureau (2010 Release). 
+**4.  Neighborhood (Census Tract) Population Centers** taken from the United States Census Bureau (2010 Release). 
 
   - [Download Data](https://www2.census.gov/geo/docs/reference/cenpop2010/tract/CenPop2010_Mean_TR37.txt)
 
-**4.  Rural-Urban Commuting Areas (RUCA)** taken from the United States Department of Agriculture (2010 Release).
+## Secondary Data Sources (Descriptive)
+
+**5.  Rural-Urban Commuting Areas (RUCA)** taken from the United States Department of Agriculture (2010 Release).
 
   -  [Download Data](https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes/documentation/)
 
-**5.  American Community Survey (ACS)** taken from the United States Census Bureau (2015 Release).
+**6.  American Community Survey (ACS)** taken from the United States Census Bureau (2015 Release). Data were extracted using the [`tidycensus`](https://walker-data.com/tidycensus/) package. 
 
   - [Script (Build Data)](piedmont-triad-data/piedmont_triad_acs_data.R)
   - [Data](piedmont-triad-data/piedmont_triad_acs_data.csv)
