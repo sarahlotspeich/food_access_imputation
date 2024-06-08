@@ -9,13 +9,15 @@ library(dplyr) ## to wrangle data
 health = read.csv(file = "https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/disease_prevalences_2022.csv")
 
 ## (2) Proximity to health foods based on straight-line and map-based distances (census tracts)
-food_access = read.csv(file = "https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/proximity_healthy_foods.csv") |> 
+food_access = read.csv(file = "https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/review_proximity_healthy_foods.csv") |> 
   right_join(health, 
              by = join_by(LocationID == TractFIPS))
 
 ## Remove additional food access columns (not needed for primary analysis)
 food_access = food_access |> 
-  dplyr::select(LocationID, CountyName, dist_closest_straight, dist_closest_map, 
+  dplyr::select(LocationID, CountyName, 
+                dist_closest_straight, dist_closest_map, 
+                comp_time_straight, dist_straight_q20, comp_time_map, 
                 POP, BPHIGH, CHD, DIABETES, OBESITY)
 
 ## Order by Location ID
@@ -43,7 +45,10 @@ food_access |>
                                         "Rockingham", "Stokes", "Surry", "Yadkin" ), 
                              labels = LETTERS[1:12])) |> 
   dplyr::rename(Xstar = dist_closest_straight, 
+                Xstar_time = comp_time_straight,
+                Xstar_q20 = dist_straight_q20,
                 X_full = dist_closest_map, 
+                X_time = comp_time_map, 
                 X_partial = dist_closest_map_cc,
                 O_POP = POP, 
                 Y_BPHIGH = BPHIGH,
