@@ -15,18 +15,18 @@ food_access = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_ac
 ## MAKE LINE GRAPH OF CUMULATIVE COMPUTING TIME ////////////////////////////////////////////
 ############################################################################################
 food_access |> 
-  select(LocationID, dplyr::starts_with("comp_")) |> 
+  select(LocationID, dplyr::ends_with("_time")) |> 
   mutate(row_id = 1:dplyr::n()) |> 
   tidyr::gather(key = "dist_calc", value = "comp_time", -c(1, 4)) |> 
   group_by(dist_calc) |> 
   mutate(cum_comp_time = cumsum(comp_time), 
          dist_calc = factor(x = dist_calc, 
-                            levels = c("comp_time_map", "comp_time_straight"), 
+                            levels = c("X_time", "Xstar_time"), 
                             labels = c("Map-Based", "Straight-Line"))) |> 
   ggplot(aes(x = row_id, 
              y = cum_comp_time, 
              color = dist_calc)) + 
-  geom_line(size = 1) + 
+  geom_line(linewidth = 1) + 
   scale_color_manual(values = c("#6F98DF", 
                                 "#EB7B51"), 
                      name = "Distance Calculation:") + 
