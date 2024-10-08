@@ -60,5 +60,5 @@ naive_res = get_sp_mod_summ(terms = "Xstar", mod = mod_diab) |>
   dplyr::mutate(Analysis = "Naive", 
                 Outcome = c("Diagnosed Diabetes", "Obesity"), 
                 Spatial = TRUE) |> 
-  dplyr::select(Analysis, Outcome, Est, LB, UB) |> 
+  dplyr::select(Analysis, Outcome, Spatial, Est, LB, UB) |> 
   dplyr::bind_rows(naive_res)
