@@ -104,6 +104,12 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
   - [Figure](figures/fig3_scatterplot_proximity_piedmont.png)
   - [Script (Make Figure)](figure-scripts/fig3_scatterplot_proximity_piedmont.R)
 
+**Figure 4.** Estimated prevalence ratios (with 95\% confidence intervals) for proximity to healthy foods and health outcomes in the Piedmont Triad, North Carolina using different analysis methods. Within each health outcome and method, estimates on the right came from the mixed effects model allowing for spatial autocorrelation between neighboring census tracts; estimates on the left came from the model assuming independence between tracts.
+
+  - [Data (Food Access + Health)](piedmont-triad-data/analysis_data.csv)
+  - [Figure](figures/fig4_forest_plot_piedmont.png)
+  - [Script (Make Figure)](figure-scripts/fig4_forest_plot_piedmont.R)
+
 **Figure S1.** Straight-line and map-based distances from Reynolda House (square symbol) to a nearby Food Lion grocery store (triangle symbol) in Winston-Salem, North Carolina. 
 
   - [Figure](figures/figS1_map_comparing_distances.png)
@@ -115,7 +121,7 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
   - [Figure](figures/figS2_cum_comp_time_line.png)
   - [Script (Make Figure)](figure-scripts/figS2_cum_comp_time_line.R)
 
-**Figure S3.** Estimated prevalence ratios for food access $X$ on health using multiple imputation. The five possible ways to include the analysis model outcome... in the imputation model for $X$ were considered. 
+**Figure S3.** Estimated prevalence ratios for map-based food access $X$ on health using multiple imputation. The five possible ways to include the analysis model outcome $Y$ (with or without the model offset $Pop$) in the imputation model for $X$ were considered. 
 
   - [Script (Run Simulations Locally)](sims-scripts/sims_incl_outcome.R)
   - [Data (Simulation Results)](sims-data/include_outcome/)
