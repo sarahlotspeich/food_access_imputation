@@ -14,7 +14,7 @@ nrow(food_access) ## N = 387 neighborhoods (exclude the tract with population = 
 
 # Set API keys (redacted to avoid violating use agreements)
 ## See ex_set_api_keys.R to set up your own script
-source("set_api_keys.R")
+# source("set_api_keys.R")
 
 # Define Piedmont Triad counties
 piedmont_triad = c("SURRY", "STOKES", "ROCKINGHAM", "CASWELL", 
