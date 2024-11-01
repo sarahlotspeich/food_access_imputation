@@ -3,19 +3,19 @@
 
 # Functions to pull out of coefficient summary
 est = function(i, fit) {
-  round(exp(fit$coefficients[i]), 3)
+  round(exp(fit$Estimate[i]), 3)
 }
 lb = function(i, fit) {
-  se = sqrt(diag(vcov(fit)))[i]
-  round(exp(fit$coefficients[i] - 1.96 * se), 3)
+  se = fit$Standard.Error[i]
+  round(exp(fit$Estimate[i] - 1.96 * se), 3)
 }
 ub = function(i, fit) {
-  se = sqrt(diag(vcov(fit)))[i]
-  round(exp(fit$coefficients[i] + 1.96 * se), 3)
+  se = fit$Standard.Error[i]
+  round(exp(fit$Estimate[i] + 1.96 * se), 3)
 }
 ci = function(i, fit) {
-  se = sqrt(diag(vcov(fit)))[i]
-  paste(round(exp(fit$coefficients[i] + c(-1.96, 1.96) * se), 3), collapse = ", ")
+  se = fit$Standard.Error[i]
+  paste(round(exp(fit$Estimate[i] + c(-1.96, 1.96) * se), 3), collapse = ", ")
 }
 
 ## Imputation Analysis
@@ -57,7 +57,7 @@ mod_obes = impPossum(imputation_formula = X_partial ~ Xstar + log(Y_OBESITY),
 imp_res = data.frame(Analysis = "Imputation",
                      Outcome = c("Diagnosed Diabetes", "Obesity"),
                      Spatial = TRUE,
-                     Est = exp(c(mod_chd$Estimate[2], mod_diab$Estimate[2], mod_hbp$Estimate[2], mod_obes$Estimate[2])), 
+                     Est = exp(c(mod_diab$Estimate[2], mod_obes$Estimate[2])), 
                      LB = exp(c(mod_diab$Estimate[2] - 1.96 * mod_diab$Standard.Error[2],
                                 mod_obes$Estimate[2] - 1.96 * mod_obes$Standard.Error[2])),
                      UB = exp(c(mod_diab$Estimate[2] + 1.96 * mod_diab$Standard.Error[2],
