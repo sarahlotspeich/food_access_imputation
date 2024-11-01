@@ -19,7 +19,6 @@ ci = function(i, fit) {
 }
 
 ## Imputation Analysis
-library(possum) ## load imputation functions 
 ### Non-Spatial Models
 mod_diab = impPossum(imputation_formula = X_partial ~ Xstar + log(Y_DIABETES), 
                      analysis_formula = Y_DIABETES ~ X_partial + offset(log(O_POP)), 
