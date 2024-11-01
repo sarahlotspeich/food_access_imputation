@@ -32,6 +32,7 @@ mod_obes = glm(formula = Y_OBESITY ~ X_partial,
 # Save results for forest plot
 cc_res = data.frame(Analysis = "Complete Case",
                     Outcome = c("Diagnosed Diabetes", "Obesity"),
+                    Spatial = FALSE,
                     Est = c(est(2, mod_diab), est(2, mod_obes)), 
                     LB = c(lb(2, mod_diab), lb(2, mod_obes)),
                     UB = c(ub(2, mod_diab), ub(2, mod_obes))) 

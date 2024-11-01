@@ -32,6 +32,7 @@ mod_obes = impPossum(imputation_formula = X_partial ~ Xstar + log(Y_OBESITY),
 # Save results for forest plot
 imp_res = data.frame(Analysis = "Imputation",
                      Outcome = c("Diagnosed Diabetes", "Obesity"),
+                     Spatial = FALSE,
                      Est = c(est(2, mod_diab), est(2, mod_obes)), 
                      LB = c(lb(2, mod_diab), lb(2, mod_obes)),
                      UB = c(ub(2, mod_diab), ub(2, mod_obes))) 
