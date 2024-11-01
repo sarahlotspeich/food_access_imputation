@@ -58,4 +58,4 @@ cc_res = get_sp_mod_summ(terms = "X_full", mod = mod_diab) |>
                 Outcome = c("Diagnosed Diabetes", "Obesity"), 
                 Spatial = TRUE) |> 
   dplyr::select(Analysis, Outcome, Spatial, Est, LB, UB) |> 
-  dplyr::bind_rows(gs_res)
+  dplyr::bind_rows(cc_res)
