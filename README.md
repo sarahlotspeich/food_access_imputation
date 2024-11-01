@@ -1,6 +1,6 @@
 # Combining straight-line and map-based distances to investigate the connection between proximity to healthy foods and disease
 
-This repository contains R code and simulation data to reproduce results from the manuscript by Lotspeich, Mullan, D'Agostino McGowan, and Hepler (2023+). 
+This repository contains `R` code and simulation data to reproduce results from the manuscript by [Lotspeich, Mullan, D'Agostino McGowan, and Hepler (2024+)](https://arxiv.org/abs/2405.16385). 
 
 These simulations rely on the `possum` package, which implements the multiple imputation approach for covariate measurement error in Poisson regression from the paper. The package can be found in its own repo [here](https://github.com/sarahlotspeich/possum) and installed in `R` as follows:
 
@@ -15,7 +15,7 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 **1.  Merged Food Access Measures and Disease Prevalence** created using the **Healthy Food Store Locations**, **Disease Prevalence by Neighborhood (Census Tract)**, and **Neighborhood (Census Tract) Population Centers**. 
 
   - [Script (Calculate Proximity)](piedmont-triad-data/raw_proximity_healthy_foods.R)
-  - *Note:* A small number of census tract population centers could not be geocoded based on the original address. They were manually reviewed and assigned the nearest address that *would* geocode, and then their proximity to healthy foods was recalculated. See the [raw data](piedmont-triad-data/raw_proximity_healthy_foods.csv) and [Script](piedmont-triad-data/review_proximity_healthy_foods.R) for more details. 
+  - *Note:* A small number of census tract population centers could not be geocoded based on the original address. They were manually reviewed and assigned the nearest address that *would* geocode, and then their proximity to healthy foods was recalculated. See the [raw data](piedmont-triad-data/raw_proximity_healthy_foods.csv) and [script](piedmont-triad-data/review_proximity_healthy_foods.R) for more details. 
   - [Data (Proximity)](piedmont-triad-data/review_proximity_healthy_foods.csv)
   - [Data (Food Access + Health)](piedmont-triad-data/analysis_data.csv)
 
