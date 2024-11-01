@@ -52,8 +52,8 @@ mod_obes = fitme(formula = Y_OBESITY ~ X_partial + adjacency(1 | LocationID) + o
                  data = food_access)
 
 # Save results for forest plot
-cc_res = get_sp_mod_summ(terms = "X_full", mod = mod_diab) |> 
-  dplyr::bind_rows(get_sp_mod_summ(terms = "X_full", mod = mod_obes)) |> 
+cc_res = get_sp_mod_summ(terms = "X_partial", mod = mod_diab) |> 
+  dplyr::bind_rows(get_sp_mod_summ(terms = "X_partial", mod = mod_obes)) |> 
   dplyr::mutate(Analysis = "Complete Case", 
                 Outcome = c("Diagnosed Diabetes", "Obesity"), 
                 Spatial = TRUE) |> 
