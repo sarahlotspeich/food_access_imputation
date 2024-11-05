@@ -107,6 +107,7 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 **Figure 4.** Estimated prevalence ratios (with 95\% confidence intervals) for proximity to healthy foods and health outcomes in the Piedmont Triad, North Carolina using different analysis methods. Within each health outcome and method, estimates on the right came from the mixed effects model allowing for spatial autocorrelation between neighboring census tracts; estimates on the left came from the model assuming independence between tracts.
 
   - [Data (Food Access + Health)](piedmont-triad-data/analysis_data.csv)
+  - [Data (Fitted Models)](piedmont-triad-data/forest_plot_data.csv) 
   - [Figure](figures/fig4_forest_plot_piedmont.png)
   - [Script (Make Figure)](figure-scripts/fig4_forest_plot_piedmont.R)
 
