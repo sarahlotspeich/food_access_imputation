@@ -32,10 +32,20 @@ mod_obes = glm(formula = Y_OBESITY ~ X_full,
 # Save results for forest plot
 gs_res = data.frame(Analysis = "Gold Standard",
                     Outcome = c("Diagnosed Diabetes", "Obesity"),
+                    Coefficient = "logPR",
                     Spatial = FALSE,
                     Est = c(est(2, mod_diab), est(2, mod_obes)), 
                     LB = c(lb(2, mod_diab), lb(2, mod_obes)),
-                    UB = c(ub(2, mod_diab), ub(2, mod_obes))) 
+                    UB = c(ub(2, mod_diab), ub(2, mod_obes))) |> 
+  dplyr::bind_rows(
+    data.frame(Analysis = "Gold Standard",
+               Outcome = c("Diagnosed Diabetes", "Obesity"),
+               Coefficient = "(Intercept)",
+               Spatial = FALSE,
+               Est = c(est(1, mod_diab), est(1, mod_obes)), 
+               LB = c(lb(1, mod_diab), lb(1, mod_obes)),
+               UB = c(ub(1, mod_diab), ub(1, mod_obes)))
+  )
 
 # Model 1a: Diagnosed diabetes among adults aged >=18 years 
 ## Predictor X = proximity to healthy foods based on map-based distance
@@ -54,8 +64,18 @@ mod_obes = fitme(formula = Y_OBESITY ~ X_full + adjacency(1 | LocationID) + offs
 # Save results for forest plot
 gs_res = get_sp_mod_summ(terms = "X_full", mod = mod_diab) |> 
   dplyr::bind_rows(get_sp_mod_summ(terms = "X_full", mod = mod_obes)) |> 
+  dplyr::rename(Coefficient = terms) |> 
   dplyr::mutate(Analysis = "Gold Standard", 
                 Outcome = c("Diagnosed Diabetes", "Obesity"), 
+                Coefficient = "logPR",
                 Spatial = TRUE) |> 
-  dplyr::select(Analysis, Outcome, Spatial, Est, LB, UB) |> 
+  dplyr::select(Analysis, Outcome, Spatial, Est, LB, UB, Coefficient) |> 
+  dplyr::bind_rows(
+    get_sp_mod_summ(terms = "(Intercept)", mod = mod_diab) |> 
+      dplyr::bind_rows(get_sp_mod_summ(terms = "(Intercept)", mod = mod_obes)) |> 
+      dplyr::rename(Coefficient = terms) |> 
+      dplyr::mutate(Analysis = "Gold Standard", 
+                    Outcome = c("Diagnosed Diabetes", "Obesity"), 
+                    Spatial = TRUE)
+  ) |> 
   dplyr::bind_rows(gs_res)
