@@ -29,10 +29,7 @@ q = 0.1 ## proportion of neighborhoods to be queried
 # --------------------------------------------------------------------
 # Function to simulate data (arguments defined as follows)
 ## N = number of neighborhoods (sample size)
-## beta0 = model intercept
-## beta1 = log prevalence ratio 
 ## muU = mean of the measurement error distribution
-## sigmaU = standard deviation of the measurement error distribution
 # --------------------------------------------------------------------
 sim_data = function(N, muU) {
   ## Simulate true (map-based) proximity to grocery store
