@@ -35,7 +35,7 @@ mod_obes = glm(formula = Y_OBESITY ~ Xstar,
 # Save results for forest plot
 naive_res = data.frame(Analysis = "Naive",
                        Outcome = c("Diagnosed Diabetes", "Obesity"),
-                       Coefficient = "LogPR",
+                       Coefficient = "PR",
                        Spatial = FALSE,
                        Est = c(est(2, mod_diab), est(2, mod_obes)), 
                        LB = c(lb(2, mod_diab), lb(2, mod_obes)),
@@ -69,7 +69,7 @@ naive_res = get_sp_mod_summ(terms = "Xstar", mod = mod_diab) |>
   dplyr::bind_rows(get_sp_mod_summ(terms = "Xstar", mod = mod_obes)) |> 
   dplyr::mutate(Analysis = "Naive", 
                 Outcome = c("Diagnosed Diabetes", "Obesity"), 
-                Coefficient = "LogPR",
+                Coefficient = "PR",
                 Spatial = TRUE) |> 
   dplyr::select(Analysis, Outcome, Spatial, Est, LB, UB, Coefficient) |> 
   dplyr::bind_rows(

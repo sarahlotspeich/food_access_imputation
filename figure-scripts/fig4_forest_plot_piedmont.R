@@ -12,7 +12,7 @@ plot_data = read.csv(file = "https://raw.githubusercontent.com/sarahlotspeich/fo
 
 ## Subset to log prevalence ratio (log PR) for proximity to healthy foods
 plot_data = plot_data |> 
-  dplyr::filter(Coefficient == "LogPR")
+  dplyr::filter(Coefficient == "PR")
 
 ############################################################################################
 ## CREATE A FOREST PLOT OF ALL MODEL RESULTS FOR PREVALENCE RATIO //////////////////////////
