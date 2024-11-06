@@ -22,6 +22,7 @@ counties = get_acs(state = "NC",
   dplyr::mutate(NAME = sub(pattern = " County, North Carolina", 
                            replacement = "", 
                            x = NAME))
+nrow(counties) ## 100 total 
 
 ############################################################################################
 ## DEFINE SUBSETS OF COUNTIES USED FOR THE ANALYSIS OR DATA COLLECTION /////////////////////
@@ -39,9 +40,9 @@ border_counties = c("PERSON", "ORANGE", "CHATHAM", "MOORE", "STANLY", "CABARRUS"
 counties = counties |> 
   dplyr::mutate(Category = dplyr::case_when(toupper(NAME) %in% piedmont_triad ~ "Piedmont Triad", 
                                             toupper(NAME) %in% border_counties ~ "Bordering Piedmont Triad", 
-                                            .default = "Rest of NC"), 
+                                            .default = "Rest of North Carolina"), 
                 Category = factor(x = Category, 
-                                  levels = c("Piedmont Triad", "Bordering Piedmont Triad", "Rest of NC")))
+                                  levels = c("Piedmont Triad", "Bordering Piedmont Triad", "Rest of North Carolina")))
 ## Inspect counts per category 
 table(counties$Category) ## 12 bordering, 12 Piedmont Triad, 76 rest of NC 
 
