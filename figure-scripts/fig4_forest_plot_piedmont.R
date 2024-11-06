@@ -10,6 +10,10 @@ library(tidycensus) ## for shapefiles
 ############################################################################################
 plot_data = read.csv(file = "https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/refs/heads/main/piedmont-triad-data/forest_plot_data.csv")
 
+## Subset to log prevalence ratio (log PR) for proximity to healthy foods
+plot_data = plot_data |> 
+  dplyr::filter(Coefficient == "LogPR")
+
 ############################################################################################
 ## CREATE A FOREST PLOT OF ALL MODEL RESULTS FOR PREVALENCE RATIO //////////////////////////
 ############################################################################################
