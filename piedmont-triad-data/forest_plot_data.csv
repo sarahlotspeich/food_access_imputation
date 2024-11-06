@@ -1,17 +1,29 @@
-"Analysis","Outcome","Spatial","Est","LB","UB"
-"Naive","Diagnosed Diabetes",TRUE,0.999347918492524,0.985341510458947,1.01355342446719
-"Naive","Obesity",TRUE,0.994224985356833,0.987093656061901,1.00140783545448
-"Naive","Diagnosed Diabetes",FALSE,0.993,0.99,0.995
-"Naive","Obesity",FALSE,0.993,0.992,0.994
-"Gold Standard","Diagnosed Diabetes",TRUE,0.997430962900538,0.986659217234924,1.00832030793852
-"Gold Standard","Obesity",TRUE,0.994415872651193,0.988931322754701,0.9999308395108
-"Gold Standard","Diagnosed Diabetes",FALSE,0.992,0.99,0.994
-"Gold Standard","Obesity",FALSE,0.994,0.993,0.995
-"Complete Case","Diagnosed Diabetes",TRUE,0.986484614413491,0.971577245484846,1.00162071415012
-"Complete Case","Obesity",TRUE,0.993205138187647,0.984261911377473,1.0022296251836
-"Complete Case","Diagnosed Diabetes",FALSE,0.986,0.982,0.989
-"Complete Case","Obesity",FALSE,0.993,0.991,0.995
-"Imputation","Diagnosed Diabetes",TRUE,0.998888851375567,0.983042160624697,1.01499099160542
-"Imputation","Obesity",TRUE,0.995798678719499,0.986815258574412,1.00486387895139
-"Imputation","Diagnosed Diabetes",FALSE,0.994,0.981,1.007
-"Imputation","Obesity",FALSE,0.995,0.984,1.006
+"Analysis","Outcome","Spatial","Est","LB","UB","Coefficient"
+"Naive","Diagnosed Diabetes",TRUE,0.999347918492524,0.985341510458947,1.01355342446719,"LogPR"
+"Naive","Obesity",TRUE,0.994224985356833,0.987093656061901,1.00140783545448,"LogPR"
+"Naive","Diagnosed Diabetes",TRUE,0.108361669951682,0.10383929513849,0.113081001744635,"(Intercept)"
+"Naive","Obesity",TRUE,0.34974492485651,0.342006919056346,0.35765800528361,"(Intercept)"
+"Naive","Diagnosed Diabetes",FALSE,0.993,0.99,0.995,"LogPR"
+"Naive","Obesity",FALSE,0.993,0.992,0.994,"LogPR"
+"Naive","Diagnosed Diabetes",FALSE,0.113,0.112,0.113,"(Intercept)"
+"Naive","Obesity",FALSE,0.354,0.353,0.355,"(Intercept)"
+"Gold Standard","Diagnosed Diabetes",TRUE,0.997430962900538,0.986659217234924,1.00832030793852,"logPR"
+"Gold Standard","Obesity",TRUE,0.994415872651193,0.988931322754701,0.9999308395108,"logPR"
+"Gold Standard","Diagnosed Diabetes",TRUE,0.108933453528783,0.104268788423306,0.113806801413405,"(Intercept)"
+"Gold Standard","Obesity",TRUE,0.351040499080514,0.343087373272457,0.359177986701468,"(Intercept)"
+"Gold Standard","Diagnosed Diabetes",FALSE,0.992,0.99,0.994,"logPR"
+"Gold Standard","Obesity",FALSE,0.994,0.993,0.995,"logPR"
+"Gold Standard","Diagnosed Diabetes",FALSE,0.113,0.113,0.114,"(Intercept)"
+"Gold Standard","Obesity",FALSE,0.355,0.354,0.357,"(Intercept)"
+"Complete Case","Diagnosed Diabetes",TRUE,0.986484615917948,0.971577249187386,1.00162071338817,"LogPR"
+"Complete Case","Obesity",TRUE,0.993205138187647,0.984261911377473,1.0022296251836,"LogPR"
+"Complete Case","Diagnosed Diabetes",TRUE,0.123617403714733,0.114467165325209,0.133499090833221,"(Intercept)"
+"Complete Case","Obesity",TRUE,0.362695294621557,0.346525828643268,0.379619254517504,"(Intercept)"
+"Complete Case","Diagnosed Diabetes",FALSE,0.986,0.982,0.989,"LogPR"
+"Complete Case","Obesity",FALSE,0.993,0.991,0.995,"LogPR"
+"Complete Case","Diagnosed Diabetes",FALSE,0.126,0.124,0.128,"(Intercept)"
+"Complete Case","Obesity",FALSE,0.363,0.36,0.367,"(Intercept)"
+"Imputation","Diagnosed Diabetes",TRUE,0.998537185408081,0.982070719794328,1.01527974569032,"LogPR"
+"Imputation","Obesity",TRUE,0.995728352612807,0.985896460655424,1.00565829350668,"LogPR"
+"Imputation","Diagnosed Diabetes",TRUE,0.108630330086616,0.102963933192553,0.11460856485211,"(Intercept)"
+"Imputation","Obesity",TRUE,0.349873224882503,0.339280558681628,0.360796604336384,"(Intercept)"
