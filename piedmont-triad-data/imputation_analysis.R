@@ -32,10 +32,20 @@ mod_obes = impPossum(imputation_formula = X_partial ~ Xstar + log(Y_OBESITY),
 # Save results for forest plot
 imp_res = data.frame(Analysis = "Imputation",
                      Outcome = c("Diagnosed Diabetes", "Obesity"),
+                     Coefficient = "LogPR",
                      Spatial = FALSE,
                      Est = c(est(2, mod_diab), est(2, mod_obes)), 
                      LB = c(lb(2, mod_diab), lb(2, mod_obes)),
-                     UB = c(ub(2, mod_diab), ub(2, mod_obes))) 
+                     UB = c(ub(2, mod_diab), ub(2, mod_obes))) |> 
+  dplyr::bind_rows(
+    data.frame(Analysis = "Imputation",
+               Outcome = c("Diagnosed Diabetes", "Obesity"),
+               Coefficient = "(Intercept)",
+               Spatial = FALSE,
+               Est = c(est(1, mod_diab), est(1, mod_obes)), 
+               LB = c(lb(1, mod_diab), lb(1, mod_obes)),
+               UB = c(ub(1, mod_diab), ub(1, mod_obes))) 
+  )
 
 # Model 1a: Diagnosed diabetes among adults aged >=18 years 
 ## Predictor X = proximity to healthy foods based on map-based distance
@@ -56,10 +66,22 @@ mod_obes = impPossum(imputation_formula = X_partial ~ Xstar + log(Y_OBESITY),
 # Save results for forest plot
 imp_res = data.frame(Analysis = "Imputation",
                      Outcome = c("Diagnosed Diabetes", "Obesity"),
+                     Coefficient = "LogPR",
                      Spatial = TRUE,
                      Est = exp(c(mod_diab$Estimate[2], mod_obes$Estimate[2])), 
                      LB = exp(c(mod_diab$Estimate[2] - 1.96 * mod_diab$Standard.Error[2],
                                 mod_obes$Estimate[2] - 1.96 * mod_obes$Standard.Error[2])),
                      UB = exp(c(mod_diab$Estimate[2] + 1.96 * mod_diab$Standard.Error[2],
                                 mod_obes$Estimate[2] + 1.96 * mod_obes$Standard.Error[2]))) |>  
+  dplyr::bind_rows(
+    data.frame(Analysis = "Imputation",
+               Outcome = c("Diagnosed Diabetes", "Obesity"),
+               Coefficient = "(Intercept)",
+               Spatial = TRUE,
+               Est = exp(c(mod_diab$Estimate[1], mod_obes$Estimate[1])), 
+               LB = exp(c(mod_diab$Estimate[1] - 1.96 * mod_diab$Standard.Error[1],
+                          mod_obes$Estimate[1] - 1.96 * mod_obes$Standard.Error[1])),
+               UB = exp(c(mod_diab$Estimate[1] + 1.96 * mod_diab$Standard.Error[1],
+                          mod_obes$Estimate[1] + 1.96 * mod_obes$Standard.Error[1])))
+  )
   dplyr::bind_rows(imp_res)
