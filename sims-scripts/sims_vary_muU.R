@@ -54,7 +54,7 @@ sim_data = function(N, muU) {
   ## Simulate Y of health outcome
   lambda = exp(beta0 + beta1 * X)
   Y = rpois(n = N, 
-                lambda = POP * lambda)
+            lambda = POP * lambda)
   
   ## Create dataset
   dat = data.frame(id = 1:N, X, Xstar, POP, Y)
