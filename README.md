@@ -159,3 +159,10 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
   - [Data (Food Access + Health)](piedmont-triad-data/analysis_data.csv)
   - [Figure](figures/figS8_histogram_errors_piedmont.png)
   - [Script (Make Figure)](figure-scripts/figS8_histogram_errors_proximity.R)
+
+**Figure S9.** Estimated baseline prevalence (with 95\% confidence intervals) for health outcomes in the Piedmont Triad, North Carolina using different analysis methods. Within each health outcome and method, estimates on the right came from the mixed effects model allowing for spatial autocorrelation between bordering neighborhoods (census tracts); estimates on the left came from the model assuming independence between neighborhoods.
+
+  - [Data (Food Access + Health)](piedmont-triad-data/analysis_data.csv)
+  - [Data (Fitted Models)](piedmont-triad-data/forest_plot_data.csv) 
+  - [Figure](figures/figS9_forest_plot_intercept_piedmont.png)
+  - [Script (Make Figure)](figure-scripts/figS9_forest_plot_intercept_piedmont.R)
