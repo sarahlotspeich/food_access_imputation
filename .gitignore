@@ -34,3 +34,7 @@ piedmont-triad-data/fitme_example.R
 reports/rank-proximity.Rmd
 
 reports/rank-proximity.html
+
+sims-scripts/piedmont_sim_parameters_cache/latex/
+
+sims-scripts/piedmont_sim_parameters_files/figure-latex/
