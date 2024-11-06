@@ -83,5 +83,5 @@ imp_res = data.frame(Analysis = "Imputation",
                           mod_obes$Estimate[1] - 1.96 * mod_obes$Standard.Error[1])),
                UB = exp(c(mod_diab$Estimate[1] + 1.96 * mod_diab$Standard.Error[1],
                           mod_obes$Estimate[1] + 1.96 * mod_obes$Standard.Error[1])))
-  )
+  ) |> 
   dplyr::bind_rows(imp_res)
