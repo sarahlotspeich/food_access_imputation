@@ -14,7 +14,7 @@ library(latex2exp) # To create LaTex labels for plots
 # Read in simulation results from GitHub ///////////////////////////////
 # //////////////////////////////////////////////////////////////////////
 file_urls = c(paste0("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/sims-data/include_outcome/proximity_N", 
-                     c(390, 2200), "_q10_seed11422.csv"))
+                     c(387, 2169), "_q10_seed11422.csv"))
 res = do.call(bind_rows, 
               lapply(X = file_urls, 
                      FUN = read.csv))
@@ -40,9 +40,9 @@ res |>
                                                      "E{X|X*, log(Y), log(Pop)}"
                                           )),
                 N = factor(x = N, 
-                           levels = c(390, 2200), 
-                           labels = c(TeX("$N = 390$ Neighborhoods"),
-                                      TeX("$N = 2200$ Neighborhoods")
+                           levels = c(387, 2169), 
+                           labels = c(TeX("$N = 387$ Neighborhoods"),
+                                      TeX("$N = 2169$ Neighborhoods")
                            ))
   ) |> 
   ggplot(aes(x = imputation_model, 
