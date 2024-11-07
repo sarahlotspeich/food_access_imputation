@@ -12,7 +12,7 @@ library(kableExtra) ### To format pretty tables
 # //////////////////////////////////////////////////////////////////////
 # Read in simulation results from GitHub ///////////////////////////////
 # //////////////////////////////////////////////////////////////////////
-file_urls = c(paste0("https://raw.githubusercontent.com/sarahlotspeich/food/main/sims-data/vary_q/proximity_N", rep(c(390, 2200), each = 4), 
+file_urls = c(paste0("https://raw.githubusercontent.com/sarahlotspeich/food/main/sims-data/vary_q/proximity_N", rep(c(387, 2169), each = 4), 
                      "_q", rep(c(10, 25, 50, 75), times = 2), 
                      "_seed11422.csv"))
 res = do.call(bind_rows, 
@@ -67,43 +67,3 @@ res_summ |>
                    bold = TRUE) |> 
   row_spec(row = 0, bold = TRUE)
 ## And a \multicolumn used to separate the three parameters
-
-cp = function(est, se, truth) {
-  mean((est - 1.96 * se) <= truth & truth <= (est + 1.96 * se))
-}
-res_summ = res |> 
-  group_by(N, pV) |> 
-  summarize(bias_gs = mean((beta_gs - beta1) / beta1), ese_gs = sd(beta_gs), ase_gs = mean(se_beta_gs), 
-            cp_gs = cp(est = beta_gs, se = se_beta_gs, truth = beta1), 
-            bias_n = mean((beta_n - beta1) / beta1), ese_n = sd(beta_n), ase_n = mean(se_beta_n), 
-            cp_n = cp(est = beta_n, se = se_beta_n, truth = beta1), 
-            bias_cc = mean((beta_cc - beta1) / beta1), ese_cc = sd(beta_cc), ase_cc = mean(se_beta_cc), 
-            cp_cc = cp(est = beta_cc, se = se_beta_cc, truth = beta1), 
-            bias_imp = mean((beta_imp - beta1) / beta1), ese_imp = sd(beta_imp), ase_imp = mean(se_beta_imp), 
-            cp_imp = cp(est = beta_imp, se = se_beta_imp, truth = beta1)
-            )
-
-# //////////////////////////////////////////////////////////////////////
-# Format table for export to LaTex /////////////////////////////////////
-# //////////////////////////////////////////////////////////////////////
-# Write function to add "padded" zeros and wrap with $$ for consistency 
-format_num = function(num, digits = 3) {
-  paste0("$", format(round(num, 3), nsmall = digits), "$")
-}
-
-# Format res_summ for LaTex
-res_summ = res_summ |> 
-  mutate_at(.vars = 3:18, .funs = format_num, digits = 3) |>
-  mutate(pV = format_num(num = pV, digits = 2)) |> 
-  arrange(N, pV)
-## Change column names 
-colnames(res_summ) = c("$\\pmb{N}$", "$\\pmb{p_V}$", rep(c("Bias", "ESE", "ASE", "CP"), times = 4))
-res_summ |> 
-  kable(format = "latex", 
-        booktabs = TRUE, 
-        escape = FALSE, 
-        align = "rcrcccrcccrcccrccc") |> 
-  kable_styling() |> 
-  add_header_above(header = c(" " = 2, "Gold Standard" = 4, "Naive" = 4, "Complete Case" = 4, "Imputation" = 4), 
-                   bold = TRUE) |> 
-  row_spec(row = 0, bold = TRUE)
