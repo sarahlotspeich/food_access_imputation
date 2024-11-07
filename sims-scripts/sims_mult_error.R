@@ -18,20 +18,20 @@ num_reps = 1000
 
 # Set parameters that won't be varied in the loop
 ## These values will be set as the defaults in the sim_data() function for convenience
-fix_beta0 = -2.7 ## outcome model intercept (leads to ~ 7% prevalence)
-fix_beta1 = log(1.01) ## log prevalence ratio
-fix_muW = 0.7 ## error mean
-fix_q = 0.1 ## proportion of neighborhoods to be queried
+### Some were based on the Piedmont Triad data 
+beta0 = -2.2 ## outcome model intercept (leads to ~ 11% prevalence, based on diabetes)
+muW = 0.7 ## error mean
+lambdaPOP = 4095 ## average population per census tract
+### And others were experimental 
+beta1 = log(1.01) ## log prevalence ratio for X on Y
+q = 0.1 ## proportion of neighborhoods to be queried
 
 # --------------------------------------------------------------------
 # Function to simulate data (arguments defined as follows)
 ## N = number of neighborhoods (sample size)
-## beta0 = model intercept
-## beta1 = log prevalence ratio 
-## muU = mean of the measurement error distribution
-## sigmaU = standard deviation of the measurement error distribution
+## sigmaW = standard deviation of the measurement error distribution
 # --------------------------------------------------------------------
-sim_data = function(N, beta0 = fix_beta0, beta1 = fix_beta1, muW = fix_muW, sigmaW) {
+sim_data = function(N, sigmaW) {
   ## Simulate true (map-based) proximity to grocery store
   X = rgamma(n = N,
              shape = 1,
@@ -48,23 +48,23 @@ sim_data = function(N, beta0 = fix_beta0, beta1 = fix_beta1, muW = fix_muW, sigm
   Xstar = X * W ### assuming multiplicative measurement error model
   
   ## Simulate population
-  P = rpois(n = N, 
-            lambda = 4165)
+  POP = rpois(n = N, 
+              lambda = lambdaPOP)
   
   ## Simulate cases of health outcome
   lambda = exp(beta0 + beta1 * X)
-  Cases = rpois(n = N, 
-                lambda = P * lambda)
+  Y = rpois(n = N, 
+            lambda = POP * lambda)
   
   ## Create dataset
-  dat = data.frame(id = 1:N, X, Xstar, P, Cases)
+  dat = data.frame(id = 1:N, X, Xstar, POP, Y)
   
   # Return dataset
   return(dat)
 }
 
-# Loop over different sample sizes: N = 390 (Piedmont Triad), 2200 (all of NC)
-for (N in c(390, 2200)) {
+# Loop over different sample sizes: N = 387 (Piedmont Triad), 2169 (all of NC)
+for (N in c(387, 2169)) {
   tic(paste("Sims with N =", N)) ## Start counting runtime for sims with current sample size N
   # And error standard deviation: 0.1, 0.15, 0.2
   for (sigma in c(0.1, 0.15, 0.2)){
@@ -73,7 +73,7 @@ for (N in c(390, 2200)) {
     
     # Create dataframe to save results for setting
     sett_res = data.frame(sim = paste(sim_seed, 1:num_reps, sep = "-"), 
-                          N, beta0 = fix_beta0, beta1 = fix_beta1, muW = fix_muW, sigmaW = sigma, q = fix_q, avg_prev = NA, ## simulation setting
+                          N, beta0 = beta0, beta1 = beta1, muW = muW, sigmaW = sigma, q = q, avg_prev = NA, ## simulation setting
                           beta0_gs = NA, se_beta0_gs = NA, beta1_gs = NA, se_beta1_gs = NA, ## gold standard analysis
                           beta0_n = NA, se_beta0_n = NA, beta1_n = NA, se_beta1_n = NA, ## naive analysis
                           beta0_cc = NA, se_beta0_cc = NA, beta1_cc = NA, se_beta1_cc = NA, ## complete case analysis
@@ -87,43 +87,43 @@ for (N in c(390, 2200)) {
                      sigmaW = sigma) ## error standard deviation
       
       # Save average neighborhood prevalence
-      sett_res$avg_prev[r] = mean(dat$Cases / dat$P)
+      sett_res$avg_prev[r] = mean(dat$Y / dat$P)
       
       # Fit the gold standard model
-      fit_gs = glm(formula = Cases ~ X, 
+      fit_gs = glm(formula = Y ~ X, 
                    family = poisson,
-                   offset = log(P),
+                   offset = log(POP),
                    data = dat)
       sett_res[r, c("beta0_gs", "beta1_gs")] = coefficients(fit_gs) ## estimated log prevalence ratio
       sett_res[r, c("se_beta0_gs", "se_beta1_gs")] = sqrt(diag(vcov(fit_gs))) ## and its standard error
       
       # Fit the gold standard model
-      fit_n = glm(formula = Cases ~ Xstar, 
+      fit_n = glm(formula = Y ~ Xstar, 
                   family = poisson,
-                  offset = log(P),
+                  offset = log(POP),
                   data = dat)
       sett_res[r, c("beta0_n", "beta1_n")] = coefficients(fit_n) ## estimated log prevalence ratio
       sett_res[r, c("se_beta0_n", "se_beta1_n")] = sqrt(diag(vcov(fit_n))) ## and its standard error
       
       # Select subset of neighborhoods/rows for map-based measures
       query_rows = sample(x = 1:N, 
-                          size = ceiling(fix_q * N), 
+                          size = ceiling(q * N), 
                           replace = FALSE)
       
       # Make X NA/missing for rows not in selected subset (query_rows)
       dat[!(dat$id %in% query_rows), "X"] = NA 
       
       # Fit the complete case model
-      fit_cc = glm(formula = Cases ~ X, 
+      fit_cc = glm(formula = Y ~ X, 
                    family = poisson,
-                   offset = log(P),
+                   offset = log(POP),
                    data = dat)
       sett_res[r, c("beta0_cc", "beta1_cc")] = coefficients(fit_cc) ## estimated log prevalence ratio
       sett_res[r, c("se_beta0_cc", "se_beta1_cc")] = sqrt(diag(vcov(fit_cc))) ## and its standard error
       
       # Fit the pooled MI model
-      fit_imp = impPossum(imputation_formula = X ~ Xstar + log(Cases), 
-                          analysis_formula = Cases ~ X + offset(log(P)), 
+      fit_imp = impPossum(imputation_formula = X ~ Xstar + log(Y), 
+                          analysis_formula = Y ~ X + offset(log(POP)), 
                           data = dat, 
                           B = 20)
       sett_res[r, c("beta0_imp", "beta1_imp")] = fit_imp$Estimate ## estimated log prevalence ratio
@@ -139,5 +139,5 @@ for (N in c(390, 2200)) {
 }
 
 # Timing from tictoc:
-## Sims with N = 390: 128.43 sec elapsed
-## Sims with N = 2200: 334.341 sec elapsed
+## Sims with N = 387: 126.857 sec elapsed
+## Sims with N = 2169: 344.476 sec elapsed
