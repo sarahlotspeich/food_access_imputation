@@ -8,18 +8,20 @@ output: pdf_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 ```
-
-# Load Data
-
-```{r, echo = FALSE, warning = FALSE, message = FALSE}
+```{r,  warning = FALSE, message = FALSE}
 # Load packages 
 library(ggplot2) ## for maps and other plots
 library(tidycensus) ## for shapefiles
 library(possum) ## for imputation 
 library(spdep) ## for adjacency matrix
 library(spaMM) ## for spatial mixed-effects model
+```
 
+# Load Data
+
+```{r}
 # Load data 
+## Just the Piedmont Triad 
 food_access = read.csv(file = "https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/analysis_data.csv")
 
 ## Inspect merged dataset (used for analysis)
@@ -27,19 +29,30 @@ food_access |>
   summary()
 ```
 
+  -   Sample size for the Piedmont Triad: `r nrow(food_access)`
+
   -   Median population: $4095$ people per census tract
 
 ```{r}
-summary(food_access$Y_DIABETES/food_access$O_POP) ## Summarize prevalence of diabetes 
+## Summarize prevalence of diabetes 
+summary(food_access$Y_DIABETES/food_access$O_POP) 
 ```
 
   -   Median prevalence of diabetes: $0.11$
   
 ```{r}
-summary(food_access$Y_OBESITY/food_access$O_POP) ## Summarize prevalence of obesity 
+## Summarize prevalence of obesity 
+summary(food_access$Y_OBESITY/food_access$O_POP) 
 ```
 
   -   Median prevalence of obesity: $0.34$
+
+```{r}
+# All of NC (with population > 0)
+nonzero_pop = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/refs/heads/main/piedmont-triad-data/nc_disease_prevalences_2022.csv")
+```
+
+  -   Sample size for all of North Carolina: `r nrow(nonzero_pop)`
 
 # Additive and Multiplicative Errors
 
