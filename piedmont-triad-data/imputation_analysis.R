@@ -52,7 +52,7 @@ imp_res = data.frame(Analysis = "Imputation",
 mod_diab = impPossum(imputation_formula = X_partial ~ Xstar + log(Y_DIABETES), 
                      analysis_formula = Y_DIABETES ~ X_partial + adjacency(1 | LocationID) + offset(log(O_POP)), 
                      data = food_access, 
-                     adjMatrix = adj_matrix,
+                     adjMatrix = ptW,
                      B = 20)
 
 # Model 2a: Obesity among adults aged >=18 years
@@ -60,7 +60,7 @@ mod_diab = impPossum(imputation_formula = X_partial ~ Xstar + log(Y_DIABETES),
 mod_obes = impPossum(imputation_formula = X_partial ~ Xstar + log(Y_OBESITY), 
                      analysis_formula = Y_OBESITY ~ X_partial + adjacency(1 | LocationID) + offset(log(O_POP)), 
                      data = food_access, 
-                     adjMatrix = adj_matrix,
+                     adjMatrix = ptW,
                      B = 20)
 
 # Save results for forest plot

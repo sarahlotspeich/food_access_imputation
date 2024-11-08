@@ -27,7 +27,7 @@ tracts = get_acs(state = "NC",
 # Define the adjacency matrix 
 neighbors = poly2nb(tracts, 
                     queen = TRUE) ## contiguous neighbors
-adj_matrix = nb2mat(neighbors, 
-                    style = "B", 
-                    zero.policy = TRUE)
-rownames(adj_matrix) = colnames(adj_matrix) = nonzero_pop$TractFIPS
+ncW = nb2mat(neighbors, 
+                       style = "B", 
+                       zero.policy = TRUE)
+rownames(ncW) = colnames(ncW) = nonzero_pop$TractFIPS

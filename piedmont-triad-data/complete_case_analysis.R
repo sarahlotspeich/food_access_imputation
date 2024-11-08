@@ -51,14 +51,14 @@ cc_res = data.frame(Analysis = "Complete Case",
 ## Predictor X = proximity to healthy foods based on map-based distance
 mod_diab = fitme(formula = Y_DIABETES ~ X_partial + adjacency(1 | LocationID) + offset(log(O_POP)), 
                  family = poisson(link = "log"), 
-                 adjMatrix = adj_matrix,
+                 adjMatrix = ptW,
                  data = food_access)
 
 # Model 2a: Obesity among adults aged >=18 years
 ## Predictor X = proximity to healthy foods based on map-based distance
 mod_obes = fitme(formula = Y_OBESITY ~ X_partial + adjacency(1 | LocationID) + offset(log(O_POP)), 
                  family = poisson(link = "log"), 
-                 adjMatrix = adj_matrix,
+                 adjMatrix = ptW,
                  data = food_access)
 
 # Save results for forest plot

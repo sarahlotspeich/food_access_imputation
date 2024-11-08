@@ -44,6 +44,6 @@ counties = get_acs(state = "NC",
 # Define the adjacency matrix 
 neighbors = poly2nb(tracts, 
                     queen = TRUE) ## contiguous neighbors
-adj_matrix = nb2mat(neighbors, 
-                    style = "B")
-rownames(adj_matrix) = colnames(adj_matrix) = food_access$LocationID
+ptW = nb2mat(neighbors, 
+                       style = "B")
+rownames(ptW) = colnames(ptW) = food_access$LocationID

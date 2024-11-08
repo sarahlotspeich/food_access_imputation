@@ -54,14 +54,14 @@ naive_res = data.frame(Analysis = "Naive",
 ## Predictor X* = proximity to healthy foods based on straight-line distance
 mod_diab = fitme(formula = Y_DIABETES ~ Xstar + adjacency(1 | LocationID) + offset(log(O_POP)), 
                  family = poisson(link = "log"), 
-                 adjMatrix = adj_matrix,
+                 adjMatrix = ptW,
                  data = food_access)
 
 # Model 2a: Obesity among adults aged >=18 years
 ## Predictor X* = proximity to healthy foods based on straight-line distance
 mod_obes = fitme(formula = Y_OBESITY ~ Xstar + adjacency(1 | LocationID) + offset(log(O_POP)), 
                  family = poisson(link = "log"), 
-                 adjMatrix = adj_matrix,
+                 adjMatrix = ptW,
                  data = food_access)
 
 # Save results for forest plot
