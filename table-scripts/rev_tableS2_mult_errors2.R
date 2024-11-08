@@ -14,8 +14,8 @@ library(kableExtra) # To format pretty tables
 # //////////////////////////////////////////////////////////////////////
 
 # Read in simulation results 
-file_urls = c(paste0("https://raw.githubusercontent.com/sarahlotspeich/food/main/sims-data/mult_error/proximity_N", rep(c(387, 2169), each = 3), 
-                     "_sigmaW", rep(c(10, 15, 20), times = 2), 
+file_urls = c(paste0("https://raw.githubusercontent.com/sarahlotspeich/food/main/sims-data/mult_error2/proximity_N", rep(c(387, 2169), each = 3), 
+                     "_muW", rep(c(30, 50, 70), times = 2), 
                      "_seed11422.csv"))
 res = do.call(bind_rows, 
               lapply(X = file_urls, 
@@ -31,7 +31,7 @@ cp = function(est, se, truth) {
   mean((est - 1.96 * se) <= truth & truth <= (est + 1.96 * se))
 }
 res_summ = res |> 
-  group_by(N, sigmaW) |> 
+  group_by(N, muW) |> 
   summarize(bias_gs = mean((beta1_gs - beta1) / beta1), ese_gs = sd(beta1_gs), 
             bias_n = mean((beta1_n - beta1) / beta1), ese_n = sd(beta1_n), 
             bias_cc = mean((beta1_cc - beta1) / beta1), ese_cc = sd(beta1_cc), 
@@ -40,7 +40,7 @@ res_summ = res |>
   ) |> 
   dplyr::mutate(re_cc = (ese_gs ^ 2) / (ese_cc ^ 2), 
                 re_imp = (ese_gs ^ 2) / (ese_imp ^ 2)) |> 
-  dplyr::select(N, sigmaW, dplyr::ends_with(c("gs", "n", "cc", "imp")))
+  dplyr::select(N, muW, dplyr::ends_with(c("gs", "n", "cc", "imp")))
 
 # //////////////////////////////////////////////////////////////////////
 # Format table for export to LaTex /////////////////////////////////////
@@ -53,7 +53,7 @@ format_num = function(num, digits = 3) {
 ## Format res_summ for LaTex
 res_summ = res_summ |> 
   mutate_at(.vars = 3:14, .funs = format_num, digits = 3) |>
-  mutate(sigmaW = format_num(num = sigmaW, digits = 2))
+  mutate(muW = format_num(num = muW, digits = 2))
 ## Change column names 
 colnames(res_summ) = c("$\\pmb{N}$", "$\\pmb{\\sigma_W}$", 
                        rep(c("Bias", "ESE"), times = 2),
