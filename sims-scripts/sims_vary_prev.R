@@ -20,7 +20,6 @@ num_reps = 1000
 ## These values will be set as the defaults in the sim_data() function for convenience
 ### Some were based on the Piedmont Triad data 
 N = 387 ## number of neighborhoods / census tracts
-beta0 = -2.2 ## outcome model intercept (leads to ~ 11% prevalence, based on diabetes)
 muU = -0.7 ## error mean
 sigmaU = 0.8 ## error standard deviation
 lambdaPOP = 4095 ## average population per census tract
@@ -40,7 +39,7 @@ sim_data = function(beta0, beta1) {
   
   ## Simulate random errors
   U = truncnorm::rtruncnorm(n = N, 
-                            a = -Inf, 
+                            a = -X, 
                             b = 0, 
                             mean = muU, 
                             sd = sigmaU)
@@ -139,6 +138,6 @@ for (beta0 in c(-2.7, -2.2, -1.1)) {
 }
 
 # Timing from tictoc:
-## Sims with beta0 = -2.7: 217.474 sec elapsed
-## Sims with beta0 = -2.2: 217.436 sec elapsed
-## Sims with beta0 = -1.1: 215.475 sec elapsed
+## Sims with beta0 = -2.7: 212.347 sec elapsed
+## Sims with beta0 = -2.2: 208.11 sec elapsed
+## Sims with beta0 = -1.1: 199.923 sec elapsed
