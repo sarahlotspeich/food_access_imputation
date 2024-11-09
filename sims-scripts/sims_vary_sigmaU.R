@@ -39,7 +39,7 @@ sim_data = function(N, sigmaU) {
   
   ## Simulate random errors
   U = truncnorm::rtruncnorm(n = N, 
-                            a = -Inf, 
+                            a = -X, 
                             b = 0, 
                             mean = muU, 
                             sd = sigmaU)
@@ -83,7 +83,7 @@ for (N in c(387, 2169)) {
     # Loop over replicates 
     for (r in 1:num_reps) {
       # Generate data
-      dat = sim_data(N  = N, ## sample size
+      dat = sim_data(N = N, ## sample size
                      sigmaU = sigma) ## error standard deviation
       
       # Save average neighborhood prevalence
@@ -139,5 +139,5 @@ for (N in c(387, 2169)) {
 }
 
 # Timing from tictoc:
-## Sims with N = 387: 208.976 sec elapsed
-## Sims with N = 2169: 520.163 sec elapsed
+## Sims with N = 387: 223.388 sec elapsed
+## Sims with N = 2169: 583.208 sec elapsed
