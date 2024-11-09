@@ -39,7 +39,7 @@ sim_data = function(N, muU) {
   
   ## Simulate random errors
   U = truncnorm::rtruncnorm(n = N, 
-                            a = -Inf, 
+                            a = -X, 
                             b = 0, 
                             mean = muU, 
                             sd = sigmaU)
@@ -140,4 +140,4 @@ for (N in c(387, 2169)) {
 
 # Timing from tictoc:
 ## Sims with N = 387: 170.121 sec elapsed
-## Sims with N = 2169: 453.951 sec elapsed
+## Sims with N = 2169: 396.264 sec elapsed
