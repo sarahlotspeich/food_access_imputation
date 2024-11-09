@@ -31,3 +31,7 @@ ncW = nb2mat(neighbors,
                        style = "B", 
                        zero.policy = TRUE)
 rownames(ncW) = colnames(ncW) = nonzero_pop$TractFIPS
+
+# Save it 
+ncW |> 
+  saveRDS(file = "piedmont-triad-data/nc_adjacency_matrix.Rds")

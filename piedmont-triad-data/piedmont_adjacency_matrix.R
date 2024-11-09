@@ -47,3 +47,7 @@ neighbors = poly2nb(tracts,
 ptW = nb2mat(neighbors, 
                        style = "B")
 rownames(ptW) = colnames(ptW) = food_access$LocationID
+
+# Save it 
+ptW |> 
+  saveRDS(file = "piedmont-triad-data/piedmont_adjacency_matrix.Rds")
