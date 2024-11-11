@@ -12,11 +12,21 @@ food_access = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_ac
 nrow(food_access) ## N = 387 neighborhoods (exclude the tract with population = 0)
 
 ############################################################################################
+## MAKE LONG VERSION OF THE DATA TO PLOT ///////////////////////////////////////////////////
+############################################################################################
+plot_dat = food_access |> 
+  dplyr::select(LocationID, CountyName, Xstar, X_full, X_partial) |> 
+  tidyr::gather(key = "Dataset", value = "X", -c(1:3)) |> 
+  dplyr::mutate(Dataset = factor(x = Dataset, 
+                                 levels = c("X_full", "X_partial"), 
+                                 labels = c("Fully Queried", "Partially Queried")))
+
+############################################################################################
 ## MAKE SCATTER PLOT OF STRAIGHT-LINE VS MAP-BASED PROXIMITY ///////////////////////////////
 ############################################################################################
-food_access |> 
+plot_dat |> 
   ggplot(aes(x = Xstar, 
-             y = X_full)) + 
+             y = X)) + 
   geom_point() + 
   geom_smooth(method = "lm", 
               se = FALSE, 
@@ -29,20 +39,23 @@ food_access |>
               size = 1, 
               linetype = 2) + 
   theme_minimal(base_size = 10) + 
-  theme(plot.margin = margin(l=25, r=20, t=20, b=25)) + 
+  theme(plot.margin = margin(l=25, r=20, t=20, b=25), 
+        strip.background = element_rect(fill = "black"),
+        strip.text = element_text(color = "white")) + 
   labs(x = "Straight-Line Proximity to Healthy Foods (X*)",
        y = "Map-Based Proximity to Healthy Foods (X)") + 
   xlim(c(0, 16)) +
   ylim(c(0, 16)) +
-  coord_equal()
+  coord_equal() + 
+  facet_wrap(~Dataset)
 
 ggsave(filename = "figures/fig3_scatterplot_proximity_piedmont.png", 
        device = "png", 
-       width = 5, 
+       width = 10, 
        height = 5, 
        units = "in")
-ggsave(filename = "fig3_scatterplot_proximity_piedmont.pdf", 
+ggsave(filename = "figures/fig3_scatterplot_proximity_piedmont.pdf", 
        device = "pdf", 
-       width = 5, 
+       width = 10, 
        height = 5, 
        units = "in")
