@@ -4,7 +4,10 @@ library(dplyr) ## for data wrangling
 
 # Load data from GitHub
 ## Analytical dataset for food access models
-food_access = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/analysis_data.csv")
+food_access = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/analysis_data.csv") |> 
+  dplyr::mutate(Prev_DIABETES = Y_DIABETES / O_POP, 
+                Prev_OBESITY = Y_OBESITY / O_POP) |> 
+  dplyr::select(LocationID, CountyName, Prev_DIABETES, Prev_OBESITY, X_full, Xstar)
 
 ## Rural/urban commuting areas (RUCA) data (2010 release)
 ruca = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/ruca2010revised.csv") |> 
@@ -13,13 +16,18 @@ ruca = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_im
                                      labels = c("Metropolitan", "Metropolitan", "Metropolitan", "Micropolitan", "Micropolitan", "Micropolitan", 
                                                 "Small town", "Small town", "Small town", "Rural", "Not coded")))
 
+## Race breakdown (according to the ACS)
+race = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/refs/heads/main/piedmont-triad-data/piedmont_triad_acs_data.csv") |> 
+  dplyr::select(-NAME, -INCOME, -PERC_POVERTY, -PERC_SNAP, -PERC_CAR, -PERC_PUBLIC_TRANSIT, 
+                -PERC_INSURED, -PERC_COLLEGE, -PERC_FEM_HEAD)
+
 # Create Table S2 data 
 dat = food_access |> 
   dplyr::left_join(ruca, 
                    by = dplyr::join_by(LocationID == StateCountyTract)) |> 
+  dplyr::left_join(race, 
+                   by = dplyr::join_by(LocationID == GEOID)) |> 
   dplyr::select(-LocationID, -SecondaryRUCA, Population, -County, -State,-StateCounty)
-## Divide case counts by population to get prevalences
-dat[, c(5:8)] = dat[, c(5:8)] / dat[, 4]
 ## Specify which variables should be treated as categorical for summary statistics
 catVars = c("CountyName", "PrimaryRUCA")
 table_S2 = CreateTableOne(data = dat, 
@@ -27,4 +35,4 @@ table_S2 = CreateTableOne(data = dat,
 
 # Print Table S2
 print(table_S2, 
-      nonnormal = setdiff(colnames(table_S2), catVars))
+      nonnormal = setdiff(colnames(dat), catVars))
