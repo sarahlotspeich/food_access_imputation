@@ -20,7 +20,7 @@ num_reps = 1000
 ## These values will be set as the defaults in the sim_data() function for convenience
 ### Some were based on the Piedmont Triad data 
 beta0 = -2.2 ## outcome model intercept (leads to ~ 11% prevalence, based on diabetes)
-sigmaW = 0.25 ## error standard deviation
+sigmaW = 0.15 ## error standard deviation
 lambdaPOP = 4095 ## average population per census tract
 ### And others were experimental 
 beta1 = log(1.01) ## log prevalence ratio for X on Y
@@ -139,5 +139,5 @@ for (N in c(387, 2169)) {
 }
 
 # Timing from tictoc:
-## Sims with N = 387: 126.857 sec elapsed
-## Sims with N = 2169: 344.476 sec elapsed
+## Sims with N = 387: 125.215 sec elapsed
+## Sims with N = 2169: 322.363 sec elapsed
