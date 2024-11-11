@@ -97,7 +97,7 @@ sim_data = function(N, tau) {
 }
 
 # Loop over different sample sizes: N = 387 (Piedmont Triad), 2169 (all of NC)
-for (N in c(387, 2169)) {
+for (N in c(387, 2168)) {
   # Set appropriate adjacency matrix for the sample size N
   if (N == 387) {
     adj_mat = ptW ## Piedmont Triad
