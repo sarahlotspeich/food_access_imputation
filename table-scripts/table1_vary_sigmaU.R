@@ -51,7 +51,8 @@ format_num = function(num, digits = 3) {
 ## Format res_summ for LaTex
 res_summ = res_summ |> 
   mutate_at(.vars = 3:14, .funs = format_num, digits = 3) |>
-  mutate(sigmaU = format_num(num = sigmaU, digits = 2))
+  mutate(N = format_num(num = N, digits = 0), 
+         sigmaU = format_num(num = sigmaU, digits = 2))
 ## Change column names 
 colnames(res_summ) = c("$\\pmb{N}$", "$\\pmb{\\sigma_U}$", 
                        rep(c("Bias", "ESE"), times = 2),
