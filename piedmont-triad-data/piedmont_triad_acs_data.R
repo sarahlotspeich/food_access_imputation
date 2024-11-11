@@ -257,6 +257,51 @@ state_avg = get_acs(state = "NC",
   dplyr::mutate(PERC_FEM_HEAD = FEM_HEAD / FEM_HEAD_TOTAL) |> 
   dplyr::summarize(PERC_FEM_HEAD = median(PERC_FEM_HEAD, na.rm = TRUE)) |> 
   dplyr::bind_cols(state_avg)
+############################################################################################
+## % BLACK OR AFRICAN AMERICAN (ANY AGE) ///////////////////////////////////////////////////
+############################################################################################
+race = get_acs(state = "NC",
+                    geography = "tract",
+                    county = piedmont_triad,
+                    variables = c(POP_TOTAL = "B01003_001", ## total population (all races)
+                                  POP_WHITE = "B01001A_001", ## population (White only )
+                                  POP_BLACK = "B01001B_001", ## population (Black only)
+                                  POP_NATIVE = "B01001C_001", ## population (American Indian and Alaska native only)
+                                  POP_ASIAN = "B01001D_001", ## population (Asian only)
+                                  POP_HAWAIIAN = "B01001E_001"), ## population (native Hawaiian and other Pacific islander)
+                    geometry = FALSE,
+                    year = 2015) |> 
+  dplyr::select(-moe) |>
+  tidyr::spread(key = variable, value = estimate) |> 
+  dplyr::mutate(PERC_WHITE = POP_WHITE / POP_TOTAL, 
+                PERC_BLACK = POP_BLACK / POP_TOTAL, 
+                PERC_NATIVE = POP_NATIVE / POP_TOTAL, 
+                PERC_ASIAN = POP_ASIAN / POP_TOTAL, 
+                PERC_HAWAIIAN = POP_HAWAIIAN / POP_TOTAL) |> 
+  dplyr::select(-POP_WHITE, -POP_BLACK, -POP_NATIVE, -POP_ASIAN, -POP_HAWAIIAN, -POP_TOTAL)
+state_avg = get_acs(state = "NC",
+                    geography = "tract",
+                    variables = c(POP_TOTAL = "B01003_001", ## total population (all races)
+                                  POP_WHITE = "B01001A_001", ## population (White only )
+                                  POP_BLACK = "B01001B_001", ## population (Black only)
+                                  POP_NATIVE = "B01001C_001", ## population (American Indian and Alaska native only)
+                                  POP_ASIAN = "B01001D_001", ## population (Asian only)
+                                  POP_HAWAIIAN = "B01001E_001"), ## population (native Hawaiian and other Pacific islander)
+                    geometry = FALSE,
+                    year = 2015) |> 
+  dplyr::select(-moe) |>
+  tidyr::spread(key = variable, value = estimate) |> 
+  dplyr::mutate(PERC_WHITE = POP_WHITE / POP_TOTAL, 
+                PERC_BLACK = POP_BLACK / POP_TOTAL, 
+                PERC_NATIVE = POP_NATIVE / POP_TOTAL, 
+                PERC_ASIAN = POP_ASIAN / POP_TOTAL, 
+                PERC_HAWAIIAN = POP_HAWAIIAN / POP_TOTAL) |> 
+  dplyr::summarize(PERC_WHITE = median(PERC_WHITE, na.rm = TRUE), 
+                   PERC_BLACK = median(PERC_BLACK, na.rm = TRUE),
+                   PERC_NATIVE = median(PERC_NATIVE, na.rm = TRUE), 
+                   PERC_ASIAN = median(PERC_ASIAN, na.rm = TRUE), 
+                   PERC_HAWAIIAN = median(PERC_HAWAIIAN, na.rm = TRUE)) |> 
+  dplyr::bind_cols(state_avg)
 
 ############################################################################################
 ## MERGE AND SAVE //////////////////////////////////////////////////////////////////////////
@@ -267,7 +312,8 @@ piedmont_triad_acs_data = income |>
   dplyr::left_join(work_transport) |> 
   dplyr::left_join(insured) |> 
   dplyr::left_join(college) |> 
-  dplyr::left_join(fem_house)
+  dplyr::left_join(fem_house) |> 
+  dplyr::left_join(race)
 piedmont_triad_acs_data |> 
   filter(GEOID != 37081980100)  |> ## exclude PTI
   write.csv("food_access_imputation/piedmont-triad-data/piedmont_triad_acs_data.csv", 
