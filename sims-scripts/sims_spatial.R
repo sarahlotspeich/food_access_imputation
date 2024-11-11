@@ -31,12 +31,18 @@ q = 0.1 ## proportion of neighborhoods to be queried
 rho = 0.9 ## correlation (to approximate rho = 1 in the ICAR)
 
 # Load adjacency matrices for Piedmont Triad and North Carolina 
-source("~/Documents/food_access_imputation/piedmont-triad-data/piedmont_adjacency_matrix.R")
-source("~/Documents/food_access_imputation/piedmont-triad-data/nc_adjacency_matrix.R")
+ptW = readRDS(file = gzcon(url("https://github.com/sarahlotspeich/food_access_imputation/raw/main/piedmont-triad-data/piedmont_adjacency_matrix.Rds")))
+ncW = readRDS(file = gzcon(url("https://github.com/sarahlotspeich/food_access_imputation/raw/main/piedmont-triad-data/nc_adjacency_matrix.Rds")))
+## Exclude one NC census tract with no neighbors (makes covariance matrix not full rank)
+ncW = ncW[rowSums(ncW) > 0, rowSums(ncW) > 0]
+
+## Rename rows/columns
+rownames(ptW) = colnames(ptW) = 1:nrow(ptW)
+rownames(ncW) = colnames(ncW) = 1:nrow(ncW)
 
 ## And create matrix D with rowsums from the adjacency matrix
-ptD = diag(rowsums(ptW))
-ncD = diag(rowsums(ncW))
+ptD = diag(rowSums(ptW))
+ncD = diag(rowSums(ncW))
 
 # --------------------------------------------------------------------
 # Function to simulate data (arguments defined as follows)
@@ -51,7 +57,7 @@ sim_data = function(N, tau) {
   
   ## Simulate random errors
   U = truncnorm::rtruncnorm(n = N, 
-                            a = -Inf, 
+                            a = -X, 
                             b = 0, 
                             mean = muU, 
                             sd = sigmaU)
@@ -70,11 +76,11 @@ sim_data = function(N, tau) {
   ## Simulate random intercept based on neighbors 
   if (N == 387) { ### based on Piedmont Triad adjacency
     R = MASS::mvrnorm(n = N, 
-                      mu = 0, 
+                      mu = rep(0, N), 
                       Sigma = ptCovR)
   } else if (N == 2169) { ### based of NC adjacency
     R = MASS::mvrnorm(n = N, 
-                      mu = 0, 
+                      mu = rep(0, N),
                       Sigma = ncCovR)
   }
 
@@ -92,6 +98,13 @@ sim_data = function(N, tau) {
 
 # Loop over different sample sizes: N = 387 (Piedmont Triad), 2169 (all of NC)
 for (N in c(387, 2169)) {
+  # Set appropriate adjacency matrix for the sample size N
+  if (N == 387) {
+    adj_mat = ptW ## Piedmont Triad
+  } else if (N == 2169) {
+    adj_mat = ncW ## North Carolina
+  }
+  
   tic(paste("Sims with N =", N)) ## Start counting runtime for sims with current sample size N
   # And random intercept standard deviation: 0, sqrt(0.01), sqrt(0.07), 1
   for (tau in c(0, sqrt(0.01), sqrt(0.07), 1)){
@@ -120,7 +133,7 @@ for (N in c(387, 2169)) {
       fit_gs = suppressMessages(
         fitme(formula = Y ~ X + adjacency(1 | id) + offset(log(POP)), 
               family = poisson(link = "log"), 
-              adjMatrix = ptW,
+              adjMatrix = adj_mat,
               data = dat)
       )
       coefs = as.data.frame(summary(fit_gs)$beta_table) ## make table of fixed effects estimates
@@ -131,7 +144,7 @@ for (N in c(387, 2169)) {
       fit_n = suppressMessages(
         fitme(formula = Y ~ Xstar + adjacency(1 | id) + offset(log(POP)), 
               family = poisson(link = "log"), 
-              adjMatrix = ptW,
+              adjMatrix = adj_mat,
               data = dat)
       )
       coefs = as.data.frame(summary(fit_n)$beta_table) ## make table of fixed effects estimates
@@ -150,7 +163,7 @@ for (N in c(387, 2169)) {
       fit_cc = suppressMessages(
         fitme(formula = Y ~ X + adjacency(1 | id) + offset(log(POP)), 
               family = poisson(link = "log"), 
-              adjMatrix = ptW,
+              adjMatrix = adj_mat,
               data = dat)
       )
       coefs = as.data.frame(summary(fit_cc)$beta_table) ## make table of fixed effects estimates
@@ -161,7 +174,7 @@ for (N in c(387, 2169)) {
       fit_imp = impPossum(imputation_formula = X ~ Xstar + log(Y), 
                           analysis_formula = Y ~ X + adjacency(1 | id) + offset(log(POP)), 
                           data = dat, 
-                          adjMatrix = ptW,
+                          adjMatrix = adj_mat,
                           B = 20)
       sett_res[r, c("beta0_imp", "beta1_imp")] = fit_imp$Estimate ## estimated log prevalence ratio
       sett_res[r, c("se_beta0_imp", "se_beta1_imp")] = fit_imp$Standard.Error ## and its standard error
@@ -176,5 +189,5 @@ for (N in c(387, 2169)) {
 }
 
 # Timing from tictoc:
-## Sims with N = 387: 208.976 sec elapsed
+## Sims with N = 387: 168.67 sec elapsed
 ## Sims with N = 2169: 520.163 sec elapsed
