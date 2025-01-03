@@ -14,9 +14,8 @@ library(spaMM) ## for spatial mixed-effects model
 food_access = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/analysis_data.csv")
 nrow(food_access) ## N = 387 neighborhoods (exclude the tract with population = 0)
 
-## Source a script to build adjacency matrix for census tracts in the Piedmont Triad as 
-### --> ptW
-devtools::source_url("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/refs/heads/main/piedmont-triad-data/piedmont_adjacency_matrix.R?raw=TRUE")
+## Load build adjacency matrix for census tracts in the Piedmont Triad as 
+ptW = readRDS(file = gzcon(url("https://github.com/sarahlotspeich/food_access_imputation/raw/main/piedmont-triad-data/piedmont_adjacency_matrix.Rds")))
 
 ## Source a function to extract model coefficients from spaMM
 ### --> get_sp_mod_summ()
