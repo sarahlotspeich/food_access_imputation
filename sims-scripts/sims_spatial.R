@@ -101,7 +101,7 @@ for (N in c(387, 2168)) {
   # Set appropriate adjacency matrix for the sample size N
   if (N == 387) {
     adj_mat = ptW ## Piedmont Triad
-  } else if (N == 2169) {
+  } else if (N == 2168) {
     adj_mat = ncW ## North Carolina
   }
   
