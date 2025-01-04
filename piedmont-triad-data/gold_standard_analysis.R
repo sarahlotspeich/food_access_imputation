@@ -20,11 +20,11 @@ ci = function(i, fit) {
 
 ## Gold Standard Analysis
 ### Non-Spatial Models
-mod_diab = glm(formula = Y_DIABETES ~ X_full, 
+mod_diab = glm(formula = Y_DIABETES ~ X_full + POP_DENS, 
                family = poisson(link = "log"), 
                offset = log(O_POP),
                data = food_access)
-mod_obes = glm(formula = Y_OBESITY ~ X_full,
+mod_obes = glm(formula = Y_OBESITY ~ X_full + POP_DENS,
                family = poisson(link = "log"), 
                offset = log(O_POP),
                data = food_access)
@@ -40,6 +40,15 @@ gs_res = data.frame(Analysis = "Gold Standard",
   dplyr::bind_rows(
     data.frame(Analysis = "Gold Standard",
                Outcome = c("Diagnosed Diabetes", "Obesity"),
+               Coefficient = "PR (PopDens)",
+               Spatial = FALSE,
+               Est = c(est(3, mod_diab), est(3, mod_obes)), 
+               LB = c(lb(3, mod_diab), lb(3, mod_obes)),
+               UB = c(ub(3, mod_diab), ub(3, mod_obes)))
+  ) |> 
+  dplyr::bind_rows(
+    data.frame(Analysis = "Gold Standard",
+               Outcome = c("Diagnosed Diabetes", "Obesity"),
                Coefficient = "(Intercept)",
                Spatial = FALSE,
                Est = c(est(1, mod_diab), est(1, mod_obes)), 
@@ -49,14 +58,14 @@ gs_res = data.frame(Analysis = "Gold Standard",
 
 # Model 1a: Diagnosed diabetes among adults aged >=18 years 
 ## Predictor X = proximity to healthy foods based on map-based distance
-mod_diab = fitme(formula = Y_DIABETES ~ X_full + adjacency(1 | LocationID) + offset(log(O_POP)), 
+mod_diab = fitme(formula = Y_DIABETES ~ X_full + POP_DENS + adjacency(1 | LocationID) + offset(log(O_POP)), 
                  family = poisson(link = "log"), 
                  adjMatrix = ptW,
                  data = food_access)
 
 # Model 2a: Obesity among adults aged >=18 years
 ## Predictor X = proximity to healthy foods based on map-based distance
-mod_obes = fitme(formula = Y_OBESITY ~ X_full + adjacency(1 | LocationID) + offset(log(O_POP)), 
+mod_obes = fitme(formula = Y_OBESITY ~ X_full + POP_DENS + adjacency(1 | LocationID) + offset(log(O_POP)), 
                  family = poisson(link = "log"), 
                  adjMatrix = ptW,
                  data = food_access)
@@ -70,6 +79,15 @@ gs_res = get_sp_mod_summ(terms = "X_full", mod = mod_diab) |>
                 Coefficient = "PR",
                 Spatial = TRUE) |> 
   dplyr::select(Analysis, Outcome, Spatial, Est, LB, UB, Coefficient) |> 
+  dplyr::bind_rows(
+    get_sp_mod_summ(terms = "POP_DENS", mod = mod_diab) |> 
+      dplyr::bind_rows(get_sp_mod_summ(terms = "POP_DENS", mod = mod_obes)) |> 
+      dplyr::select(-terms) |> 
+      dplyr::mutate(Coefficient = "PR (PopDens)", 
+                    Analysis = "Gold Standard", 
+                    Outcome = c("Diagnosed Diabetes", "Obesity"), 
+                    Spatial = TRUE)
+  ) |> 
   dplyr::bind_rows(
     get_sp_mod_summ(terms = "(Intercept)", mod = mod_diab) |> 
       dplyr::bind_rows(get_sp_mod_summ(terms = "(Intercept)", mod = mod_obes)) |> 
