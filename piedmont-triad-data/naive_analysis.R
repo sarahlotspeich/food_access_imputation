@@ -20,14 +20,14 @@ ci = function(i, fit) {
 
 # Model 1a: Diagnosed diabetes among adults aged >=18 years 
 ## Predictor X* = proximity to healthy foods based on straight-line distance
-mod_diab = glm(formula = Y_DIABETES ~ Xstar, 
+mod_diab = glm(formula = Y_DIABETES ~ Xstar + POP_DENS, 
                family = poisson(link = "log"), 
                offset = log(O_POP),
                data = food_access)
 
 # Model 2a: Obesity among adults aged >=18 years
 ## Predictor X* = proximity to healthy foods based on straight-line distance
-mod_obes = glm(formula = Y_OBESITY ~ Xstar,
+mod_obes = glm(formula = Y_OBESITY ~ Xstar + POP_DENS,
                family = poisson(link = "log"), 
                offset = log(O_POP),
                data = food_access)
@@ -43,6 +43,15 @@ naive_res = data.frame(Analysis = "Naive",
   dplyr::bind_rows(
     data.frame(Analysis = "Naive",
                Outcome = c("Diagnosed Diabetes", "Obesity"),
+               Coefficient = "PR (PopDens)",
+               Spatial = FALSE,
+               Est = c(est(3, mod_diab), est(3, mod_obes)), 
+               LB = c(lb(3, mod_diab), lb(3, mod_obes)),
+               UB = c(ub(3, mod_diab), ub(3, mod_obes)))
+  ) |> 
+  dplyr::bind_rows(
+    data.frame(Analysis = "Naive",
+               Outcome = c("Diagnosed Diabetes", "Obesity"),
                Coefficient = "(Intercept)",
                Spatial = FALSE,
                Est = c(est(1, mod_diab), est(1, mod_obes)), 
@@ -52,14 +61,14 @@ naive_res = data.frame(Analysis = "Naive",
 
 # Model 1a: Diagnosed diabetes among adults aged >=18 years 
 ## Predictor X* = proximity to healthy foods based on straight-line distance
-mod_diab = fitme(formula = Y_DIABETES ~ Xstar + adjacency(1 | LocationID) + offset(log(O_POP)), 
+mod_diab = fitme(formula = Y_DIABETES ~ Xstar + POP_DENS + adjacency(1 | LocationID) + offset(log(O_POP)), 
                  family = poisson(link = "log"), 
                  adjMatrix = ptW,
                  data = food_access)
 
 # Model 2a: Obesity among adults aged >=18 years
 ## Predictor X* = proximity to healthy foods based on straight-line distance
-mod_obes = fitme(formula = Y_OBESITY ~ Xstar + adjacency(1 | LocationID) + offset(log(O_POP)), 
+mod_obes = fitme(formula = Y_OBESITY ~ Xstar + POP_DENS + adjacency(1 | LocationID) + offset(log(O_POP)), 
                  family = poisson(link = "log"), 
                  adjMatrix = ptW,
                  data = food_access)
@@ -72,6 +81,15 @@ naive_res = get_sp_mod_summ(terms = "Xstar", mod = mod_diab) |>
                 Coefficient = "PR",
                 Spatial = TRUE) |> 
   dplyr::select(Analysis, Outcome, Spatial, Est, LB, UB, Coefficient) |> 
+  dplyr::bind_rows(
+    get_sp_mod_summ(terms = "POP_DENS", mod = mod_diab) |> 
+      dplyr::bind_rows(get_sp_mod_summ(terms = "POP_DENS", mod = mod_obes)) |> 
+      dplyr::select(-terms) |> 
+      dplyr::mutate(Coefficient = "PR (PopDens)", 
+                    Analysis = "Naive", 
+                    Outcome = c("Diagnosed Diabetes", "Obesity"), 
+                    Spatial = TRUE)
+  ) |> 
   dplyr::bind_rows(
     get_sp_mod_summ(terms = "(Intercept)", mod = mod_diab) |> 
       dplyr::bind_rows(get_sp_mod_summ(terms = "(Intercept)", mod = mod_obes)) |> 
