@@ -14,6 +14,11 @@ library(spaMM) ## for spatial mixed-effects model
 food_access = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/analysis_data.csv")
 nrow(food_access) ## N = 387 neighborhoods (exclude the tract with population = 0)
 
+## Center population density at the median for interpretation
+median(food_access$POP_DENS) ### 842.9 people / mile ^ 2
+food_access = food_access |> 
+  dplyr::mutate(POP_DENS = POP_DENS - 842.9)
+
 ## Load build adjacency matrix for census tracts in the Piedmont Triad as 
 ptW = readRDS(file = gzcon(url("https://github.com/sarahlotspeich/food_access_imputation/raw/main/piedmont-triad-data/piedmont_adjacency_matrix.Rds")))
 
