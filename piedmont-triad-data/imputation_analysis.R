@@ -20,12 +20,12 @@ ci = function(i, fit) {
 
 ## Imputation Analysis
 ### Non-Spatial Models
-mod_diab = impPossum(imputation_formula = X_partial ~ Xstar + log(Y_DIABETES), 
-                     analysis_formula = Y_DIABETES ~ X_partial + offset(log(O_POP)), 
+mod_diab = impPossum(imputation_formula = X_partial ~ Xstar + POP_DENS + log(Y_DIABETES), 
+                     analysis_formula = Y_DIABETES ~ X_partial + POP_DENS + offset(log(O_POP)), 
                      data = food_access, 
                      B = 20)
-mod_obes = impPossum(imputation_formula = X_partial ~ Xstar + log(Y_OBESITY), 
-                     analysis_formula = Y_OBESITY ~ X_partial + offset(log(O_POP)), 
+mod_obes = impPossum(imputation_formula = X_partial ~ Xstar + POP_DENS + log(Y_OBESITY), 
+                     analysis_formula = Y_OBESITY ~ X_partial + POP_DENS + offset(log(O_POP)), 
                      data = food_access, 
                      B = 20)
 
@@ -40,6 +40,15 @@ imp_res = data.frame(Analysis = "Imputation",
   dplyr::bind_rows(
     data.frame(Analysis = "Imputation",
                Outcome = c("Diagnosed Diabetes", "Obesity"),
+               Coefficient = "PR (PopDens)",
+               Spatial = FALSE,
+               Est = c(est(3, mod_diab), est(3, mod_obes)), 
+               LB = c(lb(3, mod_diab), lb(3, mod_obes)),
+               UB = c(ub(3, mod_diab), ub(3, mod_obes))) 
+  ) |> 
+  dplyr::bind_rows(
+    data.frame(Analysis = "Imputation",
+               Outcome = c("Diagnosed Diabetes", "Obesity"),
                Coefficient = "(Intercept)",
                Spatial = FALSE,
                Est = c(est(1, mod_diab), est(1, mod_obes)), 
@@ -49,16 +58,16 @@ imp_res = data.frame(Analysis = "Imputation",
 
 # Model 1a: Diagnosed diabetes among adults aged >=18 years 
 ## Predictor X = proximity to healthy foods based on map-based distance
-mod_diab = impPossum(imputation_formula = X_partial ~ Xstar + log(Y_DIABETES), 
-                     analysis_formula = Y_DIABETES ~ X_partial + adjacency(1 | LocationID) + offset(log(O_POP)), 
+mod_diab = impPossum(imputation_formula = X_partial ~ Xstar + POP_DENS + log(Y_DIABETES), 
+                     analysis_formula = Y_DIABETES ~ X_partial + POP_DENS + adjacency(1 | LocationID) + offset(log(O_POP)), 
                      data = food_access, 
                      adjMatrix = ptW,
                      B = 20)
 
 # Model 2a: Obesity among adults aged >=18 years
 ## Predictor X = proximity to healthy foods based on map-based distance
-mod_obes = impPossum(imputation_formula = X_partial ~ Xstar + log(Y_OBESITY), 
-                     analysis_formula = Y_OBESITY ~ X_partial + adjacency(1 | LocationID) + offset(log(O_POP)), 
+mod_obes = impPossum(imputation_formula = X_partial ~ Xstar + POP_DENS + log(Y_OBESITY), 
+                     analysis_formula = Y_OBESITY ~ X_partial + POP_DENS + adjacency(1 | LocationID) + offset(log(O_POP)), 
                      data = food_access, 
                      adjMatrix = ptW,
                      B = 20)
@@ -73,6 +82,17 @@ imp_res = data.frame(Analysis = "Imputation",
                                 mod_obes$Estimate[2] - 1.96 * mod_obes$Standard.Error[2])),
                      UB = exp(c(mod_diab$Estimate[2] + 1.96 * mod_diab$Standard.Error[2],
                                 mod_obes$Estimate[2] + 1.96 * mod_obes$Standard.Error[2]))) |>  
+  dplyr::bind_rows(
+    data.frame(Analysis = "Imputation",
+               Outcome = c("Diagnosed Diabetes", "Obesity"),
+               Coefficient = "PR (PopDens)",
+               Spatial = TRUE,
+               Est = exp(c(mod_diab$Estimate[3], mod_obes$Estimate[3])), 
+               LB = exp(c(mod_diab$Estimate[3] - 1.96 * mod_diab$Standard.Error[3],
+                          mod_obes$Estimate[3] - 1.96 * mod_obes$Standard.Error[3])),
+               UB = exp(c(mod_diab$Estimate[3] + 1.96 * mod_diab$Standard.Error[3],
+                          mod_obes$Estimate[3] + 1.96 * mod_obes$Standard.Error[3])))
+  ) |>  
   dplyr::bind_rows(
     data.frame(Analysis = "Imputation",
                Outcome = c("Diagnosed Diabetes", "Obesity"),
