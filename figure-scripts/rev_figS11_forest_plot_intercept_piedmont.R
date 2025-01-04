@@ -44,12 +44,12 @@ plot_data |>
   ylab("Baseline Prevalence") + 
   facet_wrap(~ Outcome, scales = "free")
 
-ggsave(filename = "figures/figS9_forest_plot_intercept_piedmont.png", 
+ggsave(filename = "figures/rev_figS11_forest_plot_intercept_piedmont.png", 
        device = "png", 
        width = 10, 
        height = 5, 
        units = "in")
-ggsave(filename = "figures/figS9_forest_plot_intercept_piedmont.pdf", 
+ggsave(filename = "figures/rev_figS11_forest_plot_intercept_piedmont.pdf", 
        device = "pdf", 
        width = 10, 
        height = 5, 
