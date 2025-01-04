@@ -13,12 +13,19 @@ food_access = read.csv(file = "https://raw.githubusercontent.com/sarahlotspeich/
   right_join(health, 
              by = join_by(LocationID == TractFIPS))
 
+## (3) Population density from 2010 Rural-Urban Commuting Area (RUCA)
+food_access = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/ruca2010revised.csv") |> 
+  select(StateCountyTract, PopulationDensity) |> 
+  right_join(food_access, 
+             by = join_by(StateCountyTract == LocationID)) |> 
+  rename(LocationID = StateCountyTract)
+
 ## Remove additional food access columns (not needed for primary analysis)
 food_access = food_access |> 
   dplyr::select(LocationID, CountyName, 
                 dist_closest_straight, dist_closest_map, 
                 comp_time_straight, dist_straight_q20, comp_time_map, 
-                POP, BPHIGH, CHD, DIABETES, OBESITY)
+                POP, BPHIGH, CHD, DIABETES, OBESITY, PopulationDensity)
 
 ## Order by Location ID
 food_access = food_access |> 
@@ -54,6 +61,7 @@ food_access |>
                 Y_BPHIGH = BPHIGH,
                 Y_CHD = CHD,
                 Y_DIABETES = DIABETES,
-                Y_OBESITY = OBESITY) |> 
+                Y_OBESITY = OBESITY, 
+                POP_DENS = PopulationDensity) |> 
   write.csv("food_access_imputation/piedmont-triad-data/analysis_data.csv", 
             row.names = FALSE)
