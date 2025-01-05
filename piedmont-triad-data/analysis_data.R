@@ -20,16 +20,24 @@ food_access = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_ac
              by = join_by(StateCountyTract == LocationID)) |> 
   rename(LocationID = StateCountyTract)
 
+## (4) Socioeconomic factors from 2010 American Community Survey
+food_access = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/piedmont_triad_acs_data.csv") |> 
+  select(GEOID, INCOME, PERC_SNAP, PERC_CAR, PERC_INSURED) |> 
+  right_join(food_access, 
+             by = join_by(GEOID == LocationID))
+
 ## Remove additional food access columns (not needed for primary analysis)
 food_access = food_access |> 
-  dplyr::select(LocationID, CountyName, 
+  dplyr::select(GEOID, CountyName, 
                 dist_closest_straight, dist_closest_map, 
                 comp_time_straight, dist_straight_q20, comp_time_map, 
-                POP, BPHIGH, CHD, DIABETES, OBESITY, PopulationDensity)
+                POP, BPHIGH, CHD, DIABETES, OBESITY, 
+                PopulationDensity, PrimaryRUCA, Metropolitan, 
+                INCOME, PERC_SNAP, PERC_CAR, PERC_INSURED)
 
 ## Order by Location ID
 food_access = food_access |> 
-  arrange(LocationID) 
+  arrange(GEOID) 
 
 ## Define query indicators (= 1 if map-based measures are available, = 0 otherwise)
 set.seed(918) ### make the sampling reproducible
@@ -40,7 +48,7 @@ queried_subset = food_access |>
 
 ### Create column for queried X from complete-case
 food_access = food_access |> 
-  mutate(dist_closest_map_cc = ifelse(test = LocationID %in% queried_subset$LocationID, 
+  mutate(dist_closest_map_cc = ifelse(test = GEOID %in% queried_subset$GEOID, 
                                       yes = dist_closest_map, 
                                       no = NA))
 
@@ -62,6 +70,8 @@ food_access |>
                 Y_CHD = CHD,
                 Y_DIABETES = DIABETES,
                 Y_OBESITY = OBESITY, 
-                POP_DENS = PopulationDensity) |> 
+                POP_DENS = PopulationDensity, 
+                RUCA = PrimaryRUCA, 
+                METRO = Metropolitan) |> 
   write.csv("food_access_imputation/piedmont-triad-data/analysis_data.csv", 
             row.names = FALSE)
