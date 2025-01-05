@@ -1,99 +1,80 @@
 # Note: This script is called by fig4_forest_plot_piedmont.R, and it
 ## assumes that a number of packages, scripts, and data have already been loaded in 
 
-# Functions to pull out of coefficient summary
-est = function(i, fit) {
-  round(exp(fit$coefficients[i]), 3)
-}
-lb = function(i, fit) {
-  se = sqrt(diag(vcov(fit)))[i]
-  round(exp(fit$coefficients[i] - 1.96 * se), 3)
-}
-ub = function(i, fit) {
-  se = sqrt(diag(vcov(fit)))[i]
-  round(exp(fit$coefficients[i] + 1.96 * se), 3)
-}
-ci = function(i, fit) {
-  se = sqrt(diag(vcov(fit)))[i]
-  paste(round(exp(fit$coefficients[i] + c(-1.96, 1.96) * se), 3), collapse = ", ")
-}
-
 ## Gold Standard Analysis
 ### Non-Spatial Models
-mod_diab = glm(formula = Y_DIABETES ~ X_full + POP_DENS, 
+mod_diab = glm(formula = Y_DIABETES ~ METRO * X_full, 
                family = poisson(link = "log"), 
                offset = log(O_POP),
                data = food_access)
-mod_obes = glm(formula = Y_OBESITY ~ X_full + POP_DENS,
+mod_obes = glm(formula = Y_OBESITY ~ METRO * X_full,
                family = poisson(link = "log"), 
                offset = log(O_POP),
                data = food_access)
 
 # Save results for forest plot
-gs_res = data.frame(Analysis = "Gold Standard",
-                    Outcome = c("Diagnosed Diabetes", "Obesity"),
-                    Coefficient = "PR",
-                    Spatial = FALSE,
-                    Est = c(est(2, mod_diab), est(2, mod_obes)), 
-                    LB = c(lb(2, mod_diab), lb(2, mod_obes)),
-                    UB = c(ub(2, mod_diab), ub(2, mod_obes))) |> 
-  dplyr::bind_rows(
-    data.frame(Analysis = "Gold Standard",
-               Outcome = c("Diagnosed Diabetes", "Obesity"),
-               Coefficient = "PR (PopDens)",
-               Spatial = FALSE,
-               Est = c(est(3, mod_diab), est(3, mod_obes)), 
-               LB = c(lb(3, mod_diab), lb(3, mod_obes)),
-               UB = c(ub(3, mod_diab), ub(3, mod_obes)))
-  ) |> 
-  dplyr::bind_rows(
-    data.frame(Analysis = "Gold Standard",
-               Outcome = c("Diagnosed Diabetes", "Obesity"),
-               Coefficient = "(Intercept)",
-               Spatial = FALSE,
-               Est = c(est(1, mod_diab), est(1, mod_obes)), 
-               LB = c(lb(1, mod_diab), lb(1, mod_obes)),
-               UB = c(ub(1, mod_diab), ub(1, mod_obes)))
+gs_res = mod_diab |> 
+  summary() |> 
+  coefficients() |> 
+  data.frame() |> 
+  mutate(Analysis = "Gold Standard", 
+         Outcome = "Diagnosed Diabetes", 
+         Coefficient = names(mod_diab$coefficients), 
+         Spatial = FALSE, 
+         LB = exp(Estimate - 1.96 * Std..Error), 
+         UB = exp(Estimate + 1.96 * Std..Error), 
+         Estimate = exp(Estimate)) |> 
+  rename(Est = Estimate) |> 
+  select(Analysis, Outcome, Coefficient, Spatial, Est, LB, UB) |> 
+  bind_rows(
+    mod_obes |> 
+      summary() |> 
+      coefficients() |> 
+      data.frame() |> 
+      mutate(Analysis = "Gold Standard", 
+             Outcome = "Obesity", 
+             Coefficient = names(mod_obes$coefficients), 
+             Spatial = FALSE, 
+             LB = exp(Estimate - 1.96 * Std..Error), 
+             UB = exp(Estimate + 1.96 * Std..Error), 
+             Estimate = exp(Estimate)) |> 
+      rename(Est = Estimate) |> 
+      select(Analysis, Outcome, Coefficient, Spatial, Est, LB, UB)
   )
 
 # Model 1a: Diagnosed diabetes among adults aged >=18 years 
 ## Predictor X = proximity to healthy foods based on map-based distance
-mod_diab = fitme(formula = Y_DIABETES ~ X_full + POP_DENS + adjacency(1 | LocationID) + offset(log(O_POP)), 
+mod_diab = fitme(formula = Y_DIABETES ~ METRO * X_full + adjacency(1 | GEOID) + offset(log(O_POP)), 
                  family = poisson(link = "log"), 
                  adjMatrix = ptW,
                  data = food_access)
 
 # Model 2a: Obesity among adults aged >=18 years
 ## Predictor X = proximity to healthy foods based on map-based distance
-mod_obes = fitme(formula = Y_OBESITY ~ X_full + POP_DENS + adjacency(1 | LocationID) + offset(log(O_POP)), 
+mod_obes = fitme(formula = Y_OBESITY ~ METRO * X_full + adjacency(1 | GEOID) + offset(log(O_POP)), 
                  family = poisson(link = "log"), 
                  adjMatrix = ptW,
                  data = food_access)
 
 # Save results for forest plot
-gs_res = get_sp_mod_summ(terms = "X_full", mod = mod_diab) |> 
-  dplyr::bind_rows(get_sp_mod_summ(terms = "X_full", mod = mod_obes)) |> 
+gs_res = do.call(what = dplyr::bind_rows, 
+                 args = lapply(X = names(mod_diab$fixef), 
+                               FUN = get_sp_mod_summ, 
+                               mod = mod_diab)) |> 
   dplyr::rename(Coefficient = terms) |> 
   dplyr::mutate(Analysis = "Gold Standard", 
-                Outcome = c("Diagnosed Diabetes", "Obesity"), 
-                Coefficient = "PR",
+                Outcome = "Diagnosed Diabetes", 
                 Spatial = TRUE) |> 
   dplyr::select(Analysis, Outcome, Spatial, Est, LB, UB, Coefficient) |> 
   dplyr::bind_rows(
-    get_sp_mod_summ(terms = "POP_DENS", mod = mod_diab) |> 
-      dplyr::bind_rows(get_sp_mod_summ(terms = "POP_DENS", mod = mod_obes)) |> 
-      dplyr::select(-terms) |> 
-      dplyr::mutate(Coefficient = "PR (PopDens)", 
-                    Analysis = "Gold Standard", 
-                    Outcome = c("Diagnosed Diabetes", "Obesity"), 
-                    Spatial = TRUE)
-  ) |> 
-  dplyr::bind_rows(
-    get_sp_mod_summ(terms = "(Intercept)", mod = mod_diab) |> 
-      dplyr::bind_rows(get_sp_mod_summ(terms = "(Intercept)", mod = mod_obes)) |> 
+    do.call(what = dplyr::bind_rows, 
+            args = lapply(X = names(mod_obes$fixef), 
+                          FUN = get_sp_mod_summ, 
+                          mod = mod_obes)) |> 
       dplyr::rename(Coefficient = terms) |> 
       dplyr::mutate(Analysis = "Gold Standard", 
-                    Outcome = c("Diagnosed Diabetes", "Obesity"), 
-                    Spatial = TRUE)
+                    Outcome = "Obesity", 
+                    Spatial = TRUE) |> 
+      dplyr::select(Analysis, Outcome, Spatial, Est, LB, UB, Coefficient)
   ) |> 
   dplyr::bind_rows(gs_res)
