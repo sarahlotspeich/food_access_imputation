@@ -15,7 +15,12 @@ food_access = read.csv(file = "https://raw.githubusercontent.com/sarahlotspeich/
 
 ## (3) Population density from 2010 Rural-Urban Commuting Area (RUCA)
 food_access = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/ruca2010revised.csv") |> 
-  select(StateCountyTract, PopulationDensity) |> 
+  mutate(PrimaryRUCA = factor(PrimaryRUCA, 
+                              levels = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 99), 
+                              labels = c("Metropolitan", "Metropolitan", "Metropolitan", "Micropolitan", "Micropolitan", "Micropolitan", 
+                                         "Small town", "Small town", "Small town", "Rural", "Not coded")), 
+         Metropolitan = PrimaryRUCA == "Metropolitan") |> 
+  select(StateCountyTract, PopulationDensity, PrimaryRUCA, Metropolitan) |> 
   right_join(food_access, 
              by = join_by(StateCountyTract == LocationID)) |> 
   rename(LocationID = StateCountyTract)
