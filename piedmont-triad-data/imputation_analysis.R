@@ -1,6 +1,12 @@
 # Note: This script is called by fig4_forest_plot_piedmont.R, and it
 ## assumes that a number of packages, scripts, and data have already been loaded in 
 
+## Imputation Model Fits 
+imp_diab = lm(formula = X_partial ~ METRO * Xstar + log(Y_DIABETES), 
+              data = food_access)
+imp_obes = lm(formula = X_partial ~ METRO * Xstar + log(Y_OBESITY), 
+              data = food_access)
+
 ## Imputation Analysis
 ### Non-Spatial Models
 mod_diab = impPossum(imputation_formula = X_partial ~ METRO * Xstar + log(Y_DIABETES), 
