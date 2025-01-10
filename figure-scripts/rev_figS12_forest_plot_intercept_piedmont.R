@@ -72,11 +72,11 @@ plot_data |>
 
 ggsave(filename = "figures/rev_figS12_forest_plot_intercept_piedmont.png", 
        device = "png", 
-       width = 10, 
+       width = 7, 
        height = 5, 
        units = "in")
 ggsave(filename = "figures/rev_figS12_forest_plot_intercept_piedmont.pdf", 
        device = "pdf", 
-       width = 10, 
+       width = 7, 
        height = 5, 
        units = "in")
