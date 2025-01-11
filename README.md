@@ -117,7 +117,7 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
   - [Data (Food Access + Health + RUCA)](piedmont-triad-data/analysis_data.csv)
   - [Script (Make Figure)](figure-scripts/fig3_scatterplot_proximity_piedmont.R)
 
-**Figure 4.** Estimated prevalence ratios (with 95\% confidence intervals) for proximity to healthy foods, \sclc{metropolitan status, and their interaction with the two} health outcomes in the Piedmont Triad, North Carolina using four different analysis methods. Within each health outcome and method, estimates on the right with the dashed error bars came from the mixed effects model allowing for spatial autocorrelation between neighboring census tracts; estimates on the left with the solid error bars came from the non-spatial model assuming independence between tracts.
+**Figure 4.** Estimated prevalence ratios (with 95\% confidence intervals) for proximity to healthy foods, metropolitan status, and their interaction with the two health outcomes in the Piedmont Triad, North Carolina using four different analysis methods. Within each health outcome and method, estimates on the right with the dashed error bars came from the mixed effects model allowing for spatial autocorrelation between neighboring census tracts; estimates on the left with the solid error bars came from the non-spatial model assuming independence between tracts.
 
 ![](figures/fig4_forest_plot_piedmont.png)
 
