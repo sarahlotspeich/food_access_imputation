@@ -35,6 +35,10 @@ food_access |>
         legend.position = "top") + 
   labs(x = "Number of Distances Calculated",
        y = "Cumulative Computing Time (in Seconds)") 
+
+# //////////////////////////////////////////////////////////////////////
+# Save as 7" wide x 5" tall ////////////////////////////////////////////
+# //////////////////////////////////////////////////////////////////////
 ggsave(filename = "figures/figS2_cum_comp_time_line.png", 
        device = "png", 
        width = 7, 

@@ -57,12 +57,12 @@ plot_dat |>
   facet_grid(cols = vars(Dataset), 
              rows = vars(METRO))
 
-ggsave(filename = "figures/rev_figS11_scatterplot_proximity_piedmont.png", 
+ggsave(filename = "figures/figS11_scatterplot_proximity_piedmont.png", 
        device = "png", 
        width = 6, 
        height = 6, 
        units = "in")
-ggsave(filename = "figures/rev_figS11_scatterplot_proximity_piedmont.pdf", 
+ggsave(filename = "figures/figS11_scatterplot_proximity_piedmont.pdf", 
        device = "pdf", 
        width = 6, 
        height = 6, 

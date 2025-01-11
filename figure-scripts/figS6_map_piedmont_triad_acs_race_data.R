@@ -26,6 +26,12 @@ piedmont_triad_ct = get_acs(state = "NC",
                             variables = "B01003_001", ## total population,
                             geometry = TRUE,
                             year = 2015)
+counties = get_acs(state = "NC",
+                   geography = "county",
+                   county = piedmont_triad,
+                   variables = "B01003_001", ## total population,
+                   geometry = TRUE,
+                   year = 2015)
 
 ############################################################################################
 ## LOAD ACS and RUCA DATA FOR PIEDMONT TRIAD CENSUS TRACTS /////////////////////////////////
@@ -36,12 +42,6 @@ acs = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_imp
 piedmont_triad_ct = piedmont_triad_ct |> 
   dplyr::mutate(GEOID = as.numeric(GEOID)) |> 
   dplyr::left_join(acs)
-
-## Merge in 2010 RUCA codes 
-ruca = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/ruca2010revised.csv")
-piedmont_triad_ct = piedmont_triad_ct |> 
-  dplyr::left_join(y = ruca, 
-                   by = dplyr::join_by(GEOID == StateCountyTract))
 
 ## State averages of each variable
 state_avg = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/state_average_acs_data.csv")
@@ -106,76 +106,61 @@ plot_tract_acs = function(fill_var, title, legend_title = "", mid, label_scale =
 ############################################################################################
 ## MAPS FROM EACH ACS VARIABLE /////////////////////////////////////////////////////////////
 ############################################################################################
-## 1. Median family income (past 12 months) per census tract
-map_income = plot_tract_acs(fill_var = INCOME, 
-                            title = "Median Family Income\n(State Average = $54,036)", 
-                            label_scale = scales::dollar, 
-                            mid = state_avg$INCOME)
-## 2. Percent population with income below poverty line (past 12 months)
-map_poverty = plot_tract_acs(fill_var = PERC_POVERTY, 
-                             title = paste0("Income Below Poverty Line\n(State Average = ", 
-                                            round(100*state_avg$PERC_POVERTY),
-                                            "%)"), 
-                             label_scale = scales::percent, 
-                             mid = state_avg$PERC_POVERTY)
-## 3. Percent households receiving food stamps / SNAP (past 12 months)
-map_snap = plot_tract_acs(fill_var = PERC_SNAP, 
-                          title = paste0("Households Receiving SNAP\n(State Average = ", 
-                                         round(100*state_avg$PERC_SNAP),
-                                         "%)"),
-                          label_scale = scales::percent,
-                          mid = state_avg$PERC_SNAP)
-## 4. Percent workers (>= 16 yo) driving alone in car, truck, or van to work
-map_cars = plot_tract_acs(fill_var = PERC_CAR, 
-                          title = paste0("Workers Driving To Work\n(State Average = ", 
-                                         round(100*state_avg$PERC_CAR),
-                                         "%)"),
-                          label_scale = scales::percent,
-                          mid = state_avg$PERC_CAR)
-## 5. Percent population with health insurance (public or private)
-map_insured = plot_tract_acs(fill_var = PERC_INSURED, 
-                             title = paste0("With Health Insurance\n(State Average = ", 
-                                            round(100*state_avg$PERC_INSURED),
-                                            "%)"),
-                             label_scale = scales::percent,
-                             mid = state_avg$PERC_INSURED)
-## 6. Percent population (>= 25 yo) completing at least some college
-map_college = plot_tract_acs(fill_var = PERC_COLLEGE, 
-                             title = paste0("At Least Some College\n(State Average = ", 
-                                            round(100*state_avg$PERC_COLLEGE),
-                                            "%)"), 
-                             label_scale = scales::percent,
-                             mid = state_avg$PERC_COLLEGE)
-## 7. Population density
-map_density = plot_tract_acs(fill_var = PopulationDensity, 
-                             title = "Population Density\n(State Average = 625)",
-                             label_scale = scales::label_comma(),
-                             mid = 625)
+## 1. Percent Black population 
+map_black = plot_tract_acs(fill_var = PERC_BLACK, 
+                           title = paste0("Black or African America Population\n(State Average = ", 
+                                          round(100*state_avg$PERC_BLACK),
+                                          "%)"), 
+                           label_scale = scales::percent,
+                           mid = state_avg$PERC_BLACK)
 
-## 8. Percent children in female-headed households 
-map_fem = plot_tract_acs(fill_var = PERC_FEM_HEAD, 
-                         title = paste0("Female-Headed Households\n(State Average = ", 
-                                        round(100*state_avg$PERC_FEM_HEAD),
-                                        "%)"), 
-                         label_scale = scales::percent,
-                         mid = state_avg$PERC_FEM_HEAD)
+## 2. Percent White population 
+map_white = plot_tract_acs(fill_var = PERC_WHITE, 
+                           title = paste0("White Population\n(State Average = ", 
+                                          round(100*state_avg$PERC_WHITE),
+                                          "%)"), 
+                           label_scale = scales::percent,
+                           mid = state_avg$PERC_WHITE)
+
+## 3. Percent Asian population 
+map_asian = plot_tract_acs(fill_var = PERC_ASIAN, 
+                           title = paste0("Asian Population\n(State Average = ", 
+                                          round(100*state_avg$PERC_ASIAN),
+                                          "%)"), 
+                           label_scale = scales::percent,
+                           mid = state_avg$PERC_ASIAN)
+
+## 4. Percent American Indian or Alaska Native population 
+map_native = plot_tract_acs(fill_var = PERC_NATIVE, 
+                            title = paste0("American Indian or\nAlaska Native Population\n(State Average = ", 
+                                           round(100*state_avg$PERC_NATIVE),
+                                           "%)"), 
+                            label_scale = scales::percent,
+                            mid = state_avg$PERC_NATIVE)
+
+## 5. Percent Native Hawaiian and Other Pacific Islander Alone
+map_hawaiian = plot_tract_acs(fill_var = PERC_HAWAIIAN, 
+                              title = paste0("Native Hawaiian and\nOther Pacific Islander Population\n(State Average = ", 
+                                             round(100*state_avg$PERC_HAWAIIAN),
+                                             "%)"), 
+                              label_scale = scales::percent,
+                              mid = state_avg$PERC_HAWAIIAN)
+
 ############################################################################################
 ## COMBINE MAPS AND SAVE ///////////////////////////////////////////////////////////////////
 ############################################################################################
-ggpubr::ggarrange(map_density, map_income, 
-                  map_poverty, map_snap, 
-                  map_cars, map_insured, 
-                  map_college, map_fem, 
-                  ncol = 3, nrow = 3, 
+ggpubr::ggarrange(map_white, map_black, map_asian,
+                  map_native, map_hawaiian,
+                  ncol = 3, nrow = 2, 
                   labels = "AUTO")
  
-ggsave(filename = "figures/figS4_map_piedmont_triad_acs_data.png",
+ggsave(filename = "figures/figS6_map_piedmont_triad_acs_race_data.png",
        device = "png",
        width = 10,
-       height = 10,
+       height = 7,
        units = "in")
-ggsave(filename = "figures/figS4_map_piedmont_triad_acs_data.pdf",
+ggsave(filename = "figures/figS6_map_piedmont_triad_acs_data.pdf",
        device = "pdf",
        width = 10,
-       height = 10,
+       height = 7,
        units = "in")

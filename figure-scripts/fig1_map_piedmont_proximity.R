@@ -37,22 +37,22 @@ nrow(food_access) ## N = 387 neighborhoods (exclude the tract with population = 
 ## GET PREDICTIONS FROM IMPUTATION /////////////////////////////////////////////////////////
 ############################################################################################
 ## Deterministic imputation
-imp_data = impPossum_data(imputation_formula = X_partial ~ Xstar, 
+imp_data = impPossum_data(imputation_formula = X_partial ~ METRO * Xstar, 
                           data = food_access, 
                           B = 0) |> 
   rename(X_imp = X_partial) |> 
-  select(LocationID, X_imp)
+  select(GEOID, X_imp)
 
 ## Merge food_access with imputed data and geometry
 map_data = food_access |> 
   left_join(imp_data) |> 
-  select(LocationID, 
+  select(GEOID, 
          Xstar, 
          X_full, 
          X_partial, 
          X_imp) |> 
   right_join(piedmont_triad_ct, 
-                   by = join_by(LocationID == GEOID)) |> 
+                   by = join_by(GEOID == GEOID)) |> 
   select(-variable, -estimate, -moe)
 
 ############################################################################################
@@ -61,7 +61,7 @@ map_data = food_access |>
 med_map_based = median(map_data$X_full, na.rm = TRUE) ## 1.514352 miles
 med_straight_line = median(map_data$Xstar, na.rm = TRUE) ## 1.006827 miles
 
-## Save as Figure 3
+## Save as Figure 1
 map_data |> 
   tidyr::gather("dist_method", "proximity", -c(1, 6:7)) |> 
   mutate(dist_method = factor(x = dist_method, 
@@ -89,8 +89,16 @@ map_data |>
         strip.text = element_text(face = "bold", hjust = 0.5)) + 
   facet_wrap(~ dist_method, nrow = 2, ncol = 2)
 
-ggsave(filename = "fig1_map_proximity_piedmont.png", 
+# //////////////////////////////////////////////////////////////////////
+# Save as 5" wide x 5" tall ////////////////////////////////////////////
+# //////////////////////////////////////////////////////////////////////
+ggsave(filename = "figures/fig1_map_proximity_piedmont.png", 
        device = "png", 
+       width = 5, 
+       height = 5, 
+       units = "in")
+ggsave(filename = "figures/fig1_map_proximity_piedmont.pdf", 
+       device = "pdf", 
        width = 5, 
        height = 5, 
        units = "in")

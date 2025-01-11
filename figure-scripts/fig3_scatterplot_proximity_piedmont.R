@@ -57,12 +57,15 @@ plot_dat |>
   coord_equal() + 
   facet_wrap(~Dataset)
 
-ggsave(filename = "figures/rev_fig3_scatterplot_proximity_piedmont.png", 
+# //////////////////////////////////////////////////////////////////////
+# Save as 10" wide x 5" tall ///////////////////////////////////////////
+# //////////////////////////////////////////////////////////////////////
+ggsave(filename = "figures/fig3_scatterplot_proximity_piedmont.png", 
        device = "png", 
        width = 10, 
        height = 5, 
        units = "in")
-ggsave(filename = "figures/rev_fig3_scatterplot_proximity_piedmont.pdf", 
+ggsave(filename = "figures/fig3_scatterplot_proximity_piedmont.pdf", 
        device = "pdf", 
        width = 10, 
        height = 5, 

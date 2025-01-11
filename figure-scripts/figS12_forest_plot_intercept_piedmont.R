@@ -70,12 +70,12 @@ plot_data |>
   xlab("Analysis Method") +
   ylab("Baseline Prevalence (95% Confidence Interval)")
 
-ggsave(filename = "figures/rev_figS12_forest_plot_intercept_piedmont.png", 
+ggsave(filename = "figures/figS12_forest_plot_intercept_piedmont.png", 
        device = "png", 
        width = 7, 
        height = 5, 
        units = "in")
-ggsave(filename = "figures/rev_figS12_forest_plot_intercept_piedmont.pdf", 
+ggsave(filename = "figures/figS12_forest_plot_intercept_piedmont.pdf", 
        device = "pdf", 
        width = 7, 
        height = 5, 

@@ -37,22 +37,22 @@ nrow(food_access) ## N = 387 neighborhoods (exclude the tract with population = 
 ## GET PREDICTIONS FROM IMPUTATION /////////////////////////////////////////////////////////
 ############################################################################################
 ## Deterministic imputation
-imp_data = impPossum_data(imputation_formula = X_partial ~ METRO * Xstar, 
+imp_data = impPossum_data(imputation_formula = X_partial ~ Xstar, 
                           data = food_access, 
                           B = 0) |> 
   rename(X_imp = X_partial) |> 
-  select(GEOID, X_imp)
+  select(LocationID, X_imp)
 
 ## Merge food_access with imputed data and geometry
 map_data = food_access |> 
   left_join(imp_data) |> 
-  select(GEOID, 
+  select(LocationID, 
          Xstar, 
          X_full, 
          X_partial, 
          X_imp) |> 
   right_join(piedmont_triad_ct, 
-                   by = join_by(GEOID == GEOID)) |> 
+                   by = join_by(LocationID == GEOID)) |> 
   select(-variable, -estimate, -moe)
 
 ############################################################################################
@@ -89,13 +89,8 @@ map_data |>
         strip.text = element_text(face = "bold", hjust = 0.5)) + 
   facet_wrap(~ dist_method, nrow = 2, ncol = 2)
 
-ggsave(filename = "figures/rev_fig1_map_proximity_piedmont.png", 
+ggsave(filename = "fig1_map_proximity_piedmont.png", 
        device = "png", 
-       width = 5, 
-       height = 5, 
-       units = "in")
-ggsave(filename = "figures/rev_fig1_map_proximity_piedmont.pdf", 
-       device = "pdf", 
        width = 5, 
        height = 5, 
        units = "in")

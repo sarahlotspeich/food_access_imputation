@@ -46,12 +46,12 @@ tracts |>
   facet_wrap(~Store.Type_with_n, nrow = 3) 
 
 ## Save map 
-ggsave(filename = "figures/figS5_map_piedmont_triad_SNAP_wide.png", 
+ggsave(filename = "figures/figS7_map_piedmont_triad_SNAP_wide.png", 
        device = "png", 
        width = 10, 
        height = 8, 
        units = "in")
-ggsave(filename = "figures/figS5_map_piedmont_triad_SNAP_wide.pdf", 
+ggsave(filename = "figures/figS7_map_piedmont_triad_SNAP_wide.pdf", 
        device = "pdf", 
        width = 10, 
        height = 8, 

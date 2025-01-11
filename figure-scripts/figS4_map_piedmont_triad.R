@@ -69,14 +69,14 @@ ggplot() +
         legend.justification = "left")
 
 # //////////////////////////////////////////////////////////////////////
-# Save as 10" wide x 5" tall ////////////////////////////////////////////
+# Save as 12" wide x 6" tall ////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////
-ggsave(filename = "figures/rev_figS4_map_piedmont_triad.png",
+ggsave(filename = "figures/figS4_map_piedmont_triad.png",
        device = "png",
        width = 12,
        height = 6,
        units = "in")
-ggsave(filename = "figures/rev_figS4_map_piedmont_triad.pdf",
+ggsave(filename = "figures/figS4_map_piedmont_triad.pdf",
        device = "pdf",
        width = 12,
        height = 6,

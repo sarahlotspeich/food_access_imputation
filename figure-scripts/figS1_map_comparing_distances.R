@@ -68,7 +68,9 @@ wake_map +
   coord_map(ylim=c(36.11, 36.155), 
             xlim = c(-80.30, -80.27))
 
-# Save Figure S4
+# //////////////////////////////////////////////////////////////////////
+# Save as 14" wide x 16" tall //////////////////////////////////////////
+# //////////////////////////////////////////////////////////////////////
 ggsave(filename = "figures/figS1_map_comparing_distances.png", 
        device = "png", 
        units = "in", 
