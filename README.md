@@ -96,84 +96,115 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
   - [Data (Simulation Results)](sims-data/spatial/)
 
 ## Figures 
+**Figure 1.** Choropleth map of food access, as measured by proximity to healthy foods for each neighborhood (census tract) in the Piedmont Triad, North Carolina, according to the data used for the naive, gold standard, imputation, and complete-case analyses.
 
-![**Figure 1.** Choropleth map of food access, as measured by proximity to healthy foods for each neighborhood (census tract) in the Piedmont Triad, North Carolina, according to the data used for the naive, gold standard, imputation, and complete-case analyses.](figures/fig1_map_proximity_piedmont.png)
+![](figures/fig1_map_proximity_piedmont.png)
 
   - [Data (Food Access + Health + RUCA)](piedmont-triad-data/analysis_data.csv)
   - [Script (Make Figure)](figure-scripts/fig1_map_piedmont_proximity.R)
 
-![**Figure 2.** Choropleth maps of the crude prevalence of diagnosed diabetes and obesity for census tracts in the Piedmont Triad, North Carolina.](figures/fig2_map_piedmont_triad_health_outcomes.png)
+**Figure 2.** Choropleth maps of the crude prevalence of diagnosed diabetes and obesity for census tracts in the Piedmont Triad, North Carolina.
+
+![](figures/fig2_map_piedmont_triad_health_outcomes.png)
 
   - [Data (PLACES)](piedmont-triad-data/disease_prevalences_2022.csv)
   - [Script (Make Figure)](figure-scripts/fig2_map_piedmont_triad_health_outcomes.R)
 
-![**Figure 3.** Scatter plot of straight-line versus map-based proximity to healthy foods store for neighborhoods in the Piedmont Triad, North Carolina using the fully-queried data ($N = 387$).](figures/fig3_scatterplot_proximity_piedmont.png)
+**Figure 3.** Scatter plot of straight-line versus map-based proximity to healthy foods store for neighborhoods in the Piedmont Triad, North Carolina using the fully-queried data ($N = 387$).
+
+![](figures/fig3_scatterplot_proximity_piedmont.png)
 
   - [Data (Food Access + Health + RUCA)](piedmont-triad-data/analysis_data.csv)
   - [Script (Make Figure)](figure-scripts/fig3_scatterplot_proximity_piedmont.R)
 
-![stimated prevalence ratios (with 95\% confidence intervals) for proximity to healthy foods, \sclc{metropolitan status, and their interaction with the two} health outcomes in the Piedmont Triad, North Carolina using four different analysis methods. Within each health outcome and method, estimates on the right with the dashed error bars came from the mixed effects model allowing for spatial autocorrelation between neighboring census tracts; estimates on the left with the solid error bars came from the non-spatial model assuming independence between tracts.](figures/fig4_forest_plot_piedmont.png)
+**Figure 4.** Estimated prevalence ratios (with 95\% confidence intervals) for proximity to healthy foods, \sclc{metropolitan status, and their interaction with the two} health outcomes in the Piedmont Triad, North Carolina using four different analysis methods. Within each health outcome and method, estimates on the right with the dashed error bars came from the mixed effects model allowing for spatial autocorrelation between neighboring census tracts; estimates on the left with the solid error bars came from the non-spatial model assuming independence between tracts.
+
+![](figures/fig4_forest_plot_piedmont.png)
 
   - [Data (Food Access + Health + RUCA)](piedmont-triad-data/analysis_data.csv)
   - [Data (Fitted Models)](piedmont-triad-data/forest_plot_data.csv) 
   - [Script (Make Figure)](figure-scripts/fig4_forest_plot_piedmont.R)
 
-![**Figure S1.** Straight-line and map-based distances from Reynolda House (square symbol) to a nearby Food Lion grocery store (triangle symbol) in Winston-Salem, North Carolina.](figures/figS1_map_comparing_distances.png)
+**Figure S1.** Straight-line and map-based distances from Reynolda House (square symbol) to a nearby Food Lion grocery store (triangle symbol) in Winston-Salem, North Carolina.
+
+![](figures/figS1_map_comparing_distances.png)
 
   - [Script (Make Figure)](figure-scripts/figS1_map_comparing_distances.R)
 
-![**Figure S2.** Line graph of the cumulative computing time (in seconds) for the map-based versus straight-line distance calculations in the Piedmont Triad data.](figures/figS2_cum_comp_time_line.png) 
+**Figure S2.** Line graph of the cumulative computing time (in seconds) for the map-based versus straight-line distance calculations in the Piedmont Triad data.
+
+![](figures/figS2_cum_comp_time_line.png) 
 
   - [Data (Food Access + Health + RUCA)](piedmont-triad-data/analysis_data.csv)
   - [Script (Make Figure)](figure-scripts/figS2_cum_comp_time_line.R)
 
-![**Figure S3.** Estimated prevalence ratios for map-based food access $X$ on health using multiple imputation. The five possible ways to include the analysis model outcome $Y$ (with or without the model offset $Pop$) in the imputation model for $X$ were considered.](figures/figS3_incl_in_imputation_model_PR.png) 
+**Figure S3.** Estimated prevalence ratios for map-based food access $X$ on health using multiple imputation. The five possible ways to include the analysis model outcome $Y$ (with or without the model offset $Pop$) in the imputation model for $X$ were considered.
+
+![](figures/figS3_incl_in_imputation_model_PR.png) 
 
   - [Script (Run Simulations Locally)](sims-scripts/sims_incl_outcome.R)
   - [Data (Simulation Results)](sims-data/include_outcome/)
   - [Script (Make Figure)](figure-scripts/figS3_inclY_in_imputation_model.R)
 
-![**Figure S4.** Map of the $100$ North Carolina counties, colored by whether they belong to the Piedmont Triad ($n = 12$), border the Piedmont Triad ($n = 12$), or fall into the rest of the state ($n = 76$).](figures/figS4_map_piedmont_triad.pdf)
+**Figure S4.** Map of the $100$ North Carolina counties, colored by whether they belong to the Piedmont Triad ($n = 12$), border the Piedmont Triad ($n = 12$), or fall into the rest of the state ($n = 76$).
+
+![](figures/figS4_map_piedmont_triad.pdf)
 
   - [Script (Make Figure)](figure-scripts/figS4_map_piedmont_triad.R)
 
-![**Figure S5.** Choropleth maps of socioeconomic factors across the census tracts of the Piedmont Triad, North Carolina. Data were taken from the 2015 American Community Survey. The gradient for each map is centered at the state median. Two census tracts were missing median family income. All other maps are based on $N = 387$ census tracts. The one census tract with zero population was excluded.](figures/figS5_map_piedmont_triad_acs_data.png)
+**Figure S5.** Choropleth maps of socioeconomic factors across the census tracts of the Piedmont Triad, North Carolina. Data were taken from the 2015 American Community Survey. The gradient for each map is centered at the state median. Two census tracts were missing median family income. All other maps are based on $N = 387$ census tracts. The one census tract with zero population was excluded.
+
+![](figures/figS5_map_piedmont_triad_acs_data.png)
 
   - [Data (RUCA)](piedmont-triad-data/ruca2010revised.csv)
   - [Data (ACS)](piedmont-triad-data/piedmont_triad_acs_data.csv)
   - [Script (Make Figure)](figure-scripts/figS5_map_piedmont_triad_acs_data.R)
 
-![**Figure S6.** Choropleth maps of percents of census tract population by self-reported race in the Piedmont Triad, North Carolina. Data were taken from the 2015 American Community Survey. The gradient for each map is centered at the state median. All maps are based on $N = 387$ census tracts. The one census tract with zero population was excluded.](figures/figS4_map_piedmont_triad_acs_data.png)
+**Figure S6.** Choropleth maps of percents of census tract population by self-reported race in the Piedmont Triad, North Carolina. Data were taken from the 2015 American Community Survey. The gradient for each map is centered at the state median. All maps are based on $N = 387$ census tracts. The one census tract with zero population was excluded.
+
+![](figures/figS4_map_piedmont_triad_acs_data.png)
 
   - [Data (ACS)](piedmont-triad-data/piedmont_triad_acs_data.csv)
   - [Script (Make Figure)](figure-scripts/figS6_map_piedmont_triad_acs_race_data.R)
 
-![**Figure S7.** Map of $M = 701$ authorized SNAP retailers in the Piedmont Triad, North Carolina, broken down by store type. Data were taken from the 2022 Historical SNAP Retail Locator Data.](figures/figS7_map_piedmont_triad_SNAP_wide.png)
+**Figure S7.** Map of $M = 701$ authorized SNAP retailers in the Piedmont Triad, North Carolina, broken down by store type. Data were taken from the 2022 Historical SNAP Retail Locator Data.
+
+![](figures/figS7_map_piedmont_triad_SNAP_wide.png)
 
   - [Data (SNAP)](piedmont-triad-data/healthy_foods_stores_2022.csv)
   - [Script (Make Figure)](figures/figS7_map_SNAP.R)
 
-![**Figure S8.** Map of census tracts in the Piedmont Triad, North Carolina, colored according to whether it was treated as queried in the partially queried analysis. For the partially queried analysis, $n = 48$ tracts were chosen to be queried via county-stratified random sampling. The thicker boundaries denote outline the $12$ counties.](figures/figS8_map_piedmont_queried.png) 
+**Figure S8.** Map of census tracts in the Piedmont Triad, North Carolina, colored according to whether it was treated as queried in the partially queried analysis. For the partially queried analysis, $n = 48$ tracts were chosen to be queried via county-stratified random sampling. The thicker boundaries denote outline the $12$ counties.
+
+![](figures/figS8_map_piedmont_queried.png) 
 
   - [Data (Food Access + Health + RUCA)](piedmont-triad-data/analysis_data.csv)
   - [Script (Make Figure)](figure-scripts/figS8_map_piedmont_queried.R)
 
-![**Figure S9.** Choropleth maps of the crude prevalence of adverse health outcomes for census tracts in Forsyth County (top row) and Guilford County (bottom row), North Carolina. The triangles denote ``downtown''  Winston-Salem and Greensboro (represented by their City Halls) in the top and bottom row, respectively. The gradient for each map is centered at the state median. Data were taken from the 2022 PLACES dataset.](figures/figS9_map_forsyth_guilford_health_outcomes.png)
+**Figure S9.** Choropleth maps of the crude prevalence of adverse health outcomes for census tracts in Forsyth County (top row) and Guilford County (bottom row), North Carolina. The triangles denote ``downtown''  Winston-Salem and Greensboro (represented by their City Halls) in the top and bottom row, respectively. The gradient for each map is centered at the state median. Data were taken from the 2022 PLACES dataset.
+
+![](figures/figS9_map_forsyth_guilford_health_outcomes.png)
 
   - [Data (PLACES)](piedmont-triad-data/disease_prevalences_2022.csv)
   - [Script (Make Figure)](figure-scripts/figS7_map_forsyth_guilford_health_outcomes.R)
 
-![**Figure S10.** Histogram of additive errors ($U$) and multiplicative errors ($W$) in straight-line proximity to healthy foods ($X^*$) from the fully queried data ($N = 387$) for the Piedmont Triad, North Carolina.](figures/figS10_histogram_errors_piedmont.png)
+**Figure S10.** Histogram of additive errors ($U$) and multiplicative errors ($W$) in straight-line proximity to healthy foods ($X^*$) from the fully queried data ($N = 387$) for the Piedmont Triad, North Carolina.
+
+![](figures/figS10_histogram_errors_piedmont.png)
 
   - [Data (Food Access + Health + RUCA)](piedmont-triad-data/analysis_data.csv)
   - [Script (Make Figure)](figure-scripts/figS10_histogram_errors_proximity.R)
 
-![**Figure S11.** Scatter plot of straight-line versus map-based proximity to healthy food store for neighborhoods (census tracts) in the Piedmont Triad, North Carolina using the fully queried data ($N = 387$) or the partially queried data ($n = 48$). The top row is among only metropolitan census tracts, and the bottom row is only among non-metropolitan census tracts. The solid line follows the fitted least-squares linear regression fit between $X$ and $X^*$ among those tracts, while the dashed line denotes the hypothetical $X = X^*$ if there had been no errors in $X^*$.](figS11_scatterplot_proximity_piedmont_metro.)
+**Figure S11.** Scatter plot of straight-line versus map-based proximity to healthy food store for neighborhoods (census tracts) in the Piedmont Triad, North Carolina using the fully queried data ($N = 387$) or the partially queried data ($n = 48$). The top row is among only metropolitan census tracts, and the bottom row is only among non-metropolitan census tracts. The solid line follows the fitted least-squares linear regression fit between $X$ and $X^*$ among those tracts, while the dashed line denotes the hypothetical $X = X^*$ if there had been no errors in $X^*$.
+
+![](figS11_scatterplot_proximity_piedmont_metro.pdf)
 
   - [Data (Food Access + Health + RUCA)](piedmont-triad-data/analysis_data.csv)
   - [Script (Make Figure)](figure-scripts/figS11_scatterplot_proximity_piedmont_metro.R)
 
-![**Figure S12.** Estimated baseline prevalence (with 95\% confidence intervals) for health outcomes in the Piedmont Triad, North Carolina using different analysis methods. Within each health outcome and method, estimates on the right came from the mixed effects model allowing for spatial autocorrelation between bordering neighborhoods (census tracts); estimates on the left came from the model assuming independence between neighborhoods.](figures/figS12_forest_plot_intercept_piedmont.png)
+**Figure S12.** Estimated baseline prevalence (with 95\% confidence intervals) for health outcomes in the Piedmont Triad, North Carolina using different analysis methods. Within each health outcome and method, estimates on the right came from the mixed effects model allowing for spatial autocorrelation between bordering neighborhoods (census tracts); estimates on the left came from the model assuming independence between neighborhoods.
+
+![](figures/figS12_forest_plot_intercept_piedmont.png)
 
   - [Data (Food Access + Health)](piedmont-triad-data/analysis_data.csv)
   - [Data (Fitted Models)](piedmont-triad-data/forest_plot_data.csv) 
