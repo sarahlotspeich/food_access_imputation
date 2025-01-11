@@ -97,6 +97,8 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 
 ## Figures 
 
+![**Figure 1.** Choropleth map of food access, as measured by proximity to healthy foods for each neighborhood (census tract) in the Piedmont Triad, North Carolina, according to the data used for the naive, gold standard, imputation, and complete-case analyses.](figures/fig1_map_proximity_piedmont.png)
+
 **Figure 1.** Choropleth map of food access, as measured by proximity to healthy foods for each neighborhood (census tract) in the Piedmont Triad, North Carolina, according to the data used for the naive, gold standard, imputation, and complete-case analyses.
 
   - [Data (Food Access + Health)](piedmont-triad-data/analysis_data.csv)
