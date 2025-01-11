@@ -197,7 +197,7 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 
 **Figure S11.** Scatter plot of straight-line versus map-based proximity to healthy food store for neighborhoods (census tracts) in the Piedmont Triad, North Carolina using the fully queried data ($N = 387$) or the partially queried data ($n = 48$). The top row is among only metropolitan census tracts, and the bottom row is only among non-metropolitan census tracts. The solid line follows the fitted least-squares linear regression fit between $X$ and $X^*$ among those tracts, while the dashed line denotes the hypothetical $X = X^*$ if there had been no errors in $X^*$.
 
-![](figS11_scatterplot_proximity_piedmont_metro.)
+![](figS11_scatterplot_proximity_piedmont_metro.pdf)
 
   - [Data (Food Access + Health + RUCA)](piedmont-triad-data/analysis_data.csv)
   - [Script (Make Figure)](figure-scripts/figS11_scatterplot_proximity_piedmont_metro.R)
