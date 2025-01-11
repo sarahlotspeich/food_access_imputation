@@ -12,12 +12,12 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 
 ## Primary Data Source (Analysis)
 
-**1.  Merged Food Access Measures and Disease Prevalence** created using the **Healthy Food Store Locations**, **Disease Prevalence by Neighborhood (Census Tract)**, and **Neighborhood (Census Tract) Population Centers**. 
+**1.  Merged Analytical Dataset** created using the **Healthy Food Store Locations**, **Disease Prevalence by Neighborhood (Census Tract)**, **Neighborhood (Census Tract) Population Centers**, and **Rural-Urban Commuting Area (RUCA) Codes**. 
 
   - [Script (Calculate Proximity)](piedmont-triad-data/raw_proximity_healthy_foods.R)
   - *Note:* A small number of census tract population centers could not be geocoded based on the original address. They were manually reviewed and assigned the nearest address that *would* geocode, and then their proximity to healthy foods was recalculated. See the [raw data](piedmont-triad-data/raw_proximity_healthy_foods.csv) and [script](piedmont-triad-data/review_proximity_healthy_foods.R) for more details. 
   - [Data (Proximity)](piedmont-triad-data/review_proximity_healthy_foods.csv)
-  - [Data (Food Access + Health)](piedmont-triad-data/analysis_data.csv)
+  - [Data (Food Access + Health + RUCA)](piedmont-triad-data/analysis_data.csv)
 
 **2.  Healthy Foods Store Locations** taken from the United States Department of Agriculture’s (UDSA’s) Historical Supplemental Nutrition Assistance Program (SNAP) Retail Locator Data (2022 Release).
 
@@ -35,11 +35,11 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
 
   - [Download Data](https://www2.census.gov/geo/docs/reference/cenpop2010/tract/CenPop2010_Mean_TR37.txt)
 
-## Secondary Data Sources (Descriptive)
-
 **5.  Rural-Urban Commuting Areas (RUCA)** taken from the United States Department of Agriculture (2010 Release).
 
   -  [Download Data](https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes/documentation/)
+
+## Secondary Data Sources (Descriptive)
 
 **6.  American Community Survey (ACS)** taken from the United States Census Bureau (2015 Release). Data were extracted using the [`tidycensus`](https://walker-data.com/tidycensus/) package. 
 
@@ -72,17 +72,28 @@ devtools::install_github("sarahlotspeich/possum", ref = "main")
   - [Script (Make Table)](table-scripts/table4_mult_error.R)
   - [Data (Simulation Results)](sims-data/mult_error_sims_combined.csv)
 
-**Table S1.** Simulation results under increasing severity of errors in straight-line proximity to healthy foods, as controlled by the error mean $\mu_U$.
+**Table S1.** Simulation results under varied additive errors in straight-line proximity to healthy foods, as controlled by the mean $\mu_U$ of the errors $U$. The standard deviation $\sigma_U = 0.8$ of the errors was fixed.
 
   - [Script (Run Simulations Locally)](sims-scripts/sims_vary_muU.R)
   - [Script (Make Table)](table-scripts/tableS1_vary_muU.R)
   - [Data (Simulation Results)](sims-data/vary_muU/)
 
-**Table S2.** Descriptive statistics of the $N = 387$ census tracts in the Piedmont Triad, North Carolina.
+**Table S2.** Simulation results under varied multiplicative errors in straight-line proximity to healthy foods, as controlled by the mean $\mu_W$ of the errors $W$. The standard deviation $\sigma_W = 0.15$ of the errors was fixed.
 
-  - [Script (Make Table)](table-scripts/tableS2_piedmont.R)
-  - [Data (Rural/Urban)](piedmont-triad-data/ruca2010revised.csv)
-  - [Data (Food Access + Health)](piedmont-triad-data/analysis_data.csv)
+  - [Script (Run Simulations Locally)](sims-scripts/sims_mult_error2.R)
+  - [Script (Make Table)](table-scripts/tableS2_mult_errors2.R)
+  - [Data (Simulation Results)](sims-data/mult_error2/)
+
+**Table S3.** Descriptive statistics of the $N = 387$ census tracts in the Piedmont Triad, North Carolina.
+
+  - [Script (Make Table)](table-scripts/tableS3_piedmont.R)
+  - [Data (Food Access + Health + RUCA)](piedmont-triad-data/analysis_data.csv)
+
+**Table S4.** Simulation results for the mixed-effects model under additive errors in straight-line proximity to healthy foods, with fixed $\mu_U = -0.7$ and $\sigma_U = 0.8$, and different amounts of variability in the spatial random effect, as controlled by $\tau^2$. 
+
+  - [Script (Run Simulations Locally)](sims-scripts/sims_spatial.R)
+  - [Script (Make Table)](table-scripts/tableS4_spatial_vary_tau2.R)
+  - [Data (Simulation Results)](sims-data/spatial/)
 
 ## Figures 
 
