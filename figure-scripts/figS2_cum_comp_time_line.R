@@ -15,7 +15,7 @@ food_access = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_ac
 ## MAKE LINE GRAPH OF CUMULATIVE COMPUTING TIME ////////////////////////////////////////////
 ############################################################################################
 food_access |> 
-  select(LocationID, dplyr::ends_with("_time")) |> 
+  select(GEOID, dplyr::ends_with("_time")) |> 
   mutate(row_id = 1:dplyr::n()) |> 
   tidyr::gather(key = "dist_calc", value = "comp_time", -c(1, 4)) |> 
   group_by(dist_calc) |> 

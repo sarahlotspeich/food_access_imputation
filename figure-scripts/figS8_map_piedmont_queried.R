@@ -41,7 +41,7 @@ nrow(food_access) ## N = 387 neighborhoods (exclude the tract with population = 
 # Merge food access and map data 
 map_data = food_access |> 
   dplyr::right_join(piedmont_triad_ct, 
-                   by = dplyr::join_by(LocationID == GEOID))
+                   by = dplyr::join_by(GEOID == GEOID))
 
 ############################################################################################
 ## MAKE MAP OF OBSERVED/PREDICTED PROXIMITY ////////////////////////////////////////////////

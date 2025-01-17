@@ -7,7 +7,7 @@ library(dplyr) ## for data wrangling
 food_access = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/analysis_data.csv") |> 
   dplyr::mutate(Prev_DIABETES = Y_DIABETES / O_POP, 
                 Prev_OBESITY = Y_OBESITY / O_POP) |> 
-  dplyr::select(LocationID, CountyName, Prev_DIABETES, Prev_OBESITY, X_full, Xstar)
+  dplyr::select(GEOID, CountyName, Prev_DIABETES, Prev_OBESITY, X_full, Xstar)
 
 ## Rural/urban commuting areas (RUCA) data (2010 release)
 ruca = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/ruca2010revised.csv") |> 
@@ -24,10 +24,10 @@ race = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_im
 # Create Table S2 data 
 dat = food_access |> 
   dplyr::left_join(ruca, 
-                   by = dplyr::join_by(LocationID == StateCountyTract)) |> 
+                   by = dplyr::join_by(GEOID == StateCountyTract)) |> 
   dplyr::left_join(race, 
-                   by = dplyr::join_by(LocationID == GEOID)) |> 
-  dplyr::select(-LocationID, -SecondaryRUCA, Population, -County, -State,-StateCounty)
+                   by = dplyr::join_by(GEOID == GEOID)) |> 
+  dplyr::select(-GEOID, -SecondaryRUCA, Population, -County, -State,-StateCounty)
 ## Specify which variables should be treated as categorical for summary statistics
 catVars = c("CountyName", "PrimaryRUCA")
 table_S2 = CreateTableOne(data = dat, 

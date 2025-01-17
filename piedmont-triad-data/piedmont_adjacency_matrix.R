@@ -28,7 +28,7 @@ tracts = get_acs(state = "NC",
                  variables = "B19013_001",
                  geometry = TRUE, 
                  year = 2015) |> 
-  dplyr::filter(GEOID %in% food_access$LocationID)
+  dplyr::filter(GEOID %in% food_access$GEOID)
 
 # Load map data (counties)
 counties = get_acs(state = "NC", 
@@ -46,7 +46,7 @@ neighbors = poly2nb(tracts,
                     queen = TRUE) ## contiguous neighbors
 ptW = nb2mat(neighbors, 
                        style = "B")
-rownames(ptW) = colnames(ptW) = food_access$LocationID
+rownames(ptW) = colnames(ptW) = food_access$GEOID
 
 # Save it 
 ptW |> 
