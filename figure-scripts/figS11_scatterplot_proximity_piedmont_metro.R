@@ -32,23 +32,28 @@ plot_dat |>
   ggplot(aes(x = Xstar, 
              y = X)) + 
   geom_point(alpha = 0.5) + 
-  geom_smooth(method = "lm", 
+  geom_smooth(aes(col = "Fitted Line"), 
+              method = "lm", 
               se = FALSE, 
-              col = '#FD7446', 
               size = 1, 
               fullrange = TRUE, 
               alpha = 0.5) + 
-  geom_abline(slope = 1, 
-              intercept = 0, 
-              col = '#709AE1', 
+  geom_abline(aes(slope = 1, 
+                  intercept = 0, 
+                  col = "Line of Equality"), 
               size = 1, 
-              linetype = 2) + 
+              linetype = 2, 
+              key_glyph = "path") + 
+  scale_color_manual(values = c("Fitted Line" = '#FD7446',  
+                                "Line of Equality" = '#709AE1'), 
+                     name = "") + 
   theme_minimal(base_size = 10) + 
   theme(plot.margin = margin(l=25, r=20, t=20, b=25), 
         strip.background = element_rect(fill = "black"),
         strip.text = element_text(color = "white"), 
         legend.box = "vertical", 
-        legend.position = "top") + 
+        legend.position = "top", 
+        legend.key.width = unit(2, "line")) + 
   labs(x = "Straight-Line Proximity to Healthy Foods (X*)",
        y = "Map-Based Proximity to Healthy Foods (X)") + 
   xlim(c(0, 16)) +
@@ -57,12 +62,12 @@ plot_dat |>
   facet_grid(cols = vars(Dataset), 
              rows = vars(METRO))
 
-ggsave(filename = "figures/figS11_scatterplot_proximity_piedmont.png", 
+ggsave(filename = "figures/figS11_scatterplot_proximity_piedmont_metro.png", 
        device = "png", 
        width = 6, 
        height = 6, 
        units = "in")
-ggsave(filename = "figures/figS11_scatterplot_proximity_piedmont.pdf", 
+ggsave(filename = "figures/figS11_scatterplot_proximity_piedmont_metro.pdf", 
        device = "pdf", 
        width = 6, 
        height = 6, 
