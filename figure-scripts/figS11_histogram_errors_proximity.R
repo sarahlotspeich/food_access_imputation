@@ -47,7 +47,7 @@ plot_mult_err = map_data |>
 ## COMBINE PLOTS ///////////////////////////////////////////////////////////////////////////
 ############################################################################################
 ggarrange(plot_add_err, plot_mult_err, nrow = 1)
-ggsave(filename = "figures/figS10_histogram_errors_piedmont.png", 
+ggsave(filename = "figures/figS11_histogram_errors_piedmont.png", 
        device = "png", 
        width = 7, 
        height = 5, 
