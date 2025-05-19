@@ -11,38 +11,31 @@ library(spaMM) ## for spatial mixed-effects model
 ## LOAD FOOD ACCESS DATA FOR FORSYTH AND BORDERING COUNTIES' CENSUS TRACTS /////////////////
 ############################################################################################
 ## Proximity to health foods based on straight-line and map-based distances (census tracts)
-# food_access = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/analysis_data.csv")
-food_access = read.csv("~/Documents/food_access_imputation/piedmont-triad-data/analysis_data.csv")
+food_access = read.csv("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/main/piedmont-triad-data/analysis_data.csv")
 nrow(food_access) ## N = 387 neighborhoods (exclude the tract with population = 0)
 
 ## Load build adjacency matrix for census tracts in the Piedmont Triad as 
-# ptW = readRDS(file = gzcon(url("https://github.com/sarahlotspeich/food_access_imputation/raw/main/piedmont-triad-data/piedmont_adjacency_matrix.Rds")))
-ptW = readRDS(file = "~/Documents/food_access_imputation/piedmont-triad-data/piedmont_adjacency_matrix.Rds")
+ptW = readRDS(file = gzcon(url("https://github.com/sarahlotspeich/food_access_imputation/raw/main/piedmont-triad-data/piedmont_adjacency_matrix.Rds")))
 
 ## Source a function to extract model coefficients from spaMM
 ### --> get_sp_mod_summ()
-# devtools::source_url("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/refs/heads/main/piedmont-triad-data/get_sp_mod_summ.R?raw=TRUE")
-source("~/Documents/food_access_imputation/piedmont-triad-data/get_sp_mod_summ.R")
+devtools::source_url("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/refs/heads/main/piedmont-triad-data/get_sp_mod_summ.R?raw=TRUE")
 
 ## Naive Analysis 
 ### --> naive_res
-# devtools::source_url("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/refs/heads/main/piedmont-triad-data/naive_analysis.R?raw=TRUE")
-source("~/Documents/food_access_imputation/piedmont-triad-data/naive_analysis.R")
+devtools::source_url("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/refs/heads/main/piedmont-triad-data/naive_analysis.R?raw=TRUE")
 
 ## Gold Standard Analysis 
 ### --> gs_res
-# devtools::source_url("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/refs/heads/main/piedmont-triad-data/gold_standard_analysis.R?raw=TRUE")
-source("~/Documents/food_access_imputation/piedmont-triad-data/gold_standard_analysis.R")
+devtools::source_url("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/refs/heads/main/piedmont-triad-data/gold_standard_analysis.R?raw=TRUE")
 
 ## Complete Case Analysis 
 ### --> cc_res
-# devtools::source_url("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/refs/heads/main/piedmont-triad-data/complete_case_analysis.R?raw=TRUE")
-source("~/Documents/food_access_imputation/piedmont-triad-data/complete_case_analysis.R")
+devtools::source_url("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/refs/heads/main/piedmont-triad-data/complete_case_analysis.R?raw=TRUE")
 
 ## Imputation Analysis 
 ### --> imp_res
-# devtools::source_url("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/refs/heads/main/piedmont-triad-data/imputation_analysis.R?raw=TRUE")
-source("~/Documents/food_access_imputation/piedmont-triad-data/imputation_analysis.R")
+devtools::source_url("https://raw.githubusercontent.com/sarahlotspeich/food_access_imputation/refs/heads/main/piedmont-triad-data/imputation_analysis.R?raw=TRUE")
 
 ## Combine All 
 all_res = naive_res |> 
@@ -52,5 +45,5 @@ all_res = naive_res |>
 
 ### And save 
 all_res |> 
-  write.csv("~/Documents/food_access_imputation/piedmont-triad-data/forest_plot_data.csv", 
+  write.csv("~/food_access_imputation/piedmont-triad-data/forest_plot_data.csv", 
             row.names = FALSE)
